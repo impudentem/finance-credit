@@ -43,10 +43,10 @@ class financeAppController
         .visibility
           once: off
           onOffScreen: (calculations) ->
-            _btn = $ ".menu .ui.tablet .ui.button"
+            _btn = $ ".menu .computer-only .ui.button"
             _btn.transition 'scale in'
           onOnScreen: (calculations) ->
-            _btn = $ ".menu .ui.tablet .ui.button"
+            _btn = $ ".menu .computer-only .ui.button"
             _btn.transition 'scale out' if not _btn.hasClass "hidden"
 
   titleStep: ->

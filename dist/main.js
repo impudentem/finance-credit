@@ -3688,12 +3688,12 @@ financeAppController = (function() {
         once: false,
         onOffScreen: function(calculations) {
           var _btn;
-          _btn = $(".menu .ui.tablet .ui.button");
+          _btn = $(".menu .computer-only .ui.button");
           return _btn.transition('scale in');
         },
         onOnScreen: function(calculations) {
           var _btn;
-          _btn = $(".menu .ui.tablet .ui.button");
+          _btn = $(".menu .computer-only .ui.button");
           if (!_btn.hasClass("hidden")) {
             return _btn.transition('scale out');
           }

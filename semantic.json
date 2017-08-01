@@ -82,6 +82,8 @@
     "angular-sanitize",
     "ngStorage",
     "ngMask",
+    "jquery.inputmask.min",
+    "jquery.inputmask.extensions.min",
     "first-step-controller",
     "first-cards-step-controller",
     "two-step-controller",

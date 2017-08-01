@@ -96,6 +96,12 @@ twoStepController = (function() {
   };
 
   twoStepController.prototype.initMask = function() {
+    var param;
+    param = {
+      mask: "+38 (\\099) 999-99-99",
+      greedy: false
+    };
+    $('input[name="phone"]').inputmask(param);
     this.$window.dispatchEvent(this.$rootScope.settings.events.eventWidgetStep2);
     return $(this.$element).find("form").form({
       inline: true,

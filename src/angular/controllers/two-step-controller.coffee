@@ -62,11 +62,11 @@ class twoStepController
     #   .ready ->
     #     console.log "READY___"
     #     return ""
-    # param =
-    #   mask: "+38 (\\099) 999-99-99"
-    #   greedy: off
-    # $ 'input[name="phone"]'
-    #   .inputmask param
+    param =
+      mask: "+38 (\\099) 999-99-99"
+      greedy: off
+    $ 'input[name="phone"]'
+      .inputmask param
     # $ 'input[name="email"]'(39|50|63|66|67|68|73|91|92|93|94|95|96|97|98|99)
     #   .inputmask "email"039', '050', '063', '066', '067', '068', '073', '091', '092', '093', '094', '095', '096', '097', '098', '099'
 

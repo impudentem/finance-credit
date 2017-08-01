@@ -1,0 +1,34 @@
+/*******************************
+         Site Overrides
+*******************************/
+
+
+.ui.privilege-page .ui.grid>.column:not(.row) {
+  padding-top: 1rem;
+  padding-bottom: 4.2857rem;
+}
+
+// .ui.main .ui.grid>.column:not(.row):first-child, .ui.main .ui.grid>.row>.column:first-child {
+//     padding-left: 0;
+
+// }
+// .ui.main .ui.grid>.column:not(.row):last-child, .ui.main .ui.grid>.row>.column:last-child {
+//     padding-right: 0;
+// }
+@media only screen and (min-width: 992px) {
+  .ui.main .ui.grid>[class*="wide computer"].column:not(.row):first-child {
+    padding-left: 0;
+  }
+  .ui.main .ui.grid>[class*="wide computer"].column:not(.row):last-child {
+    padding-right: 0;
+  }
+}
+
+.ui.clients .four.column {
+  padding-top: 0;
+  padding-right: 0;
+}
+
+.ui.clients.ui.grid>.twelve.column:not(.row) {
+  padding-top: 2.7rem;
+}

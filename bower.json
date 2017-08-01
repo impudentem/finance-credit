@@ -1,0 +1,31 @@
+{
+  "name": "semantic",
+  "description": "Semantic empowers designers and developers by creating a shared vocabulary for UI.",
+  "homepage": "http://www.semantic-ui.com",
+  "author": {
+    "name": "Jack Lukic",
+    "web": "http://www.jacklukic.com"
+  },
+  "dependencies": {
+    "jquery": ">=1.8",
+    "angular-routes-provider": "^0.0.1",
+    "semantic-ui-range": "tyleryasaka/semantic-ui-range#^1.0.0",
+    "semantic-ui-calendar": "^0.0.8",
+    "ngMask": "angular-mask#^3.1.1"
+  },
+  "main": [
+    "src/semantic.less",
+    "dist/semantic.js"
+  ],
+  "keywords": [
+    "semantic",
+    "ui",
+    "css3",
+    "framework"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "src/site",
+    "test"
+  ]
+}

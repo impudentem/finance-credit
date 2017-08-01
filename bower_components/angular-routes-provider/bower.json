@@ -1,0 +1,22 @@
+{
+  "name": "angular-routes-provider",
+  "version": "0.0.1",
+  "homepage": "https://github.com/sidigdoyo/angular-routes-provider",
+  "authors": [
+    "Sidigdoyo Pribadi <sidigdoyo@gmail.com>"
+  ],
+  "description": "angular ui router routes provider",
+  "main": "src/angular-routes-provider.js",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "~0.2.15"
+  }
+}

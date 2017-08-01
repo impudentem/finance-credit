@@ -1,0 +1,24 @@
+/*******************************
+         Site Overrides
+*******************************/
+
+
+.ui.calendar .ui.grey.button {
+  font-size: 1.5714rem;
+  padding: 0.6em;
+  margin-left: 1.5714rem;
+  margin-right: 0;
+  margin-top: -1px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F1F1F1 100%);
+  box-shadow: 0 2px 3px 0 rgba(0,0,0,0.32);
+  border: 1px solid #FFFFFF;
+}
+
+.ui.calendar .ui.grey.button i.icon.calendar {
+  height: 1em;
+  opacity: 1;
+  color: #9B9B9B;
+  box-shadow: none;
+  outline: none;
+  text-shadow: none;
+}

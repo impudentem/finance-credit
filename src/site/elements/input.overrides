@@ -1,0 +1,24 @@
+/*******************************
+         Site Overrides
+*******************************/
+
+
+.ui.input input::-webkit-input-placeholder {
+  color: rgba(0,0,0,0.4);
+}
+.ui.form .field .ui.input input {
+  font-size: 1.2857em;
+  line-height: 1.7142rem;
+  padding: .7857rem 1.1428rem;
+  box-shadow: inset 1px 1px 3px 0 rgba(0,0,0,0.25);
+  background-color: #F5F5F5;
+  border-color: transparent;
+}
+
+// .ui.form .field .ui.input input:hover,
+
+.ui.form .field .ui.input input:focus {
+  background-color: #F5F5F5;
+  border-color: #FF9C0F;
+  box-shadow: 0 1px 10px 0 rgba(255,156,15,0.40), inset 1px 1px 3px 0 rgba(0,0,0,0.17);
+}

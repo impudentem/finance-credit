@@ -1,0 +1,41 @@
+/*******************************
+        User Overrides
+*******************************/
+
+.ui.faq .ui.accordion {
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+.ui.faq .ui.accordion .title:not(.ui) {
+  padding: 0.9em 0;
+  color: #4A4A4A;
+  font-size: 1.2857em;
+  transition: color .2s ease, text-shadow .2s ease;
+}
+
+.ui.faq .ui.accordion .title:hover:not(.ui), .ui.faq .ui.accordion .title:focus:not(.ui) {
+  color: #FF9C0F;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.50);
+}
+
+.ui.accordion .accordion .title .dropdown.icon, .ui.accordion .title .dropdown.icon {
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+  height: 1.6em;
+  font-size: 0.6em;
+  width: 1.8em;
+  line-height: 1.7em;
+  font-family: Icons;
+  transform: rotate(-90deg);
+  vertical-align: middle;
+  color: #FF9C0F;
+}
+.ui.accordion .accordion .title .dropdown.icon:before, .ui.accordion .title .dropdown.icon:before {
+  content: '\fe40';
+}
+.ui.accordion .accordion .active.title .dropdown.icon, .ui.accordion .active.title .dropdown.icon {
+  transform: rotate(0deg);
+  color: #FF9C0F;
+}

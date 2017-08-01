@@ -1,0 +1,100 @@
+{
+  "base": "",
+  "paths": {
+    "source": {
+      "config": "src/theme.config",
+      "definitions": "src/definitions/",
+      "angular": "src/angular/",
+      "site": "src/site/",
+      "themes": "src/themes/"
+    },
+    "output": {
+      "packaged": "dist/",
+      "uncompressed": "dist/components/",
+      "compressed": "dist/components/",
+      "themes": "dist/themes/"
+    },
+    "clean": "dist/"
+  },
+
+  "components": [
+
+    "reset",
+    "site",
+
+    "button",
+    "container",
+    "divider",
+    "flag",
+    "header",
+    "icon",
+    "image",
+    "input",
+    "label",
+    "list",
+    "loader",
+    "rail",
+    "reveal",
+    "segment",
+    "step",
+
+    "breadcrumb",
+    "form",
+    "grid",
+    "menu",
+    "message",
+    "table",
+
+    "ad",
+    "card",
+    "comment",
+    "feed",
+    "item",
+    "statistic",
+
+    "accordion",
+    "calendar",
+    "checkbox",
+    "dimmer",
+    "dropdown",
+    "embed",
+    "modal",
+    "nag",
+    "popup",
+    "progress",
+    "range",
+    "rating",
+    "search",
+    "shape",
+    "sidebar",
+    "sticky",
+    "tab",
+    "transition",
+
+    "api",
+    "form",
+    "state",
+    "visibility"
+  ],
+
+  "user_components": [
+    "angular-route",
+    "angular-sanitize",
+    "ngStorage",
+    "ngMask",
+    "first-step-controller",
+    "first-cards-step-controller",
+    "two-step-controller",
+    "two-cards-step-controller",
+    "three-step-controller",
+    "three-cards-step-controller",
+    "directives",
+    "app",
+    "config"
+  ],
+
+  "permission": false,
+  "autoInstall": true,
+  "rtl": false,
+  "version": "2.2.11"
+}

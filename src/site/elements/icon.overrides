@@ -1,0 +1,58 @@
+/*******************************
+         Site Overrides
+*******************************/
+[class^="icon"]:before, [class*=" icon"]:before , i.icon {
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  height: 1em;
+  margin-right: .2em;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1em;
+  margin-left: .2em;
+  font-size: 120%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'Icons';
+    src: url('./themes/financeicon/assets/fonts/financeicon.svg#financeicon') format('svg');
+  }
+}
+
+i.circular.icon:before {
+  margin: 0;
+}
+
+i.icon.step-ok:before { content: '\2714'; font-weight: normal; font-size: 0.7rem;} /* '✔' */
+i.icon.arrow-input:before { content: '\fe3e'; } /* '︾' */
+i.icon.arrow:before { content: '\fe40'; } /* '﹀' */
+i.icon.like:before { content: '👍'; } /* '\1f44d' */
+i.icon.wallet:before { content: '👛'; } /* '\1f45b' */
+i.icon.user:before { content: '👤'; } /* '\1f464' */
+i.icon.page:before { content: '📄'; } /* '\1f4c4' */
+i.icon.marker-map:before { content: '📍'; } /* '\1f4cd' */
+i.icon.smartphone-call:before { content: '📱'; } /* '\1f4f1' */
+i.icon.smartphone-text:before { content: '📲'; } /* '\1f4f2' */
+i.icon.adult:before { content: '🔞'; } /* '\1f51e' */
+i.icon.code:before { content: '🔠'; } /* '\1f520' */
+i.icon.time:before { content: '🕓'; } /* '\1f553' */
+i.icon.calendar:before { content: '🗓'; } /* '\1f5d3' */
+i.icon.wrench:before { content: '🛠'; } /* '\1f6e0' */
+i.icon.safe:before { content: '🛡'; } /* '\1f6e1' */
+i.icon.chevron.right:before, .icon.angle.right:before { content: "\f105"; }
+i.icon.chevron.left:before, .icon.angle.left:before { content: "\f104"; }
+i.icon.chevron.up:before, .icon.angle.up:before { content: '\f106'; }
+i.icon.chevron.down:before, .icon.angle.down:before { content: '\f107'; }
+
+i.icon.up.open:before { content: '\e800'; } /* '' */
+i.icon.right.open:before { content: '\e801'; } /* '' */
+i.icon.left.open:before { content: '\e802'; } /* '' */
+i.icon.down.open:before { content: '\e803'; } /* '' */

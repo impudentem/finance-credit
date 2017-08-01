@@ -1,0 +1,32 @@
+{
+  "name": "angular-routes-provider",
+  "version": "0.0.1",
+  "homepage": "https://github.com/sidigdoyo/angular-routes-provider",
+  "authors": [
+    "Sidigdoyo Pribadi <sidigdoyo@gmail.com>"
+  ],
+  "description": "angular ui router routes provider",
+  "main": "src/angular-routes-provider.js",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "~0.2.15"
+  },
+  "_release": "0.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.1",
+    "commit": "59708ff2e997c255b63345b14c6dd20022cd6702"
+  },
+  "_source": "https://github.com/sidigdoyo/angular-routes-provider.git",
+  "_target": "^0.0.1",
+  "_originalSource": "angular-routes-provider",
+  "_direct": true
+}

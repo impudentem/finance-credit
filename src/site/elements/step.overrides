@@ -1,0 +1,47 @@
+/*******************************
+         Site Overrides
+*******************************/
+
+.form-page .ui.mini.step, .form-page .ui.mini.steps .step {
+  width: 22px;
+  height: 22px;
+  padding: 1em;
+  margin: 0 .3em;
+  border: 1px solid #fff;
+}
+
+.form-page .ui.mini.step .icon, .form-page .ui.mini.steps .step .icon {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1rem;
+  font-weight: bold;
+  color: #fff;
+  transition: all .3s ease;
+}
+
+.form-page .ui.steps .step.active {
+  background: #fff;
+}
+
+.form-page .ui.ordered.steps .step.active:before, .form-page .ui.steps .active.step .icon {
+  color: #ff9c0f;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1rem;
+  font-weight: bold;
+}
+
+.form-page .ui.steps .step:not(:first-child):before {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: .6em;
+  height: 1px;
+  top: 50%;
+  margin-top: -.5px;
+  background: #fff;
+}
+
+.form-page .ui.steps .step:not(:first-child):before {
+  left: calc(~"-.6em - 1px");
+}

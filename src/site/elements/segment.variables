@@ -1,0 +1,6 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+
+@borderRadius: .42857149em;
+@raisedBoxShadow: 0 16px 30px 0 rgba(0,0,0,0.21);

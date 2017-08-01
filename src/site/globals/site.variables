@@ -1,0 +1,21 @@
+/*******************************
+     User Global Variables
+*******************************/
+
+@fontName          : 'Open Sans';
+@fontSmoothing     : antialiased;
+
+@headerFont        : @fontName, Arial, Helvetica, sans-serif;
+@pageFont          : @fontName, Arial, Helvetica, sans-serif;
+
+@googleFontName    : 'Open+Sans';
+@importGoogleFonts : true;
+@googleFontSizes   : '300,400,600,700,400italic';
+@googleSubset      : 'latin,cyrillic';
+
+@orange            : #FF9C0F;
+@gray              : #F6F6F6;
+
+@textColor         : #555555;
+
+@pageBackground    : #F6F6F6;

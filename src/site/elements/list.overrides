@@ -1,0 +1,52 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+
+.ui.list>.item>.content span {
+  font-size: .8571em;
+}
+
+.ui.list>.item .header {
+  font-size: 1.4285em;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+
+.ui.privilege.container .ui.list>.item .icon {
+  color: #FF9C0F!important;
+  padding: 25px!important;
+}
+
+.ui.privilege.container .ui.list>.item {
+  padding: 3.5714em 0;
+}
+
+.ui.privilege.container .ui.list>.item:first-child {
+  padding-bottom: 0!important;
+}
+
+
+.ui.privilege.container .ui.list>.item>.icon+.content {
+  padding: 1em 0 0 1em;
+  width: 80%;
+}
+
+.ui.privilege.container .ui.list>.item i.inverted.circular.grey.icon {
+  background-color: #F6F6F6!important;
+  display: inline-table;
+  float: left;
+}
+
+.ui.privilege.container .ui.list>.item .header {
+  color: #4A4A4A;
+  font-size: 18px;
+  line-height: 24px;
+  margin-bottom: 8px;
+}
+.ui.privilege.container .ui.list>.item .description {
+  color: #676767;
+  font-size: 1em;
+  line-height: 20px;
+}
+

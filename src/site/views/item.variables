@@ -1,0 +1,5 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+
+@descriptionLineHeight: 1.7142em;

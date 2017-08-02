@@ -38,7 +38,7 @@
     transition: opacity .1s ease, padding .1s ease;
 }
 i.icon, .ui.selection.dropdown>.arrow-input.icon {
-    font-family: Icons;
+    font-family: 'Icons','Open Sans',Arial,Helvetica,sans-serif;;
     speak: none;
     font-smoothing: antialiased;
     -webkit-font-smoothing: antialiased;

@@ -24,7 +24,7 @@
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
-    font-family: 'Icons';
+    font-family: 'Icons','Open Sans',Arial,Helvetica,sans-serif;
     src: url('./themes/financeicon/assets/fonts/financeicon.svg#financeicon') format('svg');
   }
 }

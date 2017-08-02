@@ -29,7 +29,7 @@ i.icon {
   margin: 0em 0.25rem 0em 0em;
   width: 1.18em;
   height: 1em;
-  font-family: 'Icons';
+  font-family: 'Icons', 'Open Sans', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   text-decoration: inherit;
@@ -3341,7 +3341,7 @@ i.icon {
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   @font-face {
-    font-family: 'Icons';
+    font-family: 'Icons', 'Open Sans', Arial, Helvetica, sans-serif;
     src: url('themes/financeicon/assets/fonts/financeicon.svg#financeicon') format('svg');
   }
 }

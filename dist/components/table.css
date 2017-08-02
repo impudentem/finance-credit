@@ -904,7 +904,7 @@
   width: auto;
   opacity: 0.8;
   margin: 0em 0em 0em 0.5em;
-  font-family: 'Icons';
+  font-family: 'Icons', 'Open Sans', Arial, Helvetica, sans-serif;
 }
 .ui.sortable.table thead th.ascending:after {
   content: '\f0d8';

@@ -8,6 +8,7 @@ angular.module 'financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
     $locationProvider.html5Mode on
     $localStorageProvider.setKeyPrefix "financeStorage-"
     strgTime = $localStorageProvider.get "strgTime"
+    strgData = $localStorageProvider.get "strgData"
     loclTime = new Date()
     if strgTime
       _d = new Date strgTime?.time

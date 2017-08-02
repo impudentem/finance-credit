@@ -1,24 +1,31 @@
 class firstStepController
-  constructor: (@$http, @$scope, @$rootScope, @$sce, @$window, @$element, @$sceDelegate, @$filter, @$timeout) ->
-    @$scope.amount = 0
-
-    @$scope.defAims =
-      21: "Деньги до зарплаты"
-      22: "Деньги после зарплаты"
-      23: "Деньги до и после зарплаты"
+  constructor: (@$http, @$scope, @$rootScope, @$sce, @$location, @$element, @$sceDelegate, @$filter, @$timeout) ->
+    @data =
+      aims: {}
 
     @val_range =
       min: 200
       max: 50000
-    $ () =>
+
+    @$scope.$watch (newValue, oldValue, scope) =>
+      @$scope.main.currentStep
+    , (newValue, oldValue, scope) =>
       @$iElement = $ @$element
-      @init()
-      # $(@$element).find "select"
-      #   .dropdown()
+      newValue = parseInt newValue
+      @init() if newValue is 1
+      return false
+
+    # window["_loccc"] = @$location
+    # $ () =>
+    #   @$iElement = $ @$element
+    #   @init()
+    #   $(@$element).find "select"
+    #     .dropdown()
     # @init()
 
+
+
   card_hover: ($event, card) ->
-    # console.log @$scope
     @$scope.cards_first.card_hover = if $event.type is "mouseover" then card else ""
     # @$scope.$apply() if not @$scope.$$phase
 
@@ -35,14 +42,23 @@ class firstStepController
         .set.value v
 
   update: ->
+    # ng-selected="$storage.strgData.aims==key"
+    _dropdown = @$iElement.find ".ui.dropdown"
+      .dropdown
+        onChange: (value, text, $selectedItem) =>
+          @$scope.$storage.strgData.aims = value
 
-    @$iElement.find ".ui.dropdown"
-      .dropdown()
-    @rangeElement = @$iElement.find ".ui.range"
+    if @$scope.$storage.strgData.aims
+      @$timeout =>
+        _dropdown.data "module-dropdown"
+          .set.selected @$scope.$storage.strgData.aims
+      # .set.value @$scope.$storage.strgData.aims
+
+    @$iElement.find ".ui.range"
       .range
         min: @val_range.min
         max: @val_range.max
-        start: 5000
+        start: @$scope.$storage.strgData.amount
         step: 100
         smooth: on
         name         : 'AmountRange',
@@ -50,6 +66,7 @@ class firstStepController
         onChange: (v, meta) =>
           # @chgAmount v, on
           @$timeout =>
+            @$scope.$storage.strgData.amount = v
             _el = @$iElement.find("[name='amount']")
             _el = angular.element _el if _el.length
             # console.log "onMove", v, meta
@@ -65,7 +82,7 @@ class firstStepController
             identifier: "aims"
             rules: [
               type: "empty"
-              message: "Выберите цель кредита"
+              prompt: "Выберите цель кредита"
             ]
           amount:
             identifier: "amount"
@@ -75,28 +92,22 @@ class firstStepController
             ]
         onSuccess: (e, f) =>
           @$scope.main.loading = on
-          @$scope.main.currentStep = 2
+          @$location.path "/s2"
+          # @$scope.main.currentStep = 2
           return false
 
     @$scope.main.loading = off
 
   init: ->
-
     # delete @$http.defaults.headers.common['X-Requested-With']
-
     params =
       data: "aims"
-    trustedUrl = @$sceDelegate.trustAs @$sce.RESOURCE_URL, @$rootScope.settings.apiUrl
+    trustedUrl = @$sceDelegate.trustAs @$sce.RESOURCE_URL, "#{@$rootScope.settings.api.url}#{@$rootScope.settings.api.command.get}"
     @$http.jsonp trustedUrl,
       params: params
-    .then (data) =>
-      data = data.data
+    .then (responce) =>
+      data = responce.data
       if data.result is 'success' and data.listId is 'aims'
-        @$scope.dataAims = data.data
-      else
-        @$scope.dataAims = @$scope.defAims
+        @data.aims = data.data
       @update()
-    , (data, status, headers, config) =>
-
-      @$scope.dataAims = @$scope.defAims
-      @update()
+    , (data, status, headers, config) => @update()

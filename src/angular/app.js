@@ -2,21 +2,53 @@
 var financeAppController;
 
 financeAppController = (function() {
-  function financeAppController($http, $scope, $storage, $location) {
-    this.$http = $http;
+  function financeAppController($rootScope, $scope, $localStorage, $location, $window) {
+    this.$rootScope = $rootScope;
     this.$scope = $scope;
-    this.$storage = $storage;
     this.$location = $location;
+    this.$window = $window;
+    this.$scope.$storage = this.$storage = $localStorage.$default({
+      strgData: {
+        amount: 5000
+      }
+    });
     this.loading = true;
-    this.form_data = {
-      aims: 0,
-      amount: 0
-    };
     this.currentStep = 1;
     this.maxStep = 3;
+    this.$window.addEventListener("eventWidgetStep1", function(e) {
+      return console.log(e);
+    });
+    this.$window.addEventListener("eventWidgetStep2", function(e) {
+      return console.log(e);
+    });
+    this.$window.addEventListener("eventWidgetStep3", function(e) {
+      return console.log(e);
+    });
+    this.$window.addEventListener("eventWidgetSuccess", function(e) {
+      return console.log(e);
+    });
+    this.$window.addEventListener("eventWidgetError", function(e) {
+      return console.log(e);
+    });
     this.$scope.$on('$locationChangeStart', (function(_this) {
       return function(e, newUrl, oldUrl, newState, oldState) {
-        return console.log(e, newUrl, oldUrl, newState, oldState, _this.$location.path());
+        var _currentNameStep, fNameStep, fNumStep, regNameStep, regNumStep;
+        regNumStep = new RegExp(/\d$/);
+        regNameStep = new RegExp(/\w+\d?$/);
+        fNumStep = regNumStep.exec(_this.$location.path());
+        fNameStep = regNameStep.exec(_this.$location.path());
+        _this.currentStep = (fNumStep != null ? fNumStep.length : void 0) ? fNumStep[0] : 1;
+        _currentNameStep = (fNameStep != null ? fNameStep.length : void 0) ? fNameStep[0] : null;
+        if (_currentNameStep !== "request") {
+          _this.sendEvent(_currentNameStep);
+        }
+        if (_currentNameStep === "request") {
+          _this.currentStep = _currentNameStep;
+        }
+        if (!_this.$scope.$$phase) {
+          _this.$scope.$apply();
+        }
+        return console.log(_this.$location.path(), _this.currentStep, _currentNameStep);
       };
     })(this));
     $(function() {
@@ -42,6 +74,12 @@ financeAppController = (function() {
 
   financeAppController.prototype.titleStep = function() {
     return "Шаг " + this.currentStep + " из " + this.maxStep;
+  };
+
+  financeAppController.prototype.sendEvent = function(evnt) {
+    console.log(evnt);
+    evnt = Object.get(this.$rootScope.settings.events, evnt);
+    return this.$window.dispatchEvent(evnt);
   };
 
   return financeAppController;

@@ -2,43 +2,202 @@
 var threeStepController;
 
 threeStepController = (function() {
-  function threeStepController($http, $scope, $rootScope, $sce, $window, $element, $sceDelegate, $filter, $timeout) {
+  function threeStepController($http, $scope, $rootScope, $sce, $location, $element, $sceDelegate, $filter, $timeout) {
     this.$http = $http;
     this.$scope = $scope;
     this.$rootScope = $rootScope;
     this.$sce = $sce;
-    this.$window = $window;
+    this.$location = $location;
     this.$element = $element;
     this.$sceDelegate = $sceDelegate;
     this.$filter = $filter;
     this.$timeout = $timeout;
-    this.form_data = {};
-    this.$scope.dataEmployments = [];
+    this.data = {
+      cities: {},
+      employments: {}
+    };
     this.$scope.$watch((function(_this) {
       return function(newValue, oldValue, scope) {
         return _this.$scope.main.currentStep;
       };
     })(this), (function(_this) {
       return function(newValue, oldValue, scope) {
+        _this.$iElement = $(_this.$element);
+        newValue = parseInt(newValue);
         if (newValue === 3) {
-          _this.init();
+          _this.init("cities", function(responce) {
+            if (responce && responce.result === 'success') {
+              this.data.cities = responce.data;
+            }
+            return this.init("employments", function(responce) {
+              if (responce && responce.result === 'success') {
+                return this.data.employments = responce.data;
+              }
+            });
+          });
         }
         return false;
       };
     })(this));
+    this.$scope.$watch((function(_this) {
+      return function(newValue, oldValue, scope) {
+        return _this.data;
+      };
+    })(this), (function(_this) {
+      return function(newValue, oldValue, scope) {
+        if (Object.size(_this.data.cities) && Object.size(_this.data.employments)) {
+          return _this.update();
+        }
+      };
+    })(this), true);
   }
 
   threeStepController.prototype.card_hover = function($event, card) {
     return this.$scope.cards_three.card_hover = $event.type === "mouseover" ? card : "";
   };
 
-  threeStepController.prototype.init = function() {
-    this.$scope.main.loading = false;
-    return this.initMask();
+  threeStepController.prototype.update = function() {
+    var _checkbox_noinn, _dropdown_city, _dropdown_employment;
+    _dropdown_city = this.$iElement.find(".ui.dropdown.city").dropdown({
+      allowAdditions: true,
+      onChange: (function(_this) {
+        return function(value, text, $selectedItem) {
+          _this.$scope.$storage.strgData.city = text;
+          return _this.$scope.$storage.strgData.city_val = value;
+        };
+      })(this)
+    });
+    _dropdown_employment = this.$iElement.find(".ui.dropdown.employment").dropdown({
+      onChange: (function(_this) {
+        return function(value, text, $selectedItem) {
+          return _this.$scope.$storage.strgData.employment = value;
+        };
+      })(this)
+    });
+    _checkbox_noinn = this.$iElement.find(".ui.checkbox.noinn").checkbox().first().checkbox({
+      onChecked: (function(_this) {
+        return function() {
+          return _this.chngMsg("remove");
+        };
+      })(this),
+      onUnchecked: (function(_this) {
+        return function() {
+          return _this.chngMsg("add");
+        };
+      })(this)
+    });
+    if (this.$scope.$storage.strgData.city_val) {
+      this.$timeout((function(_this) {
+        return function() {
+          return _dropdown_city.data("module-dropdown").set.selected(_this.$scope.$storage.strgData.city);
+        };
+      })(this));
+    }
+    if (this.$scope.$storage.strgData.employment) {
+      this.$timeout((function(_this) {
+        return function() {
+          return _dropdown_employment.data("module-dropdown").set.selected(_this.$scope.$storage.strgData.employment);
+        };
+      })(this));
+    }
+    $(this.$element).find("form").form({
+      inline: true,
+      on: "blur",
+      fields: {
+        employment: {
+          identifier: "employment",
+          rules: [
+            {
+              type: "empty",
+              prompt: "Выберите трудоустройство"
+            }
+          ]
+        },
+        city: {
+          identifier: "city",
+          rules: [
+            {
+              type: "empty",
+              prompt: "Введите ваш город"
+            }
+          ]
+        }
+      },
+      onSuccess: (function(_this) {
+        return function(e, f) {
+          _this.$scope.main.loading = true;
+          return false;
+        };
+      })(this)
+    });
+    this.chngMsg("add");
+    return this.$scope.main.loading = false;
   };
 
-  threeStepController.prototype.initMask = function() {
-    return this.$window.dispatchEvent(this.$rootScope.settings.events.eventWidgetStep3);
+  threeStepController.prototype.chngMsg = function(comm) {
+    var _checkbox, _form;
+    _form = $(this.$element).find("form");
+    _checkbox = this.$iElement.find(".ui.button.submit");
+    if (comm === "add") {
+      _form.form("add rule", "inn", {
+        rules: [
+          {
+            type: "integer[10]",
+            prompt: "Неправильный ИНН"
+          }
+        ]
+      });
+      return _checkbox.popup({
+        transition: "horizontal flip",
+        position: 'right center',
+        target: '#inn',
+        content: 'Без ИНН шансы на получение кредита значительно уменьшаются. Часть банков не будет рассматривать заявку, если отправить её без ИНН.'
+      });
+    } else {
+      _form.form("remove fields", ["inn"]);
+      _form.form("validate field", "inn");
+      return _checkbox.popup("destroy");
+    }
+  };
+
+  threeStepController.prototype.init = function(type, fn) {
+    var params, trustedUrl;
+    this.fn = fn;
+    if (type) {
+      params = {
+        data: type
+      };
+      trustedUrl = this.$sceDelegate.trustAs(this.$sce.RESOURCE_URL, "" + this.$rootScope.settings.api.url + this.$rootScope.settings.api.command.get);
+      return this.$http.jsonp(trustedUrl, {
+        params: params
+      }).then((function(_this) {
+        return function(responce) {
+          return typeof _this.fn === "function" ? _this.fn(responce.data, function(responce) {
+            return typeof _this.fn === "function" ? _this.fn(responce.data) : void 0;
+          }) : void 0;
+        };
+      })(this));
+    }
+  };
+
+  threeStepController.prototype.post = function(type, fn) {
+    var params, trustedUrl;
+    this.fn = fn;
+    if (type) {
+      params = {
+        data: type
+      };
+      trustedUrl = this.$sceDelegate.trustAs(this.$sce.RESOURCE_URL, "" + this.$rootScope.settings.api.url + this.$rootScope.settings.api.command.get);
+      return this.$http.jsonp(trustedUrl, {
+        params: params
+      }).then((function(_this) {
+        return function(responce) {
+          return typeof _this.fn === "function" ? _this.fn(responce.data, function(responce) {
+            return typeof _this.fn === "function" ? _this.fn(responce.data) : void 0;
+          }) : void 0;
+        };
+      })(this));
+    }
   };
 
   return threeStepController;

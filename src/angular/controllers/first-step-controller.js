@@ -2,30 +2,35 @@
 var firstStepController;
 
 firstStepController = (function() {
-  function firstStepController($http, $scope, $rootScope, $sce, $window, $element, $sceDelegate, $filter, $timeout) {
+  function firstStepController($http, $scope, $rootScope, $sce, $location, $element, $sceDelegate, $filter, $timeout) {
     this.$http = $http;
     this.$scope = $scope;
     this.$rootScope = $rootScope;
     this.$sce = $sce;
-    this.$window = $window;
+    this.$location = $location;
     this.$element = $element;
     this.$sceDelegate = $sceDelegate;
     this.$filter = $filter;
     this.$timeout = $timeout;
-    this.$scope.amount = 0;
-    this.$scope.defAims = {
-      21: "Деньги до зарплаты",
-      22: "Деньги после зарплаты",
-      23: "Деньги до и после зарплаты"
+    this.data = {
+      aims: {}
     };
     this.val_range = {
       min: 200,
       max: 50000
     };
-    $((function(_this) {
-      return function() {
+    this.$scope.$watch((function(_this) {
+      return function(newValue, oldValue, scope) {
+        return _this.$scope.main.currentStep;
+      };
+    })(this), (function(_this) {
+      return function(newValue, oldValue, scope) {
         _this.$iElement = $(_this.$element);
-        return _this.init();
+        newValue = parseInt(newValue);
+        if (newValue === 1) {
+          _this.init();
+        }
+        return false;
       };
     })(this));
   }
@@ -55,11 +60,25 @@ firstStepController = (function() {
   };
 
   firstStepController.prototype.update = function() {
-    this.$iElement.find(".ui.dropdown").dropdown();
-    this.rangeElement = this.$iElement.find(".ui.range").range({
+    var _dropdown;
+    _dropdown = this.$iElement.find(".ui.dropdown").dropdown({
+      onChange: (function(_this) {
+        return function(value, text, $selectedItem) {
+          return _this.$scope.$storage.strgData.aims = value;
+        };
+      })(this)
+    });
+    if (this.$scope.$storage.strgData.aims) {
+      this.$timeout((function(_this) {
+        return function() {
+          return _dropdown.data("module-dropdown").set.selected(_this.$scope.$storage.strgData.aims);
+        };
+      })(this));
+    }
+    this.$iElement.find(".ui.range").range({
       min: this.val_range.min,
       max: this.val_range.max,
-      start: 5000,
+      start: this.$scope.$storage.strgData.amount,
       step: 100,
       smooth: true,
       name: 'AmountRange',
@@ -68,6 +87,7 @@ firstStepController = (function() {
         return function(v, meta) {
           return _this.$timeout(function() {
             var _el;
+            _this.$scope.$storage.strgData.amount = v;
             _el = _this.$iElement.find("[name='amount']");
             if (_el.length) {
               _el = angular.element(_el);
@@ -89,7 +109,7 @@ firstStepController = (function() {
           rules: [
             {
               type: "empty",
-              message: "Выберите цель кредита"
+              prompt: "Выберите цель кредита"
             }
           ]
         },
@@ -106,7 +126,7 @@ firstStepController = (function() {
       onSuccess: (function(_this) {
         return function(e, f) {
           _this.$scope.main.loading = true;
-          _this.$scope.main.currentStep = 2;
+          _this.$location.path("/s2");
           return false;
         };
       })(this)
@@ -119,22 +139,20 @@ firstStepController = (function() {
     params = {
       data: "aims"
     };
-    trustedUrl = this.$sceDelegate.trustAs(this.$sce.RESOURCE_URL, this.$rootScope.settings.apiUrl);
+    trustedUrl = this.$sceDelegate.trustAs(this.$sce.RESOURCE_URL, "" + this.$rootScope.settings.api.url + this.$rootScope.settings.api.command.get);
     return this.$http.jsonp(trustedUrl, {
       params: params
     }).then((function(_this) {
-      return function(data) {
-        data = data.data;
+      return function(responce) {
+        var data;
+        data = responce.data;
         if (data.result === 'success' && data.listId === 'aims') {
-          _this.$scope.dataAims = data.data;
-        } else {
-          _this.$scope.dataAims = _this.$scope.defAims;
+          _this.data.aims = data.data;
         }
         return _this.update();
       };
     })(this), (function(_this) {
       return function(data, status, headers, config) {
-        _this.$scope.dataAims = _this.$scope.defAims;
         return _this.update();
       };
     })(this));

@@ -4,7 +4,7 @@ angular.module 'finance-directives', ['ngMask']
 
   templateUrl: 'template/form_step1.html'
 
-  controller: ['$http', '$scope', '$rootScope', '$sce', '$window', '$element', '$sceDelegate', '$filter', '$timeout', firstStepController]
+  controller: ['$http', '$scope', '$rootScope', '$sce', '$location', '$element', '$sceDelegate', '$filter', '$timeout', firstStepController]
 
   controllerAs: 'form_first'
 
@@ -13,7 +13,7 @@ angular.module 'finance-directives', ['ngMask']
 
   templateUrl: 'template/form_step2.html'
 
-  controller: ['$http', '$scope', '$rootScope', '$sce', '$window', '$element', '$sceDelegate', '$filter', '$timeout', twoStepController]
+  controller: ['$http', '$scope', '$rootScope', '$sce', '$location', '$element', '$sceDelegate', '$filter', '$timeout', twoStepController]
 
   controllerAs: 'form_two'
 
@@ -22,7 +22,7 @@ angular.module 'finance-directives', ['ngMask']
 
   templateUrl: 'template/form_step3.html'
 
-  controller: ['$http', '$scope', '$rootScope', '$sce', '$window', '$element', '$sceDelegate', '$filter', '$timeout', threeStepController]
+  controller: ['$http', '$scope', '$rootScope', '$sce', '$location', '$element', '$sceDelegate', '$filter', '$timeout', threeStepController]
 
   controllerAs: 'form_three'
 

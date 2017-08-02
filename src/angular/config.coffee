@@ -1,67 +1,53 @@
 angular.module 'financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ngStorage']
 .config [
   "$sceDelegateProvider",
-  "$routeProvider",
+  "$localStorageProvider",
   "$locationProvider",
-  ($sceDelegateProvider, $routeProvider, $locationProvider) ->
-    # $routeProvider
-    # .when "/", controller: financeAppController
-    # .when "/s2", controller: financeAppController
-    # .when "/s3", controller: financeAppController
-
-    # $httpProvider.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
-    # $httpProvider.defaults.headers.get['Content-Type'] = 'application/json;charset=utf-8'
-
-    # $httpProvider.defaults.useXDomain = true
-    # $httpProvider.defaults.withCredentials = true
-    # delete $httpProvider.defaults.headers.common["X-Requested-With"]
-    # $httpProvider.defaults.headers.common["Accept"] = "application/json"
-    # $httpProvider.defaults.headers.common["Content-Type"] = "application/json; charset=UTF-8"
-
+  ($sceDelegateProvider, $localStorageProvider, $locationProvider) ->
     $sceDelegateProvider.resourceUrlWhitelist ["self", "http://credits*.finance.ua/api/**"]
-    # console.log
     $locationProvider.html5Mode on
+    $localStorageProvider.setKeyPrefix "financeStorage-"
+    strgTime = $localStorageProvider.get "strgTime"
+    loclTime = new Date()
+    if strgTime
+      _d = new Date strgTime?.time
+      $localStorageProvider.remove "strgData" if loclTime.getTime() > _d.getTime()
+    else
+      _d = loclTime.getDateAdd loclTime, "day", 1
+        .toISOString()
+      $localStorageProvider.remove "strgData" if strgData
+    $localStorageProvider.set "strgTime", time: _d
   ]
 .run [
   "$rootScope",
   "$http",
-  ($rootScope, $http) ->
+  "$location",
+  ($rootScope, $http, $location) ->
+    $location.path "/s1"
+
     $http.defaults.useXDomain = true
-    # $http.defaults.withCredentials = true
     $http.defaults.headers.common["Accept"] = "application/json"
     $http.defaults.headers.common["Content-Type"] = "application/json; charset=UTF-8"
     $http.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
+
     paramsEvent =
       detail:
         time: new Date()
       bubbles: on
       cancelable: on
     $rootScope.settings =
-      apiUrl: "http://credits.finance.ua/api/list"
-      stateApp:
-        state1: "s1"
-        state1: "s2"
-        state1: "s3"
-        request: "request"
+      api:
+        url: "http://credits.finance.ua/api/"
+        command:
+          get: "list"
+          put: "submit"
       events:
-        eventWidgetStep1: new CustomEvent "eventWidgetStep2", paramsEvent
-        eventWidgetStep2: new CustomEvent "eventWidgetStep2", paramsEvent
-        eventWidgetStep3: new CustomEvent "eventWidgetStep3", paramsEvent
-        eventWidgetSuccess: new CustomEvent "eventWidgetSuccess", paramsEvent
-        eventWidgetError: new CustomEvent "eventWidgetError", paramsEvent
+        s1: new CustomEvent "eventWidgetStep1", paramsEvent
+        s2: new CustomEvent "eventWidgetStep2", paramsEvent
+        s3: new CustomEvent "eventWidgetStep3", paramsEvent
+        request:
+          success: new CustomEvent "eventWidgetSuccess", paramsEvent
+          error: new CustomEvent "eventWidgetError", paramsEvent
   ]
 
-.controller "financeAppController", ['$http', '$scope', '$sessionStorage', '$location', financeAppController]
-
-
-angular.element window
-  .on 'eventWidgetStep2', (e) ->
-    console.log e
-
-
-$ window
-  .on 'eventWidgetStep2', (e) ->
-    console.log "Jquery", e
-
-window.addEventListener 'eventWidgetStep2', (e) ->
-    console.log "Native", e
+.controller "financeAppController", ['$rootScope', '$scope', '$localStorage', '$location', '$window', financeAppController]

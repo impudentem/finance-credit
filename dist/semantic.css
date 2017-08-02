@@ -11980,6 +11980,8 @@ i.icon {
   font-variant: normal;
   text-transform: none;
   line-height: 1em;
+  margin-top: -10%;
+  margin-left: -10%;
   font-size: 120%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -17417,6 +17419,19 @@ ol.ui.horizontal.list li:before,
   transition: -webkit-box-shadow 0.1s ease;
   transition: box-shadow 0.1s ease;
   transition: box-shadow 0.1s ease, -webkit-box-shadow 0.1s ease;
+  -webkit-transition: opacity 0.4s ease, -webkit-transform 0.4s ease, -webkit-box-shadow 0.1s ease;
+  transition: opacity 0.4s ease, -webkit-transform 0.4s ease, -webkit-box-shadow 0.1s ease;
+  transition: transform 0.4s ease, opacity 0.4s ease, box-shadow 0.1s ease;
+  transition: transform 0.4s ease, opacity 0.4s ease, box-shadow 0.1s ease, -webkit-transform 0.4s ease, -webkit-box-shadow 0.1s ease;
+  -webkit-transform: translate(0px, 70px) scale(0.9, 0.9);
+  transform: translate(0px, 70px) scale(0.9, 0.9);
+  opacity: 0;
+}
+
+.form-card.ui.segment.show {
+  opacity: 1;
+  -webkit-transform: translate(0px, 0px) scale(1, 1);
+  transform: translate(0px, 0px) scale(1, 1);
 }
 
 .form-card.ui.segment.shadow {
@@ -19496,6 +19511,30 @@ ol.ui.horizontal.list li:before,
 
 .two-step.ui.form .field {
   margin: 0 0 .7857em;
+}
+
+.ui.form .field:not(.error) ::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.ui.form .field:not(.error) :-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.ui.form .field:not(.error) ::-moz-placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.ui.form .field:not(.error) :focus::-webkit-input-placeholder {
+  color: #c8c8c8;
+}
+
+.ui.form .field:not(.error) :focus:-ms-input-placeholder {
+  color: #c8c8c8 !important;
+}
+
+.ui.form .field:not(.error) :focus::-moz-placeholder {
+  color: #c8c8c8;
 }
 /*!
  * # Semantic UI 2.2.11 - Grid
@@ -32345,6 +32384,12 @@ i.icon.arrow-input:before,
   background: #FF9C0F;
   color: #fff;
   font-weight: normal;
+}
+
+.ui.search.dropdown.active > input.search,
+.ui.search.dropdown.visible > input.search {
+  font-size: 1.2857rem;
+  line-height: 1.7142rem;
 }
 /*!
  * # Semantic UI 2.2.11 - Video

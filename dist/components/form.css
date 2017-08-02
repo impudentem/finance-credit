@@ -1084,3 +1084,21 @@
 .two-step.ui.form .field {
   margin: 0 0 .7857em;
 }
+.ui.form .field:not(.error) ::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+.ui.form .field:not(.error) :-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.4) !important;
+}
+.ui.form .field:not(.error) ::-moz-placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+.ui.form .field:not(.error) :focus::-webkit-input-placeholder {
+  color: #c8c8c8;
+}
+.ui.form .field:not(.error) :focus:-ms-input-placeholder {
+  color: #c8c8c8 !important;
+}
+.ui.form .field:not(.error) :focus::-moz-placeholder {
+  color: #c8c8c8;
+}

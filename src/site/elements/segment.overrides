@@ -11,6 +11,13 @@
   box-shadow: 0 1px 1px 0 rgba(0,0,0,0.08);
   border: none;
   transition: box-shadow .1s ease;
+  transition: transform .4s ease, opacity .4s ease, box-shadow .1s ease;
+  transform: translate(0px, 70px) scale(.9, .9);
+  opacity: 0;
+}
+.form-card.ui.segment.show {
+  opacity: 1;
+  transform: translate(0px, 0px) scale(1, 1);
 }
 .form-card.ui.segment.shadow {
   box-shadow: 0 16px 32px 0 rgba(0,0,0,0.16);

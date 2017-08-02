@@ -113,3 +113,8 @@ i.icon.arrow-input:before, .ui.selection.dropdown>.arrow-input.icon:before {
   color: #fff;
   font-weight: normal;
 }
+
+.ui.search.dropdown.active>input.search, .ui.search.dropdown.visible>input.search {
+  font-size: 1.2857rem;
+  line-height: 1.7142rem;
+}

@@ -3,21 +3,21 @@ angular.module('finance-directives', ['ngMask']).directive('firstStep', function
   return {
     restrict: 'E',
     templateUrl: 'template/form_step1.html',
-    controller: ['$http', '$scope', '$rootScope', '$sce', '$window', '$element', '$sceDelegate', '$filter', '$timeout', firstStepController],
+    controller: ['$http', '$scope', '$rootScope', '$sce', '$location', '$element', '$sceDelegate', '$filter', '$timeout', firstStepController],
     controllerAs: 'form_first'
   };
 }).directive('twoStep', function() {
   return {
     restrict: 'E',
     templateUrl: 'template/form_step2.html',
-    controller: ['$http', '$scope', '$rootScope', '$sce', '$window', '$element', '$sceDelegate', '$filter', '$timeout', twoStepController],
+    controller: ['$http', '$scope', '$rootScope', '$sce', '$location', '$element', '$sceDelegate', '$filter', '$timeout', twoStepController],
     controllerAs: 'form_two'
   };
 }).directive('threeStep', function() {
   return {
     restrict: 'E',
     templateUrl: 'template/form_step3.html',
-    controller: ['$http', '$scope', '$rootScope', '$sce', '$window', '$element', '$sceDelegate', '$filter', '$timeout', threeStepController],
+    controller: ['$http', '$scope', '$rootScope', '$sce', '$location', '$element', '$sceDelegate', '$filter', '$timeout', threeStepController],
     controllerAs: 'form_three'
   };
 }).directive('firstCardsStep', function() {

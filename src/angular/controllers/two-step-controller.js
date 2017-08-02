@@ -2,23 +2,25 @@
 var twoStepController;
 
 twoStepController = (function() {
-  function twoStepController($http, $scope, $rootScope, $sce, $window, $element, $sceDelegate, $filter, $timeout) {
+  function twoStepController($http, $scope, $rootScope, $sce, $location, $element, $sceDelegate, $filter, $timeout) {
     this.$http = $http;
     this.$scope = $scope;
     this.$rootScope = $rootScope;
     this.$sce = $sce;
-    this.$window = $window;
+    this.$location = $location;
     this.$element = $element;
     this.$sceDelegate = $sceDelegate;
     this.$filter = $filter;
     this.$timeout = $timeout;
-    this.form_data = {};
+    this.calendar = {};
     this.$scope.$watch((function(_this) {
       return function(newValue, oldValue, scope) {
         return _this.$scope.main.currentStep;
       };
     })(this), (function(_this) {
       return function(newValue, oldValue, scope) {
+        _this.$iElement = $(_this.$element);
+        newValue = parseInt(newValue);
         if (newValue === 2) {
           _this.init();
         }
@@ -39,53 +41,42 @@ twoStepController = (function() {
     minDate.setFullYear(minDate.getFullYear() - 90);
     this.initCal = (function(_this) {
       return function() {
-        var _cal;
-        _cal = $(".ui.calendar");
-        if (_cal.length) {
-          _cal.calendar({
-            type: "date",
-            firstDayOfWeek: 1,
-            ampm: false,
-            minDate: minDate,
-            maxDate: maxDate,
-            disableMinute: true,
-            className: {
-              prevIcon: "open icon left",
-              nextIcon: "open icon right"
-            },
-            text: {
-              days: ['В', 'П', 'В', 'С', 'Ч', 'П', 'С'],
-              months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-              monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-              today: 'Сегодня',
-              now: 'Сейчас',
-              am: 'AM',
-              pm: 'PM'
-            },
-            onChange: function(date, text, mode) {
-              _this.$scope.form_two.form_data.bday = text;
-              if (!_this.$scope.$$phase) {
-                return _this.$scope.$apply();
-              }
-            },
-            formatter: {
-              date: function(date, settings) {
-                if (!date) {
-                  return "";
-                }
-                return date.toLocaleString().split(',')[0];
-              }
+        _this.calendar = _this.$iElement.find(".ui.calendar").calendar({
+          type: "date",
+          firstDayOfWeek: 1,
+          ampm: false,
+          minDate: minDate,
+          maxDate: maxDate,
+          disableMinute: true,
+          className: {
+            prevIcon: "open icon left",
+            nextIcon: "open icon right"
+          },
+          text: {
+            days: ['В', 'П', 'В', 'С', 'Ч', 'П', 'С'],
+            months: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+            monthsShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+            today: 'Сегодня',
+            now: 'Сейчас',
+            am: 'AM',
+            pm: 'PM'
+          },
+          onChange: function(date, text, mode) {
+            _this.$scope.$storage.strgData.bday = text;
+            if (!_this.$scope.$$phase) {
+              return _this.$scope.$apply();
             }
-          });
-          _this.$scope.form_two.form_data.calObj = _cal;
-          window.__calend = _cal;
-          _this.$scope.main.loading = false;
-          return _this.initMask();
-        } else {
-          return _this.$timeout(function() {
-            return _this.initCal();
-          }, 1000);
-        }
+          },
+          formatter: {
+            date: function(date, settings) {
+              if (!date) {
+                return "";
+              }
+              return date.toLocaleString().split(',')[0];
+            }
+          }
+        });
+        return _this.initMask();
       };
     })(this);
     return this.$timeout((function(_this) {
@@ -102,7 +93,7 @@ twoStepController = (function() {
       greedy: false
     };
     $('input[name="phone"]').inputmask(param);
-    this.$window.dispatchEvent(this.$rootScope.settings.events.eventWidgetStep2);
+    this.$scope.main.loading = false;
     return $(this.$element).find("form").form({
       inline: true,
       on: "blur",
@@ -147,8 +138,7 @@ twoStepController = (function() {
       onSuccess: (function(_this) {
         return function(e, f) {
           _this.$scope.main.loading = true;
-          _this.$scope.main.currentStep = 3;
-          console.log(e, f);
+          _this.$location.path("/s3");
           return false;
         };
       })(this)

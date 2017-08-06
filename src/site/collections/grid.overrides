@@ -15,20 +15,63 @@
 // .ui.main .ui.grid>.column:not(.row):last-child, .ui.main .ui.grid>.row>.column:last-child {
 //     padding-right: 0;
 // }
-@media only screen and (min-width: 992px) {
-  .ui.main .ui.grid>[class*="wide computer"].column:not(.row):first-child {
-    padding-left: 0;
-  }
-  .ui.main .ui.grid>[class*="wide computer"].column:not(.row):last-child {
-    padding-right: 0;
-  }
+// @media only screen and (min-width: 992px) {
+//   .ui.main .ui.grid>[class*="wide computer"].column:not(.row):first-child {
+//     padding-left: 0;
+//   }
+//   .ui.main .ui.grid>[class*="wide computer"].column:not(.row):last-child {
+//     padding-right: 0;
+//   }
+// }
+
+// .ui.clients.ui.grid>.twelve.column:not(.row) {
+//   padding-top: 2.7rem;
+// }
+
+
+@media only screen and (max-width: 999px) {
+    .ui[class*="tablet stackable"].container .ui.grid {
+        margin-left: 1em!important;
+        margin-right: 1em!important;
+        // padding-left: .5714rem;
+        // padding-right: .5714rem;
+        // width: calc(~"100% + 3rem");
+    }
+
+
+    // .ui.grid>.column:not(.row), .ui[class*="tablet stackable"].container.ui.grid>.column:not(.row), .ui[class*="tablet stackable"].container.ui.grid>.row>.column {
+    //     padding-left: 1rem;
+    //     padding-right: 1rem;
+    //     vertical-align: top;
+    //     margin-left: -0.5714rem;
+    //     margin-right: -0.5714rem;
+    // }
 }
 
-.ui.clients .four.column {
-  padding-top: 0;
-  padding-right: 0;
+@media only screen and (min-width: 1000px) {
+  .ui.stackable.grid {
+    width: 100%;
+  }
 }
+@media only screen and (max-width: 768px) {
+  .ui.clients.ui.grid>.twelve.column:not(.row) {
+    padding-top: 1rem;
+    padding-left: 0rem;
+    padding-right: 0rem;
+    padding-bottom: 1rem;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+  }
+  .ui.clients.ui.grid>.twelve.column.slider:not(.row) {
+    padding: 2rem 1rem;
+    margin: 0rem;
+  }
 
-.ui.clients.ui.grid>.twelve.column:not(.row) {
-  padding-top: 2.7rem;
+  .ui.privilege.container .ui[class*="mobile stackable"].container .ui.grid {
+    margin-left: 0rem!important;
+    margin-right: 0rem!important;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
 }

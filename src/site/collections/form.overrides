@@ -11,6 +11,19 @@
   margin: 0 0 .7857em;
 }
 
+.ui.form button {
+  margin: .7857em 0 0;
+  line-height: 1.2em;
+}
+.two-step.ui.form button {
+  width: 45%;
+}
+
+.two-step.ui.form .field .ui.checkbox {
+  margin-top: .5em;
+}
+
+
 .ui.form .field:not(.error) ::-webkit-input-placeholder {
   color: rgba(0,0,0,.4);
 }
@@ -32,4 +45,79 @@
 
 .ui.form .field:not(.error) :focus::-moz-placeholder {
   color: #c8c8c8;
+}
+
+.ui.form .field.amount {
+      position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: row;
+    vertical-align: middle;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: center;
+    justify-content: space-between;
+}
+
+
+
+.ui.form .field .prompt.label {
+  color: #FB5F43!important;
+  position: absolute;
+  border: none!important;
+  background: transparent !important;
+  font-size: 12px;
+  font-weight: normal;
+  right: 0;
+  bottom: -1.3rem;
+  padding: 0;
+}
+.ui.form .field .ui.pointing.label:before {
+  display: none;
+  content: none;
+}
+
+.ui.form .field.error .ui.dropdown, .ui.form .fields.error .field .ui.dropdown {
+  border-color: #FB5C3F!important;
+  background: #F5F5F5;
+  color: rgba(0,0,0,.4);
+}
+.ui.form .field.error .ui.dropdown, .ui.form .field.error .ui.dropdown .item, .ui.form .field.error .ui.dropdown .text, .ui.form .fields.error .field .ui.dropdown, .ui.form .fields.error .field .ui.dropdown .item {
+  background: #F5F5F5;
+  color: rgba(0,0,0,.4);
+}
+
+.ui.form .field.error input:not([type]), .ui.form .field.error input[type=date], .ui.form .field.error input[type=datetime-local], .ui.form .field.error input[type=email], .ui.form .field.error input[type=file], .ui.form .field.error input[type=number], .ui.form .field.error input[type=password], .ui.form .field.error input[type=search], .ui.form .field.error input[type=tel], .ui.form .field.error input[type=text], .ui.form .field.error input[type=time], .ui.form .field.error input[type=url], .ui.form .field.error select, .ui.form .field.error textarea, .ui.form .fields.error .field input:not([type]), .ui.form .fields.error .field input[type=date], .ui.form .fields.error .field input[type=datetime-local], .ui.form .fields.error .field input[type=email], .ui.form .fields.error .field input[type=file], .ui.form .fields.error .field input[type=number], .ui.form .fields.error .field input[type=password], .ui.form .fields.error .field input[type=search], .ui.form .fields.error .field input[type=tel], .ui.form .fields.error .field input[type=text], .ui.form .fields.error .field input[type=time], .ui.form .fields.error .field input[type=url], .ui.form .fields.error .field select, .ui.form .fields.error .field textarea {
+  border-color: #FB5C3F!important;
+  background: #F5F5F5;
+  color: rgba(0,0,0,.4);
+}
+
+.ui.form .field.error input:not([type]):focus, .ui.form .field.error input[type=date]:focus, .ui.form .field.error input[type=datetime-local]:focus, .ui.form .field.error input[type=email]:focus, .ui.form .field.error input[type=file]:focus, .ui.form .field.error input[type=number]:focus, .ui.form .field.error input[type=password]:focus, .ui.form .field.error input[type=search]:focus, .ui.form .field.error input[type=tel]:focus, .ui.form .field.error input[type=text]:focus, .ui.form .field.error input[type=time]:focus, .ui.form .field.error input[type=url]:focus, .ui.form .field.error select:focus, .ui.form .field.error textarea:focus {
+  border-color: #FB5C3F!important;
+  background: #F5F5F5;
+  color: rgba(0,0,0,.4);
+}
+
+.ui.form .error :focus::-webkit-input-placeholder, .ui.form .error ::-webkit-input-placeholder {
+  color: rgba(0,0,0,.4);
+}
+
+.ui.form .field {
+  position: relative;
+}
+
+.ui.form .field>.selection.dropdown>.dropdown.icon {
+  color: #535353;
 }

@@ -1321,6 +1321,23 @@ a.ui.basic.label:hover {
   display: inline-block;
   line-height: 2.1857em;
   font-size: 1.4285em;
+  -ms-flex-item-align: flex-start;
+  align-self: flex-start;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+.ui.form-steps .ui.form .field.amount > label,
+.ui.form-steps .ui.form .field.amount > .labeled.input {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 1 auto;
+  flex: 0 1 auto;
+}
+.ui.form-steps .ui.form .field.amount > .labeled.input {
+  -ms-flex-item-align: flex-end;
+  align-self: flex-end;
+  width: auto;
+  max-width: 50%;
 }
 @media only screen and (max-width: 400px) {
   .ui.form-steps .field.amount .ui.right.input {

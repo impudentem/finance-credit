@@ -1,7 +1,7 @@
 class firstStepController
   constructor: (@$http, @$scope, @$rootScope, @$sce, @$location, @$element, @$sceDelegate, @$filter, @$timeout) ->
     @data =
-      aims: {}
+      aims: {ds:"sdls;dl"}
 
     @val_range =
       min: 200
@@ -54,6 +54,15 @@ class firstStepController
           .set.selected @$scope.$storage.strgData.aims
       # .set.value @$scope.$storage.strgData.aims
 
+
+    @changeAmount = (v) =>
+      @$timeout =>
+        @$scope.$storage.strgData.amount = v
+        _el = @$iElement.find("[name='amount']")
+        _el = angular.element _el if _el.length
+        # console.log "onMove", v, meta
+        _el.val? v
+        _el.triggerHandler? "change"
     @$iElement.find ".ui.range"
       .range
         min: @val_range.min
@@ -63,15 +72,9 @@ class firstStepController
         smooth: on
         name         : 'AmountRange',
         namespace    : 'amountrange',
-        onChange: (v, meta) =>
-          # @chgAmount v, on
-          @$timeout =>
-            @$scope.$storage.strgData.amount = v
-            _el = @$iElement.find("[name='amount']")
-            _el = angular.element _el if _el.length
-            # console.log "onMove", v, meta
-            _el.val? v
-            _el.triggerHandler? "change"
+        onChange: (v, meta) => @changeAmount v
+        onMove  : (v, meta) => @changeAmount v
+
 
     $(@$element).find "form"
       .form

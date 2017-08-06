@@ -26,10 +26,10 @@
   outline: none;
   vertical-align: baseline;
   font-style: normal;
-  min-height: 17px;
+  min-height: 20px;
   font-size: 1rem;
-  line-height: 17px;
-  min-width: 17px;
+  line-height: 20px;
+  min-width: 20px;
 }
 
 /* HTML Checkbox */
@@ -42,8 +42,8 @@
   opacity: 0 !important;
   outline: none;
   z-index: 3;
-  width: 17px;
-  height: 17px;
+  width: 20px;
+  height: 20px;
 }
 
 /*--------------
@@ -64,16 +64,16 @@
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 17px;
-  height: 17px;
+  width: 20px;
+  height: 20px;
   content: '';
   background: #FFFFFF;
-  border-radius: 0.21428571rem;
+  border-radius: 0.14285714rem;
   -webkit-transition: border 0.1s ease, opacity 0.1s ease, -webkit-transform 0.1s ease, -webkit-box-shadow 0.1s ease;
   transition: border 0.1s ease, opacity 0.1s ease, -webkit-transform 0.1s ease, -webkit-box-shadow 0.1s ease;
   transition: border 0.1s ease, opacity 0.1s ease, transform 0.1s ease, box-shadow 0.1s ease;
   transition: border 0.1s ease, opacity 0.1s ease, transform 0.1s ease, box-shadow 0.1s ease, -webkit-transform 0.1s ease, -webkit-box-shadow 0.1s ease;
-  border: 1px solid #D4D4D5;
+  border: 1px solid #9B9B9B;
 }
 
 /*--------------
@@ -86,8 +86,8 @@
   font-size: 14px;
   top: 0px;
   left: 0px;
-  width: 17px;
-  height: 17px;
+  width: 20px;
+  height: 20px;
   text-align: center;
   opacity: 0;
   color: #555555;
@@ -630,3 +630,28 @@
          Site Overrides
 *******************************/
 
+.ui.checkbox input:checked ~ .box:after,
+.ui.checkbox input:checked ~ label:after {
+  color: #767676;
+  font-size: 15px;
+}
+.ui.form .field.error .checkbox:not(.toggle):not(.slider) .box:before,
+.ui.form .field.error .checkbox:not(.toggle):not(.slider) label:before,
+.ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) .box:before,
+.ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) label:before {
+  border-color: #FB5C3F!important;
+  background: #F5F5F5;
+  color: rgba(0, 0, 0, 0.4);
+}
+.ui.form .field.error .checkbox:not(.toggle):not(.slider) .box,
+.ui.form .field.error .checkbox:not(.toggle):not(.slider) label,
+.ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) .box,
+.ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) label {
+  color: rgba(0, 0, 0, 0.4);
+}
+.ui.checkbox input:checked:focus ~ .box:after,
+.ui.checkbox input:checked:focus ~ label:after,
+.ui.checkbox input:not([type=radio]):indeterminate:focus ~ .box:after,
+.ui.checkbox input:not([type=radio]):indeterminate:focus ~ label:after {
+  color: rgba(0, 0, 0, 0.4);
+}

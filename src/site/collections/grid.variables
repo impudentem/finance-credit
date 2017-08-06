@@ -2,4 +2,6 @@
     User Variable Overrides
 *******************************/
 
-@gutterWidth: 4.28rem;
+@gutterWidth: 1.1428rem;
+
+@tabletGutter: 1em;

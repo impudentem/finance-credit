@@ -12,7 +12,10 @@ angular.module 'financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
     loclTime = new Date()
     if strgTime
       _d = new Date strgTime?.time
-      $localStorageProvider.remove "strgData" if loclTime.getTime() > _d.getTime()
+      if loclTime.getTime() > _d.getTime()
+        $localStorageProvider.remove "strgData"
+        _d = loclTime.getDateAdd loclTime, "day", 1
+          .toISOString()
     else
       _d = loclTime.getDateAdd loclTime, "day", 1
         .toISOString()
@@ -31,6 +34,8 @@ angular.module 'financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
     $http.defaults.headers.common["Content-Type"] = "application/json; charset=UTF-8"
     $http.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 
+    $rootScope.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile/i.test navigator.userAgent
+
     paramsEvent =
       detail:
         time: new Date()
@@ -38,7 +43,8 @@ angular.module 'financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
       cancelable: on
     $rootScope.settings =
       api:
-        url: "http://credits.finance.ua/api/"
+        debug : on
+        url   : "http://credits.finance.ua/api/"
         command:
           get: "list"
           put: "submit"

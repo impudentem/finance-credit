@@ -867,57 +867,57 @@
 
 /* Sizing Combinations */
 .ui.form .fields .wide.field {
-  width: 6.25%;
+  width: 8.33333333%;
   padding-left: 0.5em;
   padding-right: 0.5em;
 }
 .ui.form .one.wide.field {
-  width: 6.25% !important;
+  width: 8.33333333% !important;
 }
 .ui.form .two.wide.field {
-  width: 12.5% !important;
+  width: 16.66666667% !important;
 }
 .ui.form .three.wide.field {
-  width: 18.75% !important;
-}
-.ui.form .four.wide.field {
   width: 25% !important;
 }
+.ui.form .four.wide.field {
+  width: 33.33333333% !important;
+}
 .ui.form .five.wide.field {
-  width: 31.25% !important;
+  width: 41.66666667% !important;
 }
 .ui.form .six.wide.field {
-  width: 37.5% !important;
-}
-.ui.form .seven.wide.field {
-  width: 43.75% !important;
-}
-.ui.form .eight.wide.field {
   width: 50% !important;
 }
+.ui.form .seven.wide.field {
+  width: 58.33333333% !important;
+}
+.ui.form .eight.wide.field {
+  width: 66.66666667% !important;
+}
 .ui.form .nine.wide.field {
-  width: 56.25% !important;
-}
-.ui.form .ten.wide.field {
-  width: 62.5% !important;
-}
-.ui.form .eleven.wide.field {
-  width: 68.75% !important;
-}
-.ui.form .twelve.wide.field {
   width: 75% !important;
 }
+.ui.form .ten.wide.field {
+  width: 83.33333333% !important;
+}
+.ui.form .eleven.wide.field {
+  width: 91.66666667% !important;
+}
+.ui.form .twelve.wide.field {
+  width: 100% !important;
+}
 .ui.form .thirteen.wide.field {
-  width: 81.25% !important;
+  width: 108.33333333% !important;
 }
 .ui.form .fourteen.wide.field {
-  width: 87.5% !important;
+  width: 116.66666667% !important;
 }
 .ui.form .fifteen.wide.field {
-  width: 93.75% !important;
+  width: 125% !important;
 }
 .ui.form .sixteen.wide.field {
-  width: 100% !important;
+  width: 133.33333333% !important;
 }
 
 /* Swap to full width on mobile */
@@ -1084,6 +1084,16 @@
 .two-step.ui.form .field {
   margin: 0 0 .7857em;
 }
+.ui.form button {
+  margin: .7857em 0 0;
+  line-height: 1.2em;
+}
+.two-step.ui.form button {
+  width: 45%;
+}
+.two-step.ui.form .field .ui.checkbox {
+  margin-top: .5em;
+}
 .ui.form .field:not(.error) ::-webkit-input-placeholder {
   color: rgba(0, 0, 0, 0.4);
 }
@@ -1101,4 +1111,115 @@
 }
 .ui.form .field:not(.error) :focus::-moz-placeholder {
   color: #c8c8c8;
+}
+.ui.form .field.amount {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: row;
+  vertical-align: middle;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: center;
+  justify-content: space-between;
+}
+.ui.form .field .prompt.label {
+  color: #FB5F43!important;
+  position: absolute;
+  border: none!important;
+  background: transparent !important;
+  font-size: 12px;
+  font-weight: normal;
+  right: 0;
+  bottom: -1.3rem;
+  padding: 0;
+}
+.ui.form .field .ui.pointing.label:before {
+  display: none;
+  content: none;
+}
+.ui.form .field.error .ui.dropdown,
+.ui.form .fields.error .field .ui.dropdown {
+  border-color: #FB5C3F!important;
+  background: #F5F5F5;
+  color: rgba(0, 0, 0, 0.4);
+}
+.ui.form .field.error .ui.dropdown,
+.ui.form .field.error .ui.dropdown .item,
+.ui.form .field.error .ui.dropdown .text,
+.ui.form .fields.error .field .ui.dropdown,
+.ui.form .fields.error .field .ui.dropdown .item {
+  background: #F5F5F5;
+  color: rgba(0, 0, 0, 0.4);
+}
+.ui.form .field.error input:not([type]),
+.ui.form .field.error input[type=date],
+.ui.form .field.error input[type=datetime-local],
+.ui.form .field.error input[type=email],
+.ui.form .field.error input[type=file],
+.ui.form .field.error input[type=number],
+.ui.form .field.error input[type=password],
+.ui.form .field.error input[type=search],
+.ui.form .field.error input[type=tel],
+.ui.form .field.error input[type=text],
+.ui.form .field.error input[type=time],
+.ui.form .field.error input[type=url],
+.ui.form .field.error select,
+.ui.form .field.error textarea,
+.ui.form .fields.error .field input:not([type]),
+.ui.form .fields.error .field input[type=date],
+.ui.form .fields.error .field input[type=datetime-local],
+.ui.form .fields.error .field input[type=email],
+.ui.form .fields.error .field input[type=file],
+.ui.form .fields.error .field input[type=number],
+.ui.form .fields.error .field input[type=password],
+.ui.form .fields.error .field input[type=search],
+.ui.form .fields.error .field input[type=tel],
+.ui.form .fields.error .field input[type=text],
+.ui.form .fields.error .field input[type=time],
+.ui.form .fields.error .field input[type=url],
+.ui.form .fields.error .field select,
+.ui.form .fields.error .field textarea {
+  border-color: #FB5C3F!important;
+  background: #F5F5F5;
+  color: rgba(0, 0, 0, 0.4);
+}
+.ui.form .field.error input:not([type]):focus,
+.ui.form .field.error input[type=date]:focus,
+.ui.form .field.error input[type=datetime-local]:focus,
+.ui.form .field.error input[type=email]:focus,
+.ui.form .field.error input[type=file]:focus,
+.ui.form .field.error input[type=number]:focus,
+.ui.form .field.error input[type=password]:focus,
+.ui.form .field.error input[type=search]:focus,
+.ui.form .field.error input[type=tel]:focus,
+.ui.form .field.error input[type=text]:focus,
+.ui.form .field.error input[type=time]:focus,
+.ui.form .field.error input[type=url]:focus,
+.ui.form .field.error select:focus,
+.ui.form .field.error textarea:focus {
+  border-color: #FB5C3F!important;
+  background: #F5F5F5;
+  color: rgba(0, 0, 0, 0.4);
+}
+.ui.form .error :focus::-webkit-input-placeholder,
+.ui.form .error ::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+.ui.form .field {
+  position: relative;
+}
+.ui.form .field > .selection.dropdown > .dropdown.icon {
+  color: #535353;
 }

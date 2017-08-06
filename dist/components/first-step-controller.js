@@ -13,7 +13,9 @@ firstStepController = (function() {
     this.$filter = $filter;
     this.$timeout = $timeout;
     this.data = {
-      aims: {}
+      aims: {
+        ds: "sdls;dl"
+      }
     };
     this.val_range = {
       min: 200,
@@ -75,6 +77,22 @@ firstStepController = (function() {
         };
       })(this));
     }
+    this.changeAmount = (function(_this) {
+      return function(v) {
+        return _this.$timeout(function() {
+          var _el;
+          _this.$scope.$storage.strgData.amount = v;
+          _el = _this.$iElement.find("[name='amount']");
+          if (_el.length) {
+            _el = angular.element(_el);
+          }
+          if (typeof _el.val === "function") {
+            _el.val(v);
+          }
+          return typeof _el.triggerHandler === "function" ? _el.triggerHandler("change") : void 0;
+        });
+      };
+    })(this);
     this.$iElement.find(".ui.range").range({
       min: this.val_range.min,
       max: this.val_range.max,
@@ -85,18 +103,12 @@ firstStepController = (function() {
       namespace: 'amountrange',
       onChange: (function(_this) {
         return function(v, meta) {
-          return _this.$timeout(function() {
-            var _el;
-            _this.$scope.$storage.strgData.amount = v;
-            _el = _this.$iElement.find("[name='amount']");
-            if (_el.length) {
-              _el = angular.element(_el);
-            }
-            if (typeof _el.val === "function") {
-              _el.val(v);
-            }
-            return typeof _el.triggerHandler === "function" ? _el.triggerHandler("change") : void 0;
-          });
+          return _this.changeAmount(v);
+        };
+      })(this),
+      onMove: (function(_this) {
+        return function(v, meta) {
+          return _this.changeAmount(v);
         };
       })(this)
     });

@@ -3268,7 +3268,9 @@ firstStepController = (function() {
     this.$filter = $filter;
     this.$timeout = $timeout;
     this.data = {
-      aims: {}
+      aims: {
+        ds: "sdls;dl"
+      }
     };
     this.val_range = {
       min: 200,
@@ -3330,6 +3332,22 @@ firstStepController = (function() {
         };
       })(this));
     }
+    this.changeAmount = (function(_this) {
+      return function(v) {
+        return _this.$timeout(function() {
+          var _el;
+          _this.$scope.$storage.strgData.amount = v;
+          _el = _this.$iElement.find("[name='amount']");
+          if (_el.length) {
+            _el = angular.element(_el);
+          }
+          if (typeof _el.val === "function") {
+            _el.val(v);
+          }
+          return typeof _el.triggerHandler === "function" ? _el.triggerHandler("change") : void 0;
+        });
+      };
+    })(this);
     this.$iElement.find(".ui.range").range({
       min: this.val_range.min,
       max: this.val_range.max,
@@ -3340,18 +3358,12 @@ firstStepController = (function() {
       namespace: 'amountrange',
       onChange: (function(_this) {
         return function(v, meta) {
-          return _this.$timeout(function() {
-            var _el;
-            _this.$scope.$storage.strgData.amount = v;
-            _el = _this.$iElement.find("[name='amount']");
-            if (_el.length) {
-              _el = angular.element(_el);
-            }
-            if (typeof _el.val === "function") {
-              _el.val(v);
-            }
-            return typeof _el.triggerHandler === "function" ? _el.triggerHandler("change") : void 0;
-          });
+          return _this.changeAmount(v);
+        };
+      })(this),
+      onMove: (function(_this) {
+        return function(v, meta) {
+          return _this.changeAmount(v);
         };
       })(this)
     });
@@ -3538,7 +3550,13 @@ twoStepController = (function() {
     var param;
     param = {
       mask: "+38 (\\099) 999-99-99",
-      greedy: false
+      greedy: false,
+      showMaskOnHover: false,
+      oncomplete: (function(_this) {
+        return function(e) {
+          return _this.$scope.$storage.strgData.phone = e.target.value;
+        };
+      })(this)
     };
     $('input[name="phone"]').inputmask(param);
     this.$scope.main.loading = false;
@@ -3555,12 +3573,12 @@ twoStepController = (function() {
             }
           ]
         },
-        fullname: {
-          identifier: "fullname",
+        bday: {
+          identifier: "bday",
           rules: [
             {
-              type: "regExp[/^[а-яёієыї\\-\\']*\\s[а-яёієыї\\-\\']*\\s[а-яёієыї\\-\\']*$/i]",
-              prompt: "Введены недопустимые символы"
+              type: "regExp[/^\\d{2}[\\.]\\d{2}[\\.]\\d{4}$/i]",
+              prompt: "Неправильная дата рождения"
             }
           ]
         },
@@ -3758,7 +3776,27 @@ threeStepController = (function() {
       },
       onSuccess: (function(_this) {
         return function(e, f) {
+          var data;
           _this.$scope.main.loading = true;
+          data = {
+            aims: _this.$scope.$storage.strgData.aims,
+            amount: _this.$scope.$storage.strgData.amount,
+            name: _this.$scope.$storage.strgData.name,
+            phone: _this.$scope.$storage.strgData.phone,
+            bday: _this.$scope.$storage.strgData.bday,
+            employment: _this.$scope.$storage.strgData.employment,
+            city: _this.$scope.$storage.strgData.city
+          };
+          if (!_this.$scope.$storage.strgData.noinn) {
+            data.inn = _this.$scope.$storage.strgData.inn;
+          }
+          if (_this.$rootScope.settings.api.debug === true) {
+            data.result = false;
+          }
+          _this.post(data, function(resp) {
+            _this.$location.path("/request");
+            return _this.$scope.main.statusReq = (resp != null ? resp.result : void 0) === "success" ? true : false;
+          });
           return false;
         };
       })(this)
@@ -3794,42 +3832,40 @@ threeStepController = (function() {
   };
 
   threeStepController.prototype.init = function(type, fn) {
-    var params, trustedUrl;
+    var clbck, params, trustedUrl;
     this.fn = fn;
     if (type) {
       params = {
         data: type
       };
       trustedUrl = this.$sceDelegate.trustAs(this.$sce.RESOURCE_URL, "" + this.$rootScope.settings.api.url + this.$rootScope.settings.api.command.get);
+      clbck = (function(_this) {
+        return function(responce) {
+          return typeof _this.fn === "function" ? _this.fn(responce.data) : void 0;
+        };
+      })(this);
       return this.$http.jsonp(trustedUrl, {
         params: params
-      }).then((function(_this) {
-        return function(responce) {
-          return typeof _this.fn === "function" ? _this.fn(responce.data, function(responce) {
-            return typeof _this.fn === "function" ? _this.fn(responce.data) : void 0;
-          }) : void 0;
-        };
-      })(this));
+      }).then(clbck, clbck);
     }
   };
 
   threeStepController.prototype.post = function(type, fn) {
-    var params, trustedUrl;
+    var clbck, params, trustedUrl;
     this.fn = fn;
     if (type) {
       params = {
         data: type
       };
-      trustedUrl = this.$sceDelegate.trustAs(this.$sce.RESOURCE_URL, "" + this.$rootScope.settings.api.url + this.$rootScope.settings.api.command.get);
+      trustedUrl = this.$sceDelegate.trustAs(this.$sce.RESOURCE_URL, "" + this.$rootScope.settings.api.url + this.$rootScope.settings.api.command.put);
+      clbck = (function(_this) {
+        return function(responce) {
+          return typeof _this.fn === "function" ? _this.fn(responce.data) : void 0;
+        };
+      })(this);
       return this.$http.jsonp(trustedUrl, {
         params: params
-      }).then((function(_this) {
-        return function(responce) {
-          return typeof _this.fn === "function" ? _this.fn(responce.data, function(responce) {
-            return typeof _this.fn === "function" ? _this.fn(responce.data) : void 0;
-          }) : void 0;
-        };
-      })(this));
+      }).then(clbck, clbck);
     }
   };
 
@@ -3926,6 +3962,7 @@ financeAppController = (function() {
       }
     });
     this.loading = true;
+    this.statusReq = false;
     this.currentStep = 1;
     this.maxStep = 3;
     this.$window.addEventListener("eventWidgetStep1", function(e) {
@@ -3958,6 +3995,9 @@ financeAppController = (function() {
         if (_currentNameStep === "request") {
           _this.currentStep = _currentNameStep;
         }
+        if (_currentNameStep === "request") {
+          _this.sendEvent(_this.statusReq ? _currentNameStep + ".success" : _currentNameStep + ".error");
+        }
         if (!_this.$scope.$$phase) {
           _this.$scope.$apply();
         }
@@ -3965,6 +4005,44 @@ financeAppController = (function() {
       };
     })(this));
     $(function() {
+      $(".ui.clients .ui.images").slick({
+        infinite: true,
+        centerMode: true,
+        autoplay: true,
+        accessibility: false,
+        arrows: false,
+        prevArrow: '<button class="slick-prev button icon basic" aria-label="Previous" type="button"></button>',
+        nextArrow: '<button class="slick-next button icon basic" aria-label="Next" type="button"></button>',
+        slideTrack: '<div class="slick-track images"/>',
+        speed: 400,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        responsive: [
+          {
+            breakpoint: 1199,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 1,
+              arrows: false
+            }
+          }, {
+            breakpoint: 1000,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              arrows: false
+            }
+          }, {
+            breakpoint: 768,
+            settings: {
+              autoplay: false,
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              arrows: true
+            }
+          }
+        ]
+      });
       $(".ui.sidebar").sidebar("attach events", ".toc.item").sidebar("setting", "dimPage", true).sidebar("setting", "transition", "push").sidebar("setting", "useLegacy", true);
       $(".ui.accordion").accordion();
       return $(".main.container").visibility({
@@ -4013,6 +4091,7 @@ angular.module('financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
       _d = new Date(strgTime != null ? strgTime.time : void 0);
       if (loclTime.getTime() > _d.getTime()) {
         $localStorageProvider.remove("strgData");
+        _d = loclTime.getDateAdd(loclTime, "day", 1).toISOString();
       }
     } else {
       _d = loclTime.getDateAdd(loclTime, "day", 1).toISOString();
@@ -4032,6 +4111,7 @@ angular.module('financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
     $http.defaults.headers.common["Accept"] = "application/json";
     $http.defaults.headers.common["Content-Type"] = "application/json; charset=UTF-8";
     $http.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+    $rootScope.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile/i.test(navigator.userAgent);
     paramsEvent = {
       detail: {
         time: new Date()
@@ -4041,6 +4121,7 @@ angular.module('financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
     };
     return $rootScope.settings = {
       api: {
+        debug: true,
         url: "http://credits.finance.ua/api/",
         command: {
           get: "list",

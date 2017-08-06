@@ -3352,6 +3352,13 @@ i.icon.step-ok:before {
   content: '\2714';
   font-weight: normal;
   font-size: 0.7rem;
+  line-height: 1.8rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  left: 0;
+  top: 0;
+  padding: 0;
+  text-align: center;
 }
 /* '✔' */
 i.icon.arrow-input:before {

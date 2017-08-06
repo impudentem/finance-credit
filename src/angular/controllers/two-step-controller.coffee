@@ -62,6 +62,8 @@ class twoStepController
     param =
       mask: "+38 (\\099) 999-99-99"
       greedy: off
+      showMaskOnHover: off
+      oncomplete: (e) => @$scope.$storage.strgData.phone = e.target.value
     $ 'input[name="phone"]'
       .inputmask param
 
@@ -82,11 +84,11 @@ class twoStepController
               type: "regExp[/^[а-яёієыї\\-\\']*\\s[а-яёієыї\\-\\']*\\s[а-яёієыї\\-\\']*$/i]"
               prompt: "Введены недопустимые символы"
             ]
-          fullname:
-            identifier: "fullname"
+          bday:
+            identifier: "bday"
             rules: [
-              type: "regExp[/^[а-яёієыї\\-\\']*\\s[а-яёієыї\\-\\']*\\s[а-яёієыї\\-\\']*$/i]"
-              prompt: "Введены недопустимые символы"
+              type: "regExp[/^\\d{2}[\\.]\\d{2}[\\.]\\d{4}$/i]"
+              prompt: "Неправильная дата рождения"
             ]
           phone:
             identifier: "phone"

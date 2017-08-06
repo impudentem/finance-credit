@@ -2,3 +2,21 @@
          Site Overrides
 *******************************/
 
+.ui.checkbox input:checked~.box:after, .ui.checkbox input:checked~label:after {
+  color: #767676;
+  font-size: 15px;
+}
+
+.ui.form .field.error .checkbox:not(.toggle):not(.slider) .box:before, .ui.form .field.error .checkbox:not(.toggle):not(.slider) label:before, .ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) .box:before, .ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) label:before {
+  border-color: #FB5C3F!important;
+  background: #F5F5F5;
+  color: rgba(0,0,0,.4);
+}
+
+.ui.form .field.error .checkbox:not(.toggle):not(.slider) .box, .ui.form .field.error .checkbox:not(.toggle):not(.slider) label, .ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) .box, .ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) label {
+  color: rgba(0,0,0,.4);
+}
+
+.ui.checkbox input:checked:focus~.box:after, .ui.checkbox input:checked:focus~label:after, .ui.checkbox input:not([type=radio]):indeterminate:focus~.box:after, .ui.checkbox input:not([type=radio]):indeterminate:focus~label:after {
+  color: rgba(0,0,0,.4);
+}

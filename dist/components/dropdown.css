@@ -443,7 +443,7 @@ select.ui.dropdown {
     max-height: 10.68571429rem;
   }
 }
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 1000px) {
   .ui.selection.dropdown .menu {
     max-height: 16.02857143rem;
   }
@@ -629,7 +629,7 @@ select.ui.dropdown {
     max-height: 10.68571429rem;
   }
 }
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 1000px) {
   .ui.search.dropdown .menu {
     max-height: 16.02857143rem;
   }
@@ -1140,7 +1140,7 @@ select.ui.dropdown {
     max-height: 15.42857143rem;
   }
 }
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 1000px) {
   .ui.scrolling.dropdown .menu,
   .ui.dropdown .scrolling.menu {
     max-height: 20.57142857rem;
@@ -1507,9 +1507,13 @@ select.ui.dropdown {
 
 .ui.dropdown:not(.button) > .text,
 .ui.dropdown:not(.button) > .default.text {
-  color: #232323;
   font-size: 1.2857rem;
   line-height: 1.7142rem;
+  color: rgba(0, 0, 0, 0.4);
+  font-weight: normal;
+}
+.ui.dropdown:not(.button) > .text {
+  color: #232323;
   font-weight: 600;
 }
 .ui.selection.dropdown {
@@ -1623,6 +1627,7 @@ i.icon.arrow-input:before,
   color: #fff;
   font-weight: normal;
 }
+.ui.search.selection.dropdown > input.search,
 .ui.search.dropdown.active > input.search,
 .ui.search.dropdown.visible > input.search {
   font-size: 1.2857rem;

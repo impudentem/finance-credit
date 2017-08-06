@@ -74,7 +74,10 @@
     "api",
     "form",
     "state",
-    "visibility"
+    "visibility",
+
+    "slick",
+    "slick-theme"
   ],
 
   "user_components": [

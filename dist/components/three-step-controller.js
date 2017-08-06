@@ -125,7 +125,27 @@ threeStepController = (function() {
       },
       onSuccess: (function(_this) {
         return function(e, f) {
+          var data;
           _this.$scope.main.loading = true;
+          data = {
+            aims: _this.$scope.$storage.strgData.aims,
+            amount: _this.$scope.$storage.strgData.amount,
+            name: _this.$scope.$storage.strgData.name,
+            phone: _this.$scope.$storage.strgData.phone,
+            bday: _this.$scope.$storage.strgData.bday,
+            employment: _this.$scope.$storage.strgData.employment,
+            city: _this.$scope.$storage.strgData.city
+          };
+          if (!_this.$scope.$storage.strgData.noinn) {
+            data.inn = _this.$scope.$storage.strgData.inn;
+          }
+          if (_this.$rootScope.settings.api.debug === true) {
+            data.result = false;
+          }
+          _this.post(data, function(resp) {
+            _this.$location.path("/request");
+            return _this.$scope.main.statusReq = (resp != null ? resp.result : void 0) === "success" ? true : false;
+          });
           return false;
         };
       })(this)
@@ -161,42 +181,40 @@ threeStepController = (function() {
   };
 
   threeStepController.prototype.init = function(type, fn) {
-    var params, trustedUrl;
+    var clbck, params, trustedUrl;
     this.fn = fn;
     if (type) {
       params = {
         data: type
       };
       trustedUrl = this.$sceDelegate.trustAs(this.$sce.RESOURCE_URL, "" + this.$rootScope.settings.api.url + this.$rootScope.settings.api.command.get);
+      clbck = (function(_this) {
+        return function(responce) {
+          return typeof _this.fn === "function" ? _this.fn(responce.data) : void 0;
+        };
+      })(this);
       return this.$http.jsonp(trustedUrl, {
         params: params
-      }).then((function(_this) {
-        return function(responce) {
-          return typeof _this.fn === "function" ? _this.fn(responce.data, function(responce) {
-            return typeof _this.fn === "function" ? _this.fn(responce.data) : void 0;
-          }) : void 0;
-        };
-      })(this));
+      }).then(clbck, clbck);
     }
   };
 
   threeStepController.prototype.post = function(type, fn) {
-    var params, trustedUrl;
+    var clbck, params, trustedUrl;
     this.fn = fn;
     if (type) {
       params = {
         data: type
       };
-      trustedUrl = this.$sceDelegate.trustAs(this.$sce.RESOURCE_URL, "" + this.$rootScope.settings.api.url + this.$rootScope.settings.api.command.get);
+      trustedUrl = this.$sceDelegate.trustAs(this.$sce.RESOURCE_URL, "" + this.$rootScope.settings.api.url + this.$rootScope.settings.api.command.put);
+      clbck = (function(_this) {
+        return function(responce) {
+          return typeof _this.fn === "function" ? _this.fn(responce.data) : void 0;
+        };
+      })(this);
       return this.$http.jsonp(trustedUrl, {
         params: params
-      }).then((function(_this) {
-        return function(responce) {
-          return typeof _this.fn === "function" ? _this.fn(responce.data, function(responce) {
-            return typeof _this.fn === "function" ? _this.fn(responce.data) : void 0;
-          }) : void 0;
-        };
-      })(this));
+      }).then(clbck, clbck);
     }
   };
 

@@ -13,6 +13,7 @@ financeAppController = (function() {
       }
     });
     this.loading = true;
+    this.statusReq = false;
     this.currentStep = 1;
     this.maxStep = 3;
     this.$window.addEventListener("eventWidgetStep1", function(e) {
@@ -45,6 +46,9 @@ financeAppController = (function() {
         if (_currentNameStep === "request") {
           _this.currentStep = _currentNameStep;
         }
+        if (_currentNameStep === "request") {
+          _this.sendEvent(_this.statusReq ? _currentNameStep + ".success" : _currentNameStep + ".error");
+        }
         if (!_this.$scope.$$phase) {
           _this.$scope.$apply();
         }
@@ -52,6 +56,44 @@ financeAppController = (function() {
       };
     })(this));
     $(function() {
+      $(".ui.clients .ui.images").slick({
+        infinite: true,
+        centerMode: true,
+        autoplay: true,
+        accessibility: false,
+        arrows: false,
+        prevArrow: '<button class="slick-prev button icon basic" aria-label="Previous" type="button"></button>',
+        nextArrow: '<button class="slick-next button icon basic" aria-label="Next" type="button"></button>',
+        slideTrack: '<div class="slick-track images"/>',
+        speed: 400,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        responsive: [
+          {
+            breakpoint: 1199,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 1,
+              arrows: false
+            }
+          }, {
+            breakpoint: 1000,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              arrows: false
+            }
+          }, {
+            breakpoint: 768,
+            settings: {
+              autoplay: false,
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              arrows: true
+            }
+          }
+        ]
+      });
       $(".ui.sidebar").sidebar("attach events", ".toc.item").sidebar("setting", "dimPage", true).sidebar("setting", "transition", "push").sidebar("setting", "useLegacy", true);
       $(".ui.accordion").accordion();
       return $(".main.container").visibility({

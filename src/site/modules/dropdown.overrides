@@ -4,9 +4,14 @@
 
 
 .ui.dropdown:not(.button)>.text, .ui.dropdown:not(.button)>.default.text {
-  color: #232323;
+  // color: #232323;
   font-size: 1.2857rem;
   line-height: 1.7142rem;
+  color: rgba(0,0,0,.4);
+  font-weight: normal;
+}
+.ui.dropdown:not(.button)>.text {
+  color: #232323;
   font-weight: 600;
 }
 
@@ -114,7 +119,13 @@ i.icon.arrow-input:before, .ui.selection.dropdown>.arrow-input.icon:before {
   font-weight: normal;
 }
 
-.ui.search.dropdown.active>input.search, .ui.search.dropdown.visible>input.search {
+.ui.search.selection.dropdown>input.search, .ui.search.dropdown.active>input.search, .ui.search.dropdown.visible>input.search {
   font-size: 1.2857rem;
   line-height: 1.7142rem;
 }
+
+
+// .ui.dropdown:not(.button)>.default.text, .ui.dropdown:not(.button)>.text {
+//   color: rgba(0,0,0,.4);
+//   font-weight: normal;
+// }

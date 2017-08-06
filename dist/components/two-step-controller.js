@@ -90,7 +90,13 @@ twoStepController = (function() {
     var param;
     param = {
       mask: "+38 (\\099) 999-99-99",
-      greedy: false
+      greedy: false,
+      showMaskOnHover: false,
+      oncomplete: (function(_this) {
+        return function(e) {
+          return _this.$scope.$storage.strgData.phone = e.target.value;
+        };
+      })(this)
     };
     $('input[name="phone"]').inputmask(param);
     this.$scope.main.loading = false;
@@ -107,12 +113,12 @@ twoStepController = (function() {
             }
           ]
         },
-        fullname: {
-          identifier: "fullname",
+        bday: {
+          identifier: "bday",
           rules: [
             {
-              type: "regExp[/^[а-яёієыї\\-\\']*\\s[а-яёієыї\\-\\']*\\s[а-яёієыї\\-\\']*$/i]",
-              prompt: "Введены недопустимые символы"
+              type: "regExp[/^\\d{2}[\\.]\\d{2}[\\.]\\d{4}$/i]",
+              prompt: "Неправильная дата рождения"
             }
           ]
         },

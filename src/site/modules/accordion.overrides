@@ -6,6 +6,12 @@
   max-width: 80%;
   margin: 0 auto;
 }
+@media only screen and (max-width: 768px) {
+  .ui.faq .ui.accordion {
+    max-width: 90%;
+    margin: 0 auto;
+  }
+}
 
 .ui.faq .ui.accordion .title:not(.ui) {
   padding: 0.9em 0;

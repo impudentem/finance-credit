@@ -12,6 +12,7 @@ angular.module('financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
       _d = new Date(strgTime != null ? strgTime.time : void 0);
       if (loclTime.getTime() > _d.getTime()) {
         $localStorageProvider.remove("strgData");
+        _d = loclTime.getDateAdd(loclTime, "day", 1).toISOString();
       }
     } else {
       _d = loclTime.getDateAdd(loclTime, "day", 1).toISOString();
@@ -31,6 +32,7 @@ angular.module('financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
     $http.defaults.headers.common["Accept"] = "application/json";
     $http.defaults.headers.common["Content-Type"] = "application/json; charset=UTF-8";
     $http.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+    $rootScope.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile/i.test(navigator.userAgent);
     paramsEvent = {
       detail: {
         time: new Date()
@@ -40,6 +42,7 @@ angular.module('financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
     };
     return $rootScope.settings = {
       api: {
+        debug: true,
         url: "http://credits.finance.ua/api/",
         command: {
           get: "list",

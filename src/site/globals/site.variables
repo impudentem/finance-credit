@@ -19,3 +19,9 @@
 @textColor         : #555555;
 
 @pageBackground    : #F6F6F6;
+
+
+
+@columnCount       : 12;
+
+@computerBreakpoint: 1000px;

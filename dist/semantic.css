@@ -775,6 +775,17 @@ body {
   text-align: center;
 }
 
+.ui.main .money {
+  position: absolute;
+  width: 100%;
+  max-width: 1000px;
+  height: 336px;
+  background: url(../web/img/money.png) 664px 0px no-repeat;
+  top: 395px;
+  right: 0px;
+  z-index: -1;
+}
+
 .ui.privilege.container {
   margin-top: 5.71em;
   background: #FFF;

@@ -44,7 +44,7 @@ angular.module 'financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
     $rootScope.settings =
       api:
         debug : on
-        url   : "http://credits.finance.ua/api/"
+        url   : "//credits.finance.ua/api/"
         command:
           get: "list"
           put: "submit"
@@ -55,6 +55,26 @@ angular.module 'financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
         request:
           success: new CustomEvent "eventWidgetSuccess", paramsEvent
           error: new CustomEvent "eventWidgetError", paramsEvent
+        transitionEvent: ->
+          element      = document.createElement "element"
+          transitions  =
+            transition       : "transitionend"
+            OTransition      : "oTransitionEnd"
+            MozTransition    : "transitionend"
+            WebkitTransition : "webkitTransitionEnd"
+          for k, v of transitions
+            return transition = v if  element.style[k] isnt undefined
+          return transition
+
+
+    $ document
+      .ready ->
+        $ "#page-preloader"
+          .addClass "loaded"
+          .on $rootScope.settings.events.transitionEvent(), (e) ->
+            $ e.currentTarget
+              .remove()
+
   ]
 
 .controller "financeAppController", ['$rootScope', '$scope', '$localStorage', '$location', '$window', financeAppController]

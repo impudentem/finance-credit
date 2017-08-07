@@ -4119,10 +4119,10 @@ angular.module('financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
       bubbles: true,
       cancelable: true
     };
-    return $rootScope.settings = {
+    $rootScope.settings = {
       api: {
         debug: true,
-        url: "http://credits.finance.ua/api/",
+        url: "//credits.finance.ua/api/",
         command: {
           get: "list",
           put: "submit"
@@ -4135,8 +4135,30 @@ angular.module('financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
         request: {
           success: new CustomEvent("eventWidgetSuccess", paramsEvent),
           error: new CustomEvent("eventWidgetError", paramsEvent)
+        },
+        transitionEvent: function() {
+          var element, k, transition, transitions, v;
+          element = document.createElement("element");
+          transitions = {
+            transition: "transitionend",
+            OTransition: "oTransitionEnd",
+            MozTransition: "transitionend",
+            WebkitTransition: "webkitTransitionEnd"
+          };
+          for (k in transitions) {
+            v = transitions[k];
+            if (element.style[k] !== void 0) {
+              return transition = v;
+            }
+          }
+          return transition;
         }
       }
     };
+    return $(document).ready(function() {
+      return $("#page-preloader").addClass("loaded").on($rootScope.settings.events.transitionEvent(), function(e) {
+        return $(e.currentTarget).remove();
+      });
+    });
   }
 ]).controller("financeAppController", ['$rootScope', '$scope', '$localStorage', '$location', '$window', financeAppController]);

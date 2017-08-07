@@ -69,10 +69,14 @@ twoStepController = (function() {
           },
           formatter: {
             date: function(date, settings) {
+              var day, month, year;
               if (!date) {
                 return "";
               }
-              return date.toLocaleString().split(',')[0];
+              day = day.length < 2 ? "0" + (date.getDate()) : "" + (date.getDate());
+              month = month.length < 2 ? "0" + (date.getMonth() + 1) : "" + (date.getMonth() + 1);
+              year = "" + (date.getFullYear());
+              return day + "." + month + "." + year;
             }
           }
         });

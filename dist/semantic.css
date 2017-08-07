@@ -1278,6 +1278,15 @@ body {
   opacity: 0.5;
   color: #fff;
 }
+
+.ui.top.fixed.menu .ui.container {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.ui.top.fixed.menu .ui.container a.header {
+  padding-left: 0px;
+}
 /*!
  * # Semantic UI 2.2.11 - Button
  * http://github.com/semantic-org/semantic-ui/

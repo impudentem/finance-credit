@@ -47,8 +47,10 @@ class twoStepController
           formatter:
             date: (date, settings) ->
               return "" if not date
-              return date.toLocaleString().split(',')[0]
-
+              day = if day.length < 2 then "0#{date.getDate()}" else "#{date.getDate()}"
+              month = if month.length < 2 then "0#{date.getMonth()+1}" else "#{date.getMonth()+1}"
+              year = "#{date.getFullYear()}"
+              return "#{day}.#{month}.#{year}"
       @initMask()
 
     @$timeout () =>

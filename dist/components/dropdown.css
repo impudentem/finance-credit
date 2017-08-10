@@ -443,12 +443,12 @@ select.ui.dropdown {
     max-height: 10.68571429rem;
   }
 }
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 900px) {
   .ui.selection.dropdown .menu {
     max-height: 16.02857143rem;
   }
 }
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1100px) {
   .ui.selection.dropdown .menu {
     max-height: 21.37142857rem;
   }
@@ -629,12 +629,12 @@ select.ui.dropdown {
     max-height: 10.68571429rem;
   }
 }
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 900px) {
   .ui.search.dropdown .menu {
     max-height: 16.02857143rem;
   }
 }
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1100px) {
   .ui.search.dropdown .menu {
     max-height: 21.37142857rem;
   }
@@ -1140,13 +1140,13 @@ select.ui.dropdown {
     max-height: 15.42857143rem;
   }
 }
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 900px) {
   .ui.scrolling.dropdown .menu,
   .ui.dropdown .scrolling.menu {
     max-height: 20.57142857rem;
   }
 }
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1100px) {
   .ui.scrolling.dropdown .menu,
   .ui.dropdown .scrolling.menu {
     max-height: 20.57142857rem;
@@ -1632,4 +1632,38 @@ i.icon.arrow-input:before,
 .ui.search.dropdown.visible > input.search {
   font-size: 1.2857rem;
   line-height: 1.7142rem;
+}
+.ui.form .field.error .ui.dropdown,
+.ui.form .fields.error .field .ui.dropdown {
+  border-color: #FB5C3F!important;
+  background: rgba(241, 241, 241, 0.32);
+  color: #232323;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.32)), to(rgba(241, 241, 241, 0.32)));
+  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.32) 0%, rgba(241, 241, 241, 0.32) 100%);
+  background-image: linear-gradient(-180deg, rgba(255, 255, 255, 0.32) 0%, rgba(241, 241, 241, 0.32) 100%);
+}
+.ui.form .field.error .ui.dropdown,
+.ui.form .field.error .ui.dropdown .text,
+.ui.form .fields.error .field .ui.dropdown {
+  background: rgba(241, 241, 241, 0.32);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.32)), to(rgba(241, 241, 241, 0.32)));
+  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.32) 0%, rgba(241, 241, 241, 0.32) 100%);
+  background-image: linear-gradient(-180deg, rgba(255, 255, 255, 0.32) 0%, rgba(241, 241, 241, 0.32) 100%);
+  color: #232323;
+}
+.ui.form .field.error .ui.dropdown .item,
+.ui.form .fields.error .field .ui.dropdown .item {
+  background: #fff;
+  color: #232323;
+}
+.ui.form .field.error .ui.dropdown .menu .item:hover,
+.ui.form .fields.error .field .ui.dropdown .menu .item:hover {
+  background: #F7F7F7;
+  color: #232323;
+}
+.ui.form .field.error .ui.dropdown .menu .active.item,
+.ui.form .fields.error .field .ui.dropdown .menu .item:active {
+  background: #FF9C0F;
+  color: #fff;
+  font-weight: normal;
 }

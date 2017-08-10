@@ -13,9 +13,7 @@ firstStepController = (function() {
     this.$filter = $filter;
     this.$timeout = $timeout;
     this.data = {
-      aims: {
-        ds: "sdls;dl"
-      }
+      aims: {}
     };
     this.val_range = {
       min: 200,
@@ -41,23 +39,40 @@ firstStepController = (function() {
     return this.$scope.cards_first.card_hover = $event.type === "mouseover" ? card : "";
   };
 
-  firstStepController.prototype.chgAmount = function(v, fromRange) {
-    if (fromRange) {
-      return this.$timeout((function(_this) {
-        return function() {
-          var _el;
-          _el = _this.$iElement.find("[name='amount']");
-          if (_el.length) {
-            _el = angular.element(_el);
+  firstStepController.prototype.selectAllTxt = function($event) {
+    return $event.currentTarget.select();
+  };
+
+  firstStepController.prototype.chgAmount = function($event) {
+    return this.$timeout((function(_this) {
+      return function() {
+        var ref;
+        _this.$scope.$storage.strgData.amount = _this.$scope.$storage.strgData.amount.replace(/[^0-9]+/g, '');
+        if (_this.$scope.$storage.strgData.amount) {
+          if ((ref = _this.$iElement.find(".ui.range").data("module-amountrange").update) != null) {
+            ref.value(_this.$scope.$storage.strgData.amount);
           }
-          if (typeof _el.val === "function") {
-            _el.val(v);
-          }
-          return typeof _el.triggerHandler === "function" ? _el.triggerHandler("change") : void 0;
-        };
-      })(this));
-    } else {
-      return this.rangeElement.data("module-amountrange").set.value(v);
+        }
+        if (!_this.$scope.$$phase) {
+          return _this.$scope.$apply();
+        }
+      };
+    })(this));
+  };
+
+  firstStepController.prototype.nextStep = function() {
+    var form;
+    form = $(this.$element).find(".ui.form");
+    form = form.data("module-form");
+    if (form && form.is.valid()) {
+      this.$scope.main.loading = true;
+      this.data.aims = {};
+      this.$location.path("/s2");
+      if (!this.$scope.$$phase) {
+        return this.$scope.$apply();
+      }
+    } else if (form) {
+      return form.validate.form();
     }
   };
 
@@ -112,7 +127,7 @@ firstStepController = (function() {
         };
       })(this)
     });
-    $(this.$element).find("form").form({
+    $(this.$element).find(".ui.form").form({
       inline: true,
       on: "blur",
       fields: {
@@ -134,20 +149,14 @@ firstStepController = (function() {
             }
           ]
         }
-      },
-      onSuccess: (function(_this) {
-        return function(e, f) {
-          _this.$scope.main.loading = true;
-          _this.$location.path("/s2");
-          return false;
-        };
-      })(this)
+      }
     });
     return this.$scope.main.loading = false;
   };
 
   firstStepController.prototype.init = function() {
     var params, trustedUrl;
+    this.data.aims = {};
     params = {
       data: "aims"
     };

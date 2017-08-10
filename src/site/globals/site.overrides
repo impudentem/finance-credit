@@ -339,7 +339,7 @@ body {
 .ui.grid.mail-subscr .ui.container .action.input.ui {
   display: inline-block;
   vertical-align: top;
-  margin-left: 2.3571rem;
+  margin-left: 2.2571rem;
 }
 .ui.grid.mail-subscr .ui.container .action.input.ui input {
   display: inline-block;
@@ -357,7 +357,7 @@ body {
   border-radius: .28571429rem;
   line-height: 1.7142rem;
   font-size: 1.2857rem;
-  margin-left: 2.3571rem;
+  margin-left: 1.3571rem;
   padding-top: .725714em;
   padding-bottom: .725714em;
 }

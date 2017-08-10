@@ -859,6 +859,6 @@
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.47);
   padding: 1.1428rem 2.5714rem;
 }
-.ui.form-steps .ui.form.segment {
+.ui.form-steps .ui.segment-form.segment {
   padding: 1.6428rem 2.5714rem 2.5714rem 2.5714rem;
 }

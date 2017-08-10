@@ -51,5 +51,8 @@
   margin-top: -.042em;
   left: -.684em;
   background: #fff;
+}
 
+.form-page .ui.segments.form-steps .ui.segment.segments .right.floated.ui.basic.segment {
+  padding-right: 2.2714rem;
 }

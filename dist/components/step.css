@@ -425,7 +425,7 @@
 
 
 /* Tablet Or Below */
-@media only screen and (max-width: 999px) {
+@media only screen and (max-width: 899px) {
   .ui[class*="tablet stackable"].steps {
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;
@@ -667,4 +667,7 @@
   margin-top: -0.042em;
   left: -0.684em;
   background: #fff;
+}
+.form-page .ui.segments.form-steps .ui.segment.segments .right.floated.ui.basic.segment {
+  padding-right: 2.2714rem;
 }

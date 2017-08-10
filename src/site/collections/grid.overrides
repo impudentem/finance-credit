@@ -75,3 +75,31 @@
   }
 
 }
+
+
+@media only screen and (min-width: 900px) {
+  .form-page .twelve.wide.mobile.seven.wide.tablet.five.wide.computer.column {
+    width: 43%!important;
+  }
+  .form-page .ui.tab.twelve.wide.mobile.five.wide.tablet.six.wide.computer.column {
+    width: 57%!important;
+  }
+}
+
+
+@media only screen and (min-width: 1000px) {
+  .ui.inrelaxed.grid {
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+
+    &>.column:not(.row):first-child {
+      padding-right: 1.5rem;
+    }
+
+    &>.column:not(.row):last-child {
+      padding-left: 3.5rem;
+    }
+
+  }
+}
+

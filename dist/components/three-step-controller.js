@@ -25,6 +25,8 @@ threeStepController = (function() {
         _this.$iElement = $(_this.$element);
         newValue = parseInt(newValue);
         if (newValue === 3) {
+          _this.data.employments = {};
+          _this.data.cities = {};
           _this.init("cities", function(responce) {
             if (responce && responce.result === 'success') {
               this.data.cities = responce.data;
@@ -56,10 +58,64 @@ threeStepController = (function() {
     return this.$scope.cards_three.card_hover = $event.type === "mouseover" ? card : "";
   };
 
+  threeStepController.prototype.prevStep = function() {
+    this.$scope.main.loading = true;
+    this.data.employments = {};
+    this.data.cities = {};
+    return this.$scope.main.$location.path('/s2');
+  };
+
+  threeStepController.prototype.nextStep = function() {
+    var data, form;
+    form = $(this.$element).find(".ui.form");
+    form = form.data("module-form");
+    if (form && form.is.valid()) {
+      this.$scope.main.loading = true;
+      data = {
+        aims: this.$scope.$storage.strgData.aims,
+        amount: this.$scope.$storage.strgData.amount,
+        name: this.$scope.$storage.strgData.name,
+        phone: this.$scope.$storage.strgData.phone,
+        bday: this.$scope.$storage.strgData.bday,
+        employment: this.$scope.$storage.strgData.employment,
+        city: this.$scope.$storage.strgData.city,
+        utime: (new Date()).getTime()
+      };
+      if (!this.$scope.$storage.strgData.noinn) {
+        data.inn = this.$scope.$storage.strgData.inn;
+      }
+      if (this.$rootScope.settings.api.debug === true) {
+        data.result = "" + false;
+      }
+      this.data.employments = {};
+      this.data.cities = {};
+      return this.post(data, (function(_this) {
+        return function(resp) {
+          _this.$location.path("/request");
+          _this.$scope.main.statusReq = (resp != null ? resp.result : void 0) === "success" ? true : false;
+          _this.$scope.$storage.$reset();
+          if (!_this.$scope.$$phase) {
+            return _this.$scope.$apply();
+          }
+        };
+      })(this));
+    } else if (form) {
+      return form.validate.form();
+    }
+  };
+
   threeStepController.prototype.update = function() {
-    var _checkbox_noinn, _dropdown_city, _dropdown_employment;
+    var _checkbox_noinn, _dropdown_city, _dropdown_employment, param;
     _dropdown_city = this.$iElement.find(".ui.dropdown.city").dropdown({
+      selectOnKeydown: false,
+      allowReselection: true,
+      forceSelection: false,
+      hideAdditions: false,
       allowAdditions: true,
+      message: {
+        addResult: '<b>{term}</b>',
+        noResults: 'Ничего не найдено.'
+      },
       onChange: (function(_this) {
         return function(value, text, $selectedItem) {
           _this.$scope.$storage.strgData.city = text;
@@ -100,7 +156,29 @@ threeStepController = (function() {
         };
       })(this));
     }
-    $(this.$element).find("form").form({
+    param = {
+      mask: "([а-яёієыї\\-\\']+\\s[а-яёієыї\\-\\']+)?(\\s[а-яёієыї\\-\\']+)?",
+      greedy: false,
+      showMaskOnHover: false,
+      oncomplete: (function(_this) {
+        return function(e) {
+          return _this.$scope.$storage.strgData.city = e.target.value;
+        };
+      })(this)
+    };
+    $('input[name="city"]').inputmask(param);
+    param = {
+      mask: "9999999999",
+      greedy: false,
+      showMaskOnHover: false,
+      oncomplete: (function(_this) {
+        return function(e) {
+          return _this.$scope.$storage.strgData.inn = e.target.value;
+        };
+      })(this)
+    };
+    $('input[name="inn"]').inputmask(param);
+    $(this.$element).find(".ui.form").form({
       inline: true,
       on: "blur",
       fields: {
@@ -122,33 +200,7 @@ threeStepController = (function() {
             }
           ]
         }
-      },
-      onSuccess: (function(_this) {
-        return function(e, f) {
-          var data;
-          _this.$scope.main.loading = true;
-          data = {
-            aims: _this.$scope.$storage.strgData.aims,
-            amount: _this.$scope.$storage.strgData.amount,
-            name: _this.$scope.$storage.strgData.name,
-            phone: _this.$scope.$storage.strgData.phone,
-            bday: _this.$scope.$storage.strgData.bday,
-            employment: _this.$scope.$storage.strgData.employment,
-            city: _this.$scope.$storage.strgData.city
-          };
-          if (!_this.$scope.$storage.strgData.noinn) {
-            data.inn = _this.$scope.$storage.strgData.inn;
-          }
-          if (_this.$rootScope.settings.api.debug === true) {
-            data.result = false;
-          }
-          _this.post(data, function(resp) {
-            _this.$location.path("/request");
-            return _this.$scope.main.statusReq = (resp != null ? resp.result : void 0) === "success" ? true : false;
-          });
-          return false;
-        };
-      })(this)
+      }
     });
     this.chngMsg("add");
     return this.$scope.main.loading = false;

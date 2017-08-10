@@ -196,19 +196,19 @@
     margin: 0em 0em 0em -44%;
   }
 }
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 900px) {
   .ui.modal {
     width: 850px;
     margin: 0em 0em 0em -425px;
   }
 }
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1100px) {
   .ui.modal {
     width: 900px;
     margin: 0em 0em 0em -450px;
   }
 }
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1100px) {
   .ui.modal {
     width: 950px;
     margin: 0em 0em 0em -475px;
@@ -216,7 +216,7 @@
 }
 
 /* Tablet and Mobile */
-@media only screen and (max-width: 999px) {
+@media only screen and (max-width: 899px) {
   .ui.modal > .header {
     padding-right: 2.25rem;
   }
@@ -321,7 +321,7 @@
 }
 
 /* Tablet and Mobile */
-@media only screen and (max-width: 999px) {
+@media only screen and (max-width: 899px) {
   .ui.basic.modal > .close {
     color: #FFFFFF;
   }
@@ -381,7 +381,7 @@
 .undetached.dimmable.dimmed > .pusher {
   z-index: auto;
 }
-@media only screen and (max-width: 999px) {
+@media only screen and (max-width: 899px) {
   .modals.dimmer .ui.scrolling.modal {
     margin-top: 1rem !important;
     margin-bottom: 1rem !important;
@@ -441,19 +441,19 @@
     margin: 0em 0em 0em -17.6%;
   }
 }
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 900px) {
   .ui.mini.modal {
     width: 340px;
     margin: 0em 0em 0em -170px;
   }
 }
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1100px) {
   .ui.mini.modal {
     width: 360px;
     margin: 0em 0em 0em -180px;
   }
 }
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1100px) {
   .ui.mini.modal {
     width: 380px;
     margin: 0em 0em 0em -190px;
@@ -478,19 +478,19 @@
     margin: 0em 0em 0em -26.4%;
   }
 }
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 900px) {
   .ui.tiny.modal {
     width: 510px;
     margin: 0em 0em 0em -255px;
   }
 }
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1100px) {
   .ui.tiny.modal {
     width: 540px;
     margin: 0em 0em 0em -270px;
   }
 }
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1100px) {
   .ui.tiny.modal {
     width: 570px;
     margin: 0em 0em 0em -285px;
@@ -515,19 +515,19 @@
     margin: 0em 0em 0em -35.2%;
   }
 }
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 900px) {
   .ui.small.modal {
     width: 680px;
     margin: 0em 0em 0em -340px;
   }
 }
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1100px) {
   .ui.small.modal {
     width: 720px;
     margin: 0em 0em 0em -360px;
   }
 }
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1100px) {
   .ui.small.modal {
     width: 760px;
     margin: 0em 0em 0em -380px;
@@ -550,19 +550,19 @@
     margin: 0em 0em 0em -44%;
   }
 }
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 900px) {
   .ui.large.modal {
     width: 1020px;
     margin: 0em 0em 0em -510px;
   }
 }
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1100px) {
   .ui.large.modal {
     width: 1080px;
     margin: 0em 0em 0em -540px;
   }
 }
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1100px) {
   .ui.large.modal {
     width: 1140px;
     margin: 0em 0em 0em -570px;

@@ -15,6 +15,7 @@ class twoStepController
     # @$scope.$apply() if not @$scope.$$phase
 
   init: ->
+    @calendar = {}
     minDate = new Date()
     maxDate = new Date()
     maxDate.setFullYear maxDate.getFullYear() - 18
@@ -29,7 +30,13 @@ class twoStepController
           ampm: off
           minDate: minDate
           maxDate: maxDate
+          initialDate: minDate
+          touchReadonly: off
           disableMinute: on
+          popupOptions:
+            position: 'top right'
+            lastResort: 'top right'
+            # hideOnScroll: false
           className:
             prevIcon: "open icon left"
             nextIcon: "open icon right"
@@ -41,12 +48,15 @@ class twoStepController
             now: 'Сейчас'
             am: 'AM'
             pm: 'PM'
-          onChange: (date, text, mode) =>
-            @$scope.$storage.strgData.bday = text
-            @$scope.$apply() if not @$scope.$$phase
+          # onChange: (date, text, mode) =>
+            # console.log date, text, mode
+            # @$scope.$storage.strgData.bday = text
+            # @$scope.$apply() if not @$scope.$$phase
           formatter:
             date: (date, settings) ->
               return "" if not date
+              day = "#{date.getDate()}"
+              month = "#{date.getMonth()+1}"
               day = if day.length < 2 then "0#{date.getDate()}" else "#{date.getDate()}"
               month = if month.length < 2 then "0#{date.getMonth()+1}" else "#{date.getMonth()+1}"
               year = "#{date.getFullYear()}"
@@ -56,17 +66,51 @@ class twoStepController
     @$timeout () =>
       @initCal()
 
+
+  prevStep: ->
+    @$scope.main.$location.path '/s1'
+    @$scope.main.loading = on
+
+  nextStep: ->
+    form = $(@$element).find ".ui.form"
+    form = form.data "module-form"
+    if form and form.is.valid()
+      @$scope.main.loading = on
+      # @data.aims = {}
+      @$location.path "/s3"
+      @$scope.$apply() if not @$scope.$$phase
+    else if form
+      form.validate.form()
+
   initMask: ->
     # $ document
     #   .ready ->
     #     console.log "READY___"
     #     return ""
+    @$scope.$storage.strgData.aggree = true if @$scope.$storage.strgData.aggree is undefined
     param =
-      mask: "+38 (\\099) 999-99-99"
+      # mask: "+38 \\(0(3\\9)|(50)|(63)|(66)|(67)|(68)|(73)|(\\91)|(\\92)|(\\93)|(\\94)|(\\95)|(\\96)|(\\97)|(\\98)|(\\9\\9)\\) 999-99-99"
+      mask: "+38 (099) 999-99-99"
       greedy: off
       showMaskOnHover: off
       oncomplete: (e) => @$scope.$storage.strgData.phone = e.target.value
     $ 'input[name="phone"]'
+      .inputmask param
+
+    param =
+      mask: "(09)|(19)|(29)|(30|1).(09)|(10|1|2).(1\\9)|(20)99"
+      greedy: off
+      showMaskOnHover: off
+      oncomplete: (e) => @$scope.$storage.strgData.bday = e.target.value
+    $ 'input[name="bday"]'
+      .inputmask param
+
+    param =
+      mask: "U{1,64} (U{1,64})|(U{1,64} U{1,64})"
+      greedy: off
+      showMaskOnHover: off
+      oncomplete: (e) => @$scope.$storage.strgData.name = e.target.value
+    $ 'input[name="fullname"]'
       .inputmask param
 
     @$scope.main.loading = off
@@ -75,7 +119,7 @@ class twoStepController
     #   .inputmask "email"039', '050', '063', '066', '067', '068', '073', '091', '092', '093', '094', '095', '096', '097', '098', '099'
     # allowCode = ['(039)','(050)','(063)','(066)','(067)','(068)','(073)','(091)','(092)','(093)','(094)','(095)','(096)','(097)','(098)','(099)']
 
-    $(@$element).find "form"
+    $(@$element).find ".ui.form"
       .form
         inline : true
         on: "blur"
@@ -83,8 +127,11 @@ class twoStepController
           fullname:
             identifier: "fullname"
             rules: [
-              type: "regExp[/^[а-яёієыї\\-\\']*\\s[а-яёієыї\\-\\']*\\s[а-яёієыї\\-\\']*$/i]"
+              type: "regExp[/^([а-яёієыї\\-\\']+\\s[а-яёієыї\\-\\']+)?(\\s[а-яёієыї\\-\\']+)?$/i]"
               prompt: "Введены недопустимые символы"
+            ,
+              type: "empty"
+              prompt: "Укажите Имя и Фамилию"
             ]
           bday:
             identifier: "bday"
@@ -105,12 +152,16 @@ class twoStepController
               type: "checked"
               prompt: "Так мы не сможем обработать Ваш запрос"
             ]
-        onSuccess: (e, f) =>
-          @$scope.main.loading = on
-          @$location.path "/s3"
-          # e.defaultPrevented()
-          # @$scope.main.currentStep = 3
-          # console.log e, f
-          return false
+        # onSuccess: (e, f) =>
+        #   e.preventDefault()
+        #   e.stopPropagation()
+
+        #   console.log "fromTwo", e
+
+        #   @$scope.main.loading = on
+        #   @$location.path "/s3"
+        #   @$scope.$apply() if not @$scope.$$phase
+
+        #   return off
 
 

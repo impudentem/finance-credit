@@ -24,4 +24,6 @@
 
 @columnCount       : 12;
 
-@computerBreakpoint: 1000px;
+@computerBreakpoint: 900px;
+@largeMonitorBreakpoint      : 1100px;
+@widescreenMonitorBreakpoint : 1100px;

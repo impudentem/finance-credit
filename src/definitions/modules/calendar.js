@@ -448,7 +448,7 @@
                 module.popup('hide');
               }
 
-              if (module.popup('is visible')) {
+              if (module.popup('is visible')&&settings.keydownSelDate) {
                 if (event.keyCode === 37 || event.keyCode === 38 || event.keyCode === 39 || event.keyCode === 40) {
                   //arrow keys
                   var mode = module.get.mode();
@@ -1014,6 +1014,7 @@
     startCalendar: null,  // jquery object or selector for another calendar that represents the start date of a date range
     endCalendar: null,    // jquery object or selector for another calendar that represents the end date of a date range
     multiMonth: 1,        // show multiple months when in 'day' mode
+    keydownSelDate: false,
 
     // popup options ('popup', 'on', 'hoverable', and show/hide callbacks are overridden)
     popupOptions: {

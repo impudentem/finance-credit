@@ -1084,12 +1084,21 @@
 .two-step.ui.form .field {
   margin: 0 0 .7857em;
 }
+.three-step.ui.form .field {
+  margin: 0 0 .7857em;
+}
 .ui.form button {
   margin: .7857em 0 0;
   line-height: 1.2em;
 }
 .two-step.ui.form button {
   width: 45%;
+}
+.three-step.ui.form button {
+  width: 45%;
+}
+.three-step.ui.form button.right {
+  width: 50%;
 }
 .two-step.ui.form .field .ui.checkbox {
   margin-top: .5em;
@@ -1148,6 +1157,9 @@
 .ui.form .field .ui.pointing.label:before {
   display: none;
   content: none;
+}
+.ui.form .field.amount .prompt.label {
+  bottom: -1.8rem;
 }
 .ui.form .field.error .ui.dropdown,
 .ui.form .fields.error .field .ui.dropdown {

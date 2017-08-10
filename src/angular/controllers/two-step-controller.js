@@ -35,6 +35,7 @@ twoStepController = (function() {
 
   twoStepController.prototype.init = function() {
     var maxDate, minDate;
+    this.calendar = {};
     minDate = new Date();
     maxDate = new Date();
     maxDate.setFullYear(maxDate.getFullYear() - 18);
@@ -47,7 +48,13 @@ twoStepController = (function() {
           ampm: false,
           minDate: minDate,
           maxDate: maxDate,
+          initialDate: minDate,
+          touchReadonly: false,
           disableMinute: true,
+          popupOptions: {
+            position: 'top right',
+            lastResort: 'top right'
+          },
           className: {
             prevIcon: "open icon left",
             nextIcon: "open icon right"
@@ -61,18 +68,14 @@ twoStepController = (function() {
             am: 'AM',
             pm: 'PM'
           },
-          onChange: function(date, text, mode) {
-            _this.$scope.$storage.strgData.bday = text;
-            if (!_this.$scope.$$phase) {
-              return _this.$scope.$apply();
-            }
-          },
           formatter: {
             date: function(date, settings) {
               var day, month, year;
               if (!date) {
                 return "";
               }
+              day = "" + (date.getDate());
+              month = "" + (date.getMonth() + 1);
               day = day.length < 2 ? "0" + (date.getDate()) : "" + (date.getDate());
               month = month.length < 2 ? "0" + (date.getMonth() + 1) : "" + (date.getMonth() + 1);
               year = "" + (date.getFullYear());
@@ -90,10 +93,33 @@ twoStepController = (function() {
     })(this));
   };
 
+  twoStepController.prototype.prevStep = function() {
+    this.$scope.main.$location.path('/s1');
+    return this.$scope.main.loading = true;
+  };
+
+  twoStepController.prototype.nextStep = function() {
+    var form;
+    form = $(this.$element).find(".ui.form");
+    form = form.data("module-form");
+    if (form && form.is.valid()) {
+      this.$scope.main.loading = true;
+      this.$location.path("/s3");
+      if (!this.$scope.$$phase) {
+        return this.$scope.$apply();
+      }
+    } else if (form) {
+      return form.validate.form();
+    }
+  };
+
   twoStepController.prototype.initMask = function() {
     var param;
+    if (this.$scope.$storage.strgData.aggree === void 0) {
+      this.$scope.$storage.strgData.aggree = true;
+    }
     param = {
-      mask: "+38 (\\099) 999-99-99",
+      mask: "+38 (099) 999-99-99",
       greedy: false,
       showMaskOnHover: false,
       oncomplete: (function(_this) {
@@ -103,8 +129,30 @@ twoStepController = (function() {
       })(this)
     };
     $('input[name="phone"]').inputmask(param);
+    param = {
+      mask: "(09)|(19)|(29)|(30|1).(09)|(10|1|2).(1\\9)|(20)99",
+      greedy: false,
+      showMaskOnHover: false,
+      oncomplete: (function(_this) {
+        return function(e) {
+          return _this.$scope.$storage.strgData.bday = e.target.value;
+        };
+      })(this)
+    };
+    $('input[name="bday"]').inputmask(param);
+    param = {
+      mask: "U{1,64} (U{1,64})|(U{1,64} U{1,64})",
+      greedy: false,
+      showMaskOnHover: false,
+      oncomplete: (function(_this) {
+        return function(e) {
+          return _this.$scope.$storage.strgData.name = e.target.value;
+        };
+      })(this)
+    };
+    $('input[name="fullname"]').inputmask(param);
     this.$scope.main.loading = false;
-    return $(this.$element).find("form").form({
+    return $(this.$element).find(".ui.form").form({
       inline: true,
       on: "blur",
       fields: {
@@ -112,8 +160,11 @@ twoStepController = (function() {
           identifier: "fullname",
           rules: [
             {
-              type: "regExp[/^[а-яёієыї\\-\\']*\\s[а-яёієыї\\-\\']*\\s[а-яёієыї\\-\\']*$/i]",
+              type: "regExp[/^([а-яёієыї\\-\\']+\\s[а-яёієыї\\-\\']+)?(\\s[а-яёієыї\\-\\']+)?$/i]",
               prompt: "Введены недопустимые символы"
+            }, {
+              type: "empty",
+              prompt: "Укажите Имя и Фамилию"
             }
           ]
         },
@@ -144,14 +195,7 @@ twoStepController = (function() {
             }
           ]
         }
-      },
-      onSuccess: (function(_this) {
-        return function(e, f) {
-          _this.$scope.main.loading = true;
-          _this.$location.path("/s3");
-          return false;
-        };
-      })(this)
+      }
     });
   };
 

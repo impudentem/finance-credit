@@ -10,6 +10,9 @@
 .two-step.ui.form .field {
   margin: 0 0 .7857em;
 }
+.three-step.ui.form .field {
+  margin: 0 0 .7857em;
+}
 
 .ui.form button {
   margin: .7857em 0 0;
@@ -17,6 +20,12 @@
 }
 .two-step.ui.form button {
   width: 45%;
+}
+.three-step.ui.form button {
+  width: 45%;
+}
+.three-step.ui.form button.right {
+  width: 50%;
 }
 
 .two-step.ui.form .field .ui.checkbox {
@@ -48,26 +57,26 @@
 }
 
 .ui.form .field.amount {
-      position: relative;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-flex: 1;
-    -ms-flex: 1 0 auto;
-    flex: 1 0 auto;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: row;
-    vertical-align: middle;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: center;
-    justify-content: space-between;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: row;
+  vertical-align: middle;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: center;
+  justify-content: space-between;
 }
 
 
@@ -86,6 +95,9 @@
 .ui.form .field .ui.pointing.label:before {
   display: none;
   content: none;
+}
+.ui.form .field.amount .prompt.label {
+  bottom: -1.8rem;
 }
 
 .ui.form .field.error .ui.dropdown, .ui.form .fields.error .field .ui.dropdown {

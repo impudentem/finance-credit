@@ -1127,7 +1127,7 @@ body {
 .ui.grid.mail-subscr .ui.container .action.input.ui {
   display: inline-block;
   vertical-align: top;
-  margin-left: 2.3571rem;
+  margin-left: 2.2571rem;
 }
 
 .ui.grid.mail-subscr .ui.container .action.input.ui input {
@@ -1148,7 +1148,7 @@ body {
   border-radius: .28571429rem;
   line-height: 1.7142rem;
   font-size: 1.2857rem;
-  margin-left: 2.3571rem;
+  margin-left: 1.3571rem;
   padding-top: .725714em;
   padding-bottom: .725714em;
 }
@@ -5579,7 +5579,7 @@ body {
 
 /* Tablet */
 
-@media only screen and (min-width: 768px) and (max-width: 999px) {
+@media only screen and (min-width: 768px) and (max-width: 899px) {
   .ui.container {
     width: 723px;
     margin-left: auto !important;
@@ -5601,45 +5601,45 @@ body {
 
 /* Small Monitor */
 
-@media only screen and (min-width: 1000px) and (max-width: 1199px) {
+@media only screen and (min-width: 900px) and (max-width: 1099px) {
   .ui.container {
-    width: 941px;
+    width: 841px;
     margin-left: auto !important;
     margin-right: auto !important;
   }
 
   .ui.grid.container {
-    width: calc( 941px  +  2rem ) !important;
+    width: calc( 841px  +  2rem ) !important;
   }
 
   .ui.relaxed.grid.container {
-    width: calc( 941px  +  3rem ) !important;
+    width: calc( 841px  +  3rem ) !important;
   }
 
   .ui.very.relaxed.grid.container {
-    width: calc( 941px  +  5rem ) !important;
+    width: calc( 841px  +  5rem ) !important;
   }
 }
 
 /* Large Monitor */
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1100px) {
   .ui.container {
-    width: 1127px;
+    width: 1027px;
     margin-left: auto !important;
     margin-right: auto !important;
   }
 
   .ui.grid.container {
-    width: calc( 1127px  +  2rem ) !important;
+    width: calc( 1027px  +  2rem ) !important;
   }
 
   .ui.relaxed.grid.container {
-    width: calc( 1127px  +  3rem ) !important;
+    width: calc( 1027px  +  3rem ) !important;
   }
 
   .ui.very.relaxed.grid.container {
-    width: calc( 1127px  +  5rem ) !important;
+    width: calc( 1027px  +  5rem ) !important;
   }
 }
 
@@ -17898,7 +17898,7 @@ ol.ui.horizontal.list li:before,
   padding: 1.1428rem 2.5714rem;
 }
 
-.ui.form-steps .ui.form.segment {
+.ui.form-steps .ui.segment-form.segment {
   padding: 1.6428rem 2.5714rem 2.5714rem 2.5714rem;
 }
 /*!
@@ -18368,7 +18368,7 @@ ol.ui.horizontal.list li:before,
 
 /* Tablet Or Below */
 
-@media only screen and (max-width: 999px) {
+@media only screen and (max-width: 899px) {
   .ui[class*="tablet stackable"].steps {
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;
@@ -18640,6 +18640,10 @@ ol.ui.horizontal.list li:before,
   margin-top: -0.042em;
   left: -0.684em;
   background: #fff;
+}
+
+.form-page .ui.segments.form-steps .ui.segment.segments .right.floated.ui.basic.segment {
+  padding-right: 2.2714rem;
 }
 /*!
  * # Semantic UI 2.2.11 - Breadcrumb
@@ -19960,6 +19964,10 @@ ol.ui.horizontal.list li:before,
   margin: 0 0 .7857em;
 }
 
+.three-step.ui.form .field {
+  margin: 0 0 .7857em;
+}
+
 .ui.form button {
   margin: .7857em 0 0;
   line-height: 1.2em;
@@ -19967,6 +19975,14 @@ ol.ui.horizontal.list li:before,
 
 .two-step.ui.form button {
   width: 45%;
+}
+
+.three-step.ui.form button {
+  width: 45%;
+}
+
+.three-step.ui.form button.right {
+  width: 50%;
 }
 
 .two-step.ui.form .field .ui.checkbox {
@@ -20035,6 +20051,10 @@ ol.ui.horizontal.list li:before,
 .ui.form .field .ui.pointing.label:before {
   display: none;
   content: none;
+}
+
+.ui.form .field.amount .prompt.label {
+  bottom: -1.8rem;
 }
 
 .ui.form .field.error .ui.dropdown,
@@ -20307,7 +20327,7 @@ ol.ui.horizontal.list li:before,
   }
 }
 
-@media only screen and (min-width: 768px) and (max-width: 999px) {
+@media only screen and (min-width: 768px) and (max-width: 899px) {
   .ui.page.grid {
     width: auto;
     margin-left: 0em;
@@ -20317,7 +20337,7 @@ ol.ui.horizontal.list li:before,
   }
 }
 
-@media only screen and (min-width: 1000px) and (max-width: 1199px) {
+@media only screen and (min-width: 900px) and (max-width: 1099px) {
   .ui.page.grid {
     width: auto;
     margin-left: 0em;
@@ -20327,7 +20347,7 @@ ol.ui.horizontal.list li:before,
   }
 }
 
-@media only screen and (min-width: 1200px) and (max-width: 1919px) {
+@media only screen and (min-width: 1100px) and (max-width: 1099px) {
   .ui.page.grid {
     width: auto;
     margin-left: 0em;
@@ -20337,7 +20357,7 @@ ol.ui.horizontal.list li:before,
   }
 }
 
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1100px) {
   .ui.page.grid {
     width: auto;
     margin-left: 0em;
@@ -20753,7 +20773,7 @@ ol.ui.horizontal.list li:before,
 
 /* Tablet Sizing Combinations */
 
-@media only screen and (min-width: 768px) and (max-width: 999px) {
+@media only screen and (min-width: 768px) and (max-width: 899px) {
   .ui.grid > .row > [class*="one wide tablet"].column,
   .ui.grid > .column.row > [class*="one wide tablet"].column,
   .ui.grid > [class*="one wide tablet"].column,
@@ -20869,7 +20889,7 @@ ol.ui.horizontal.list li:before,
 
 /* Computer/Desktop Sizing Combinations */
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 900px) {
   .ui.grid > .row > [class*="one wide computer"].column,
   .ui.grid > .column.row > [class*="one wide computer"].column,
   .ui.grid > [class*="one wide computer"].column,
@@ -20985,7 +21005,7 @@ ol.ui.horizontal.list li:before,
 
 /* Large Monitor Sizing Combinations */
 
-@media only screen and (min-width: 1200px) and (max-width: 1919px) {
+@media only screen and (min-width: 1100px) and (max-width: 1099px) {
   .ui.grid > .row > [class*="one wide large screen"].column,
   .ui.grid > .column.row > [class*="one wide large screen"].column,
   .ui.grid > [class*="one wide large screen"].column,
@@ -21101,7 +21121,7 @@ ol.ui.horizontal.list li:before,
 
 /* Widescreen Sizing Combinations */
 
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1100px) {
   .ui.grid > .row > [class*="one wide widescreen"].column,
   .ui.grid > .column.row > [class*="one wide widescreen"].column,
   .ui.grid > [class*="one wide widescreen"].column,
@@ -21848,7 +21868,7 @@ ol.ui.horizontal.list li:before,
 
 /* Tablet */
 
-@media only screen and (min-width: 768px) and (max-width: 999px) {
+@media only screen and (min-width: 768px) and (max-width: 899px) {
   .ui[class*="tablet reversed"].grid,
   .ui[class*="tablet reversed"].grid > .row,
   .ui.grid > [class*="tablet reversed"].row {
@@ -21906,7 +21926,7 @@ ol.ui.horizontal.list li:before,
 
 /* Computer */
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 900px) {
   .ui[class*="computer reversed"].grid,
   .ui[class*="computer reversed"].grid > .row,
   .ui.grid > [class*="computer reversed"].row {
@@ -21968,7 +21988,7 @@ ol.ui.horizontal.list li:before,
 
 /* Tablet Only */
 
-@media only screen and (min-width: 768px) and (max-width: 999px) {
+@media only screen and (min-width: 768px) and (max-width: 899px) {
   .ui.doubling.grid {
     width: auto;
   }
@@ -22314,7 +22334,7 @@ ol.ui.horizontal.list li:before,
 
 /* Tablet Only Hide */
 
-@media only screen and (min-width: 768px) and (max-width: 999px) {
+@media only screen and (min-width: 768px) and (max-width: 899px) {
   .ui[class*="mobile only"].grid.grid.grid:not(.tablet),
   .ui.grid.grid.grid > [class*="mobile only"].row:not(.tablet),
   .ui.grid.grid.grid > [class*="mobile only"].column:not(.tablet),
@@ -22346,7 +22366,7 @@ ol.ui.horizontal.list li:before,
 
 /* Computer Only Hide */
 
-@media only screen and (min-width: 1000px) and (max-width: 1199px) {
+@media only screen and (min-width: 900px) and (max-width: 1099px) {
   .ui[class*="mobile only"].grid.grid.grid:not(.computer),
   .ui.grid.grid.grid > [class*="mobile only"].row:not(.computer),
   .ui.grid.grid.grid > [class*="mobile only"].column:not(.computer),
@@ -22378,7 +22398,7 @@ ol.ui.horizontal.list li:before,
 
 /* Large Screen Only Hide */
 
-@media only screen and (min-width: 1200px) and (max-width: 1919px) {
+@media only screen and (min-width: 1100px) and (max-width: 1099px) {
   .ui[class*="mobile only"].grid.grid.grid:not(.computer),
   .ui.grid.grid.grid > [class*="mobile only"].row:not(.computer),
   .ui.grid.grid.grid > [class*="mobile only"].column:not(.computer),
@@ -22403,7 +22423,7 @@ ol.ui.horizontal.list li:before,
 
 /* Widescreen Only Hide */
 
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1100px) {
   .ui[class*="mobile only"].grid.grid.grid:not(.computer),
   .ui.grid.grid.grid > [class*="mobile only"].row:not(.computer),
   .ui.grid.grid.grid > [class*="mobile only"].column:not(.computer),
@@ -22465,6 +22485,31 @@ ol.ui.horizontal.list li:before,
     margin-right: 0rem!important;
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .form-page .twelve.wide.mobile.seven.wide.tablet.five.wide.computer.column {
+    width: 43%!important;
+  }
+
+  .form-page .ui.tab.twelve.wide.mobile.five.wide.tablet.six.wide.computer.column {
+    width: 57%!important;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .ui.inrelaxed.grid {
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+  }
+
+  .ui.inrelaxed.grid > .column:not(.row):first-child {
+    padding-right: 1.5rem;
+  }
+
+  .ui.inrelaxed.grid > .column:not(.row):last-child {
+    padding-left: 3.5rem;
   }
 }
 /*
@@ -25757,7 +25802,7 @@ Floated Menu / Item
     Stackable
 ---------------*/
 
-@media only screen and (max-width: 999px) {
+@media only screen and (max-width: 899px) {
   .ui[class*="tablet stackable"].table,
   .ui[class*="tablet stackable"].table tbody,
   .ui[class*="tablet stackable"].table tr,
@@ -27870,7 +27915,7 @@ a.ui.card:hover,
 
 /* Tablet Only */
 
-@media only screen and (min-width: 768px) and (max-width: 999px) {
+@media only screen and (min-width: 768px) and (max-width: 899px) {
   .ui.two.doubling.cards {
     margin-left: 0em;
     margin-right: 0em;
@@ -28975,7 +29020,7 @@ a.ui.card:hover,
 
 /* Tablet Only */
 
-@media only screen and (min-width: 768px) and (max-width: 999px) {
+@media only screen and (min-width: 768px) and (max-width: 899px) {
   .ui.items > .item {
     margin: 1em 0em;
   }
@@ -31758,13 +31803,13 @@ select.ui.dropdown {
   }
 }
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 900px) {
   .ui.selection.dropdown .menu {
     max-height: 16.02857143rem;
   }
 }
 
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1100px) {
   .ui.selection.dropdown .menu {
     max-height: 21.37142857rem;
   }
@@ -31972,13 +32017,13 @@ select.ui.dropdown {
   }
 }
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 900px) {
   .ui.search.dropdown .menu {
     max-height: 16.02857143rem;
   }
 }
 
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1100px) {
   .ui.search.dropdown .menu {
     max-height: 21.37142857rem;
   }
@@ -32536,14 +32581,14 @@ select.ui.dropdown {
   }
 }
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 900px) {
   .ui.scrolling.dropdown .menu,
   .ui.dropdown .scrolling.menu {
     max-height: 20.57142857rem;
   }
 }
 
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1100px) {
   .ui.scrolling.dropdown .menu,
   .ui.dropdown .scrolling.menu {
     max-height: 20.57142857rem;
@@ -33086,6 +33131,45 @@ i.icon.arrow-input:before,
   font-size: 1.2857rem;
   line-height: 1.7142rem;
 }
+
+.ui.form .field.error .ui.dropdown,
+.ui.form .fields.error .field .ui.dropdown {
+  border-color: #FB5C3F!important;
+  background: rgba(241, 241, 241, 0.32);
+  color: #232323;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.32)), to(rgba(241, 241, 241, 0.32)));
+  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.32) 0%, rgba(241, 241, 241, 0.32) 100%);
+  background-image: linear-gradient(-180deg, rgba(255, 255, 255, 0.32) 0%, rgba(241, 241, 241, 0.32) 100%);
+}
+
+.ui.form .field.error .ui.dropdown,
+.ui.form .field.error .ui.dropdown .text,
+.ui.form .fields.error .field .ui.dropdown {
+  background: rgba(241, 241, 241, 0.32);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.32)), to(rgba(241, 241, 241, 0.32)));
+  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.32) 0%, rgba(241, 241, 241, 0.32) 100%);
+  background-image: linear-gradient(-180deg, rgba(255, 255, 255, 0.32) 0%, rgba(241, 241, 241, 0.32) 100%);
+  color: #232323;
+}
+
+.ui.form .field.error .ui.dropdown .item,
+.ui.form .fields.error .field .ui.dropdown .item {
+  background: #fff;
+  color: #232323;
+}
+
+.ui.form .field.error .ui.dropdown .menu .item:hover,
+.ui.form .fields.error .field .ui.dropdown .menu .item:hover {
+  background: #F7F7F7;
+  color: #232323;
+}
+
+.ui.form .field.error .ui.dropdown .menu .active.item,
+.ui.form .fields.error .field .ui.dropdown .menu .item:active {
+  background: #FF9C0F;
+  color: #fff;
+  font-weight: normal;
+}
 /*!
  * # Semantic UI 2.2.11 - Video
  * http://github.com/semantic-org/semantic-ui/
@@ -33462,21 +33546,21 @@ i.icon.arrow-input:before,
   }
 }
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 900px) {
   .ui.modal {
     width: 850px;
     margin: 0em 0em 0em -425px;
   }
 }
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1100px) {
   .ui.modal {
     width: 900px;
     margin: 0em 0em 0em -450px;
   }
 }
 
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1100px) {
   .ui.modal {
     width: 950px;
     margin: 0em 0em 0em -475px;
@@ -33485,7 +33569,7 @@ i.icon.arrow-input:before,
 
 /* Tablet and Mobile */
 
-@media only screen and (max-width: 999px) {
+@media only screen and (max-width: 899px) {
   .ui.modal > .header {
     padding-right: 2.25rem;
   }
@@ -33607,7 +33691,7 @@ i.icon.arrow-input:before,
 
 /* Tablet and Mobile */
 
-@media only screen and (max-width: 999px) {
+@media only screen and (max-width: 899px) {
   .ui.basic.modal > .close {
     color: #FFFFFF;
   }
@@ -33672,7 +33756,7 @@ i.icon.arrow-input:before,
   z-index: auto;
 }
 
-@media only screen and (max-width: 999px) {
+@media only screen and (max-width: 899px) {
   .modals.dimmer .ui.scrolling.modal {
     margin-top: 1rem !important;
     margin-bottom: 1rem !important;
@@ -33740,21 +33824,21 @@ i.icon.arrow-input:before,
   }
 }
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 900px) {
   .ui.mini.modal {
     width: 340px;
     margin: 0em 0em 0em -170px;
   }
 }
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1100px) {
   .ui.mini.modal {
     width: 360px;
     margin: 0em 0em 0em -180px;
   }
 }
 
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1100px) {
   .ui.mini.modal {
     width: 380px;
     margin: 0em 0em 0em -190px;
@@ -33783,21 +33867,21 @@ i.icon.arrow-input:before,
   }
 }
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 900px) {
   .ui.tiny.modal {
     width: 510px;
     margin: 0em 0em 0em -255px;
   }
 }
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1100px) {
   .ui.tiny.modal {
     width: 540px;
     margin: 0em 0em 0em -270px;
   }
 }
 
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1100px) {
   .ui.tiny.modal {
     width: 570px;
     margin: 0em 0em 0em -285px;
@@ -33826,21 +33910,21 @@ i.icon.arrow-input:before,
   }
 }
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 900px) {
   .ui.small.modal {
     width: 680px;
     margin: 0em 0em 0em -340px;
   }
 }
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1100px) {
   .ui.small.modal {
     width: 720px;
     margin: 0em 0em 0em -360px;
   }
 }
 
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1100px) {
   .ui.small.modal {
     width: 760px;
     margin: 0em 0em 0em -380px;
@@ -33867,21 +33951,21 @@ i.icon.arrow-input:before,
   }
 }
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 900px) {
   .ui.large.modal {
     width: 1020px;
     margin: 0em 0em 0em -510px;
   }
 }
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1100px) {
   .ui.large.modal {
     width: 1080px;
     margin: 0em 0em 0em -540px;
   }
 }
 
-@media only screen and (min-width: 1920px) {
+@media only screen and (min-width: 1100px) {
   .ui.large.modal {
     width: 1140px;
     margin: 0em 0em 0em -570px;

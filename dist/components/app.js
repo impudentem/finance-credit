@@ -2,11 +2,13 @@
 var financeAppController;
 
 financeAppController = (function() {
-  function financeAppController($rootScope, $scope, $localStorage, $location, $window) {
+  function financeAppController($rootScope, $scope, $localStorage, $location, $window, $timeout, $route) {
     this.$rootScope = $rootScope;
     this.$scope = $scope;
     this.$location = $location;
     this.$window = $window;
+    this.$timeout = $timeout;
+    this.$route = $route;
     this.$scope.$storage = this.$storage = $localStorage.$default({
       strgData: {
         amount: 5000
@@ -52,70 +54,86 @@ financeAppController = (function() {
         if (!_this.$scope.$$phase) {
           _this.$scope.$apply();
         }
-        return console.log(_this.$location.path(), _this.currentStep, _currentNameStep);
+        console.log(_this.$location.path(), _this.currentStep, _currentNameStep);
+        return _this.$timeout(function() {
+          if (_this.currentStep === 1) {
+            return _this.init();
+          }
+        });
       };
     })(this));
-    $(function() {
-      $(".ui.clients .ui.images").slick({
-        infinite: true,
-        centerMode: true,
-        autoplay: true,
-        accessibility: false,
-        arrows: false,
-        prevArrow: '<button class="slick-prev button icon basic" aria-label="Previous" type="button"></button>',
-        nextArrow: '<button class="slick-next button icon basic" aria-label="Next" type="button"></button>',
-        slideTrack: '<div class="slick-track images"/>',
-        speed: 400,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        responsive: [
-          {
-            breakpoint: 1199,
-            settings: {
-              slidesToShow: 3,
-              slidesToScroll: 1,
-              arrows: false
-            }
-          }, {
-            breakpoint: 1000,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1,
-              arrows: false
-            }
-          }, {
-            breakpoint: 768,
-            settings: {
-              autoplay: false,
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              arrows: true
-            }
+    $((function(_this) {
+      return function() {
+        return _this.init();
+      };
+    })(this));
+  }
+
+  financeAppController.prototype.init = function() {
+    $(".ui.clients .ui.images").slick({
+      infinite: true,
+      centerMode: true,
+      autoplay: true,
+      accessibility: false,
+      prevArrow: '<button class="slick-prev button icon basic" aria-label="Previous" type="button"></button>',
+      nextArrow: '<button class="slick-next button icon basic" aria-label="Next" type="button"></button>',
+      slideTrack: '<div class="slick-track images"/>',
+      speed: 400,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 1199,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            arrows: false
           }
-        ]
-      });
-      $(".ui.sidebar").sidebar("attach events", ".toc.item").sidebar("setting", "dimPage", true).sidebar("setting", "transition", "push").sidebar("setting", "useLegacy", true);
-      $(".ui.accordion").accordion();
-      return $(".main.container").visibility({
-        once: false,
-        onOffScreen: function(calculations) {
-          var _btn;
-          _btn = $(".menu .computer-only .ui.button");
-          return _btn.transition('scale in');
-        },
-        onOnScreen: function(calculations) {
-          var _btn;
-          _btn = $(".menu .computer-only .ui.button");
-          if (!_btn.hasClass("hidden")) {
-            return _btn.transition('scale out');
+        }, {
+          breakpoint: 1000,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            arrows: false
+          }
+        }, {
+          breakpoint: 768,
+          settings: {
+            autoplay: false,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: true
           }
         }
-      });
+      ]
     });
-  }
+    $(".ui.sidebar").sidebar("attach events", ".toc.item").sidebar("setting", "dimPage", true).sidebar("setting", "transition", "push").sidebar("setting", "useLegacy", true);
+    $(".ui.accordion").accordion();
+    return $(".main.container").visibility({
+      once: false,
+      onOffScreen: function(calculations) {
+        var _btn;
+        _btn = $(".menu .computer-only .ui.button");
+        return _btn.transition('scale in');
+      },
+      onOnScreen: function(calculations) {
+        var _btn;
+        _btn = $(".menu .computer-only .ui.button");
+        if (!_btn.hasClass("hidden")) {
+          return _btn.transition('scale out');
+        }
+      }
+    });
+  };
 
   financeAppController.prototype.titleStep = function() {
     return "Шаг " + this.currentStep + " из " + this.maxStep;
+  };
+
+  financeAppController.prototype.scrollTo = function($event, id) {
+    return $("html, body").animate({
+      scrollTop: $(id).offset().top
+    }, 600);
   };
 
   financeAppController.prototype.sendEvent = function(evnt) {

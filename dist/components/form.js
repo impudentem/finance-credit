@@ -332,7 +332,7 @@ $.fn.form = function(parameters) {
                   .blur()
                 ;
               }
-              if(!event.ctrlKey && key == keyCode.enter && isInput && !isInDropdown && !isCheckbox) {
+              if(!event.ctrlKey && settings.keyboardSubmit && key == keyCode.enter && isInput && !isInDropdown && !isCheckbox) {
                 if(!keyHeldDown) {
                   $field
                     .one('keyup' + eventNamespace, module.event.field.keyup)
@@ -1214,6 +1214,7 @@ $.fn.form.settings = {
   fields            : false,
 
   keyboardShortcuts : true,
+  keyboardSubmit    : false,
   on                : 'submit',
   inline            : false,
 

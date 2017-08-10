@@ -10,6 +10,8 @@ class threeStepController
       @$iElement = $ @$element
       newValue = parseInt newValue
       if newValue is 3
+        @data.employments = {}
+        @data.cities = {}
         @init "cities", (responce) ->
           @data.cities = responce.data if responce and responce.result is 'success'
           @init "employments", (responce) -> @data.employments = responce.data if responce and responce.result is 'success'
@@ -25,10 +27,56 @@ class threeStepController
     @$scope.cards_three.card_hover = if $event.type is "mouseover" then card else ""
     # @$scope.$apply() if not @$scope.$$phase
 
+  prevStep: ->
+    @$scope.main.loading = on
+    @data.employments = {}
+    @data.cities = {}
+    @$scope.main.$location.path '/s2'
+
+  nextStep: ->
+    form = $(@$element).find ".ui.form"
+    form = form.data "module-form"
+    if form and form.is.valid()
+      @$scope.main.loading = on
+      # @data.aims = {}
+      # @$location.path "/s3"
+      data =
+        aims       : @$scope.$storage.strgData.aims
+        amount     : @$scope.$storage.strgData.amount
+        name       : @$scope.$storage.strgData.name
+        phone      : @$scope.$storage.strgData.phone
+        bday       : @$scope.$storage.strgData.bday
+        employment : @$scope.$storage.strgData.employment
+        city       : @$scope.$storage.strgData.city
+        utime      : (new Date()).getTime()
+      data.inn = @$scope.$storage.strgData.inn if not @$scope.$storage.strgData.noinn
+      data.result = "#{off}" if @$rootScope.settings.api.debug is on
+
+      @data.employments = {}
+      @data.cities = {}
+
+      @post data, (resp) =>
+        @$location.path "/request"
+        @$scope.main.statusReq = if resp?.result is "success" then on else off
+
+        @$scope.$storage.$reset()
+        @$scope.$apply() if not @$scope.$$phase
+
+    else if form
+      form.validate.form()
+
   update: ->
     _dropdown_city = @$iElement.find ".ui.dropdown.city"
       .dropdown
+        selectOnKeydown: off
+        allowReselection: on
+        forceSelection: off
+        hideAdditions: off
         allowAdditions: on
+        message:
+          addResult     : '<b>{term}</b>'
+          noResults     : 'Ничего не найдено.'
+
         onChange: (value, text, $selectedItem) =>
           @$scope.$storage.strgData.city     = text
           @$scope.$storage.strgData.city_val = value
@@ -51,7 +99,23 @@ class threeStepController
         _dropdown_employment.data "module-dropdown"
           .set.selected @$scope.$storage.strgData.employment
 
-    $(@$element).find "form"
+    param =
+      mask: "([а-яёієыї\\-\\']+\\s[а-яёієыї\\-\\']+)?(\\s[а-яёієыї\\-\\']+)?"
+      greedy: off
+      showMaskOnHover: off
+      oncomplete: (e) => @$scope.$storage.strgData.city = e.target.value
+    $ 'input[name="city"]'
+      .inputmask param
+
+    param =
+      mask: "9999999999"
+      greedy: off
+      showMaskOnHover: off
+      oncomplete: (e) => @$scope.$storage.strgData.inn = e.target.value
+    $ 'input[name="inn"]'
+      .inputmask param
+
+    $(@$element).find ".ui.form"
       .form
         inline : true
         on: "blur"
@@ -68,26 +132,37 @@ class threeStepController
               type: "empty"
               prompt: "Введите ваш город"
             ]
-        onSuccess: (e, f) =>
-          @$scope.main.loading = on
-          # @$location.path "/s2"
-          # @$scope.main.currentStep = 2
-          data =
-            aims       : @$scope.$storage.strgData.aims
-            amount     : @$scope.$storage.strgData.amount
-            name       : @$scope.$storage.strgData.name
-            phone      : @$scope.$storage.strgData.phone
-            bday       : @$scope.$storage.strgData.bday
-            employment : @$scope.$storage.strgData.employment
-            city       : @$scope.$storage.strgData.city
-          data.inn = @$scope.$storage.strgData.inn if not @$scope.$storage.strgData.noinn
-          data.result = off if @$rootScope.settings.api.debug is on
+        # onSuccess: (e, f) =>
+        #   console.log "onSuccess", e
+        #   @$scope.main.loading = on
 
-          @post data, (resp) =>
-            @$location.path "/request"
-            @$scope.main.statusReq = if resp?.result is "success" then on else off
+        #   data =
+        #     aims       : @$scope.$storage.strgData.aims
+        #     amount     : @$scope.$storage.strgData.amount
+        #     name       : @$scope.$storage.strgData.name
+        #     phone      : @$scope.$storage.strgData.phone
+        #     bday       : @$scope.$storage.strgData.bday
+        #     employment : @$scope.$storage.strgData.employment
+        #     city       : @$scope.$storage.strgData.city
+        #     utime      : (new Date()).getTime()
+        #   data.inn = @$scope.$storage.strgData.inn if not @$scope.$storage.strgData.noinn
+        #   data.result = "#{off}" if @$rootScope.settings.api.debug is on
 
-          return false
+        #   @data.employments = {}
+        #   @data.cities = {}
+
+        #   @post data, (resp) =>
+        #     e.preventDefault()
+        #     e.stopPropagation()
+
+        #     console.log "postSuccess", resp
+
+        #     @$location.path "/request"
+        #     @$scope.main.statusReq = if resp?.result is "success" then on else off
+
+        #     @$scope.$apply() if not @$scope.$$phase
+
+        #   return off
 
     @chngMsg "add"
 

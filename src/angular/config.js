@@ -82,4 +82,4 @@ angular.module('financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
       });
     });
   }
-]).controller("financeAppController", ['$rootScope', '$scope', '$localStorage', '$location', '$window', financeAppController]);
+]).controller("financeAppController", ['$rootScope', '$scope', '$localStorage', '$location', '$window', '$timeout', '$route', financeAppController]);

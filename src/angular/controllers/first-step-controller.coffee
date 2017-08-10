@@ -1,7 +1,7 @@
 class firstStepController
   constructor: (@$http, @$scope, @$rootScope, @$sce, @$location, @$element, @$sceDelegate, @$filter, @$timeout) ->
     @data =
-      aims: {ds:"sdls;dl"}
+      aims: {}
 
     @val_range =
       min: 200
@@ -29,17 +29,41 @@ class firstStepController
     @$scope.cards_first.card_hover = if $event.type is "mouseover" then card else ""
     # @$scope.$apply() if not @$scope.$$phase
 
-  chgAmount: (v, fromRange) ->
-    if fromRange
-      @$timeout =>
-        _el = @$iElement.find("[name='amount']")
-        _el = angular.element _el if _el.length
-        # console.log "onMove", v, meta
-        _el.val? v
-        _el.triggerHandler? "change"
-    else
-      @rangeElement.data "module-amountrange"
-        .set.value v
+  selectAllTxt: ($event) ->
+    $event.currentTarget.select()
+
+  chgAmount: ($event) ->
+    @$timeout =>
+      @$scope.$storage.strgData.amount = @$scope.$storage.strgData.amount.replace /[^0-9]+/g, ''
+      @$iElement.find ".ui.range"
+        .data "module-amountrange"
+          .update?.value @$scope.$storage.strgData.amount if @$scope.$storage.strgData.amount
+      @$scope.$apply() if not @$scope.$$phase
+    # "f32. 32".replace(/[^0-9]+/g, '');
+
+    # console.log $event
+    # if fromRange
+    #   @$timeout =>
+    #     _el = @$iElement.find("[name='amount']")
+    #     _el = angular.element _el if _el.length
+    #     # console.log "onMove", v, meta
+    #     _el.val? v
+    #     _el.triggerHandler? "change"
+    # else
+    #   @rangeElement.data "module-amountrange"
+    #     .set.value v
+
+  nextStep: ->
+    form = $(@$element).find ".ui.form"
+    form = form.data "module-form"
+    if form and form.is.valid()
+      @$scope.main.loading = on
+      @data.aims = {}
+      @$location.path "/s2"
+      @$scope.$apply() if not @$scope.$$phase
+    else if form
+      form.validate.form()
+
 
   update: ->
     # ng-selected="$storage.strgData.aims==key"
@@ -52,6 +76,14 @@ class firstStepController
       @$timeout =>
         _dropdown.data "module-dropdown"
           .set.selected @$scope.$storage.strgData.aims
+
+    # param =
+    #   mask: "[1-5\s]{1,2}?999"
+    #   greedy: off
+    #   showMaskOnHover: off
+      # oncomplete: (e) => @$scope.$storage.strgData.amount = e.target.value
+    # $ 'input[name="amount"]'
+    #   .inputmask param
       # .set.value @$scope.$storage.strgData.aims
 
 
@@ -75,8 +107,7 @@ class firstStepController
         onChange: (v, meta) => @changeAmount v
         onMove  : (v, meta) => @changeAmount v
 
-
-    $(@$element).find "form"
+    $(@$element).find ".ui.form"
       .form
         inline : true
         on: "blur"
@@ -93,15 +124,23 @@ class firstStepController
               type: "integer[200..50000]"
               prompt: "Сумма кредита должна быть от 200 до 50 000 грн."
             ]
-        onSuccess: (e, f) =>
-          @$scope.main.loading = on
-          @$location.path "/s2"
-          # @$scope.main.currentStep = 2
-          return false
+        # onSuccess: (e, f) =>
+        #   e.preventDefault()
+        #   e.stopPropagation()
+
+        #   console.log "fromFirst", e
+
+        #   @$scope.main.loading = on
+        #   @data.aims = {}
+        #   @$location.path "/s2"
+        #   @$scope.$apply() if not @$scope.$$phase
+
+        #   return off
 
     @$scope.main.loading = off
 
   init: ->
+    @data.aims = {}
     # delete @$http.defaults.headers.common['X-Requested-With']
     params =
       data: "aims"

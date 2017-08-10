@@ -830,7 +830,7 @@ $.fn.form = function(parameters) {
                   .blur()
                 ;
               }
-              if(!event.ctrlKey && key == keyCode.enter && isInput && !isInDropdown && !isCheckbox) {
+              if(!event.ctrlKey && settings.keyboardSubmit && key == keyCode.enter && isInput && !isInDropdown && !isCheckbox) {
                 if(!keyHeldDown) {
                   $field
                     .one('keyup' + eventNamespace, module.event.field.keyup)
@@ -1712,6 +1712,7 @@ $.fn.form.settings = {
   fields            : false,
 
   keyboardShortcuts : true,
+  keyboardSubmit    : false,
   on                : 'submit',
   inline            : false,
 
@@ -3264,7 +3265,7 @@ $.extend( $.easing, {
                 module.popup('hide');
               }
 
-              if (module.popup('is visible')) {
+              if (module.popup('is visible')&&settings.keydownSelDate) {
                 if (event.keyCode === 37 || event.keyCode === 38 || event.keyCode === 39 || event.keyCode === 40) {
                   //arrow keys
                   var mode = module.get.mode();
@@ -3830,6 +3831,7 @@ $.extend( $.easing, {
     startCalendar: null,  // jquery object or selector for another calendar that represents the start date of a date range
     endCalendar: null,    // jquery object or selector for another calendar that represents the end date of a date range
     multiMonth: 1,        // show multiple months when in 'day' mode
+    keydownSelDate: false,
 
     // popup options ('popup', 'on', 'hoverable', and show/hide callbacks are overridden)
     popupOptions: {

@@ -1,5 +1,6 @@
-angular.module 'financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ngStorage']
-.config [
+financeApp = angular.module 'financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ngStorage']
+
+financeApp.config [
   "$sceDelegateProvider",
   "$localStorageProvider",
   "$locationProvider",
@@ -21,8 +22,9 @@ angular.module 'financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
         .toISOString()
       $localStorageProvider.remove "strgData" if strgData
     $localStorageProvider.set "strgTime", time: _d
-  ]
-.run [
+]
+
+financeApp.run [
   "$rootScope",
   "$http",
   "$location",
@@ -43,7 +45,7 @@ angular.module 'financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
       cancelable: on
     $rootScope.settings =
       apiSubscr:
-        url: "/finance/web/subscribe/"
+        url: "/subscribe/"
       api:
         debug : on
         url   : "//credits.finance.ua/api/"
@@ -76,7 +78,7 @@ angular.module 'financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
           .on $rootScope.settings.events.transitionEvent(), (e) ->
             $ e.currentTarget
               .remove()
-    return off
-  ]
+]
 
-.controller "financeAppController", ['$rootScope', '$scope', '$localStorage', '$location', '$window', '$timeout', '$route', '$http', '$sceDelegate', '$sce', financeAppController]
+
+financeApp.controller "financeAppController", ['$rootScope', '$scope', '$localStorage', '$location', '$window', '$timeout', '$route', '$http', '$sceDelegate', '$sce', financeAppController]

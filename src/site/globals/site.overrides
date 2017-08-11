@@ -327,14 +327,16 @@ body {
   display: inline-block;
   vertical-align: top;
   font-size: 1.4285rem;
-  line-height: 1.8571rem;
+  // line-height: 1.8571rem;
+  line-height: 1.9rem;
   color: #4A4A4A;
   font-weight: 600;
   margin: 0;
 }
 .ui.grid.mail-subscr .ui.container h2.ui.header .sub.header {
   font-size: 1.0714rem;
-  line-height: 2.5rem;
+  // line-height: 2.5rem;
+  line-height: 1.2rem;
 }
 .ui.grid.mail-subscr .ui.container .action.input.ui {
   display: inline-block;

@@ -100,11 +100,11 @@ class threeStepController
           .set.selected @$scope.$storage.strgData.employment
 
     param =
-      mask: "([а-яёієыї\\-\\']+\\s[а-яёієыї\\-\\']+)?(\\s[а-яёієыї\\-\\']+)?"
+      mask: "U{1,128}"
       greedy: off
       showMaskOnHover: off
       oncomplete: (e) => @$scope.$storage.strgData.city = e.target.value
-    $ 'input[name="city"]'
+    $ 'input[name="city"], .ui.dropdown input.search'
       .inputmask param
 
     param =
@@ -112,6 +112,9 @@ class threeStepController
       greedy: off
       showMaskOnHover: off
       oncomplete: (e) => @$scope.$storage.strgData.inn = e.target.value
+      onKeyDown: (e) =>
+        console.log e
+        @$scope.$storage.strgData.inn = e.target.value
     $ 'input[name="inn"]'
       .inputmask param
 
@@ -169,12 +172,12 @@ class threeStepController
     @$scope.main.loading = off
 
   chngMsg: (comm) ->
-    _form = $(@$element).find "form"
+    _form = $(@$element).find ".ui.form"
     _checkbox = @$iElement.find ".ui.button.submit"
     if comm is "add"
       _form.form "add rule", "inn",
         rules: [
-          type: "integer[10]"
+          type: "integer[10...10]"
           prompt: "Неправильный ИНН"
         ]
       _checkbox.popup

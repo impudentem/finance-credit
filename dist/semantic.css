@@ -1148,9 +1148,10 @@ body {
   border-radius: .28571429rem;
   line-height: 1.7142rem;
   font-size: 1.2857rem;
-  margin-left: 1.3571rem;
   padding-top: .725714em;
   padding-bottom: .725714em;
+  margin-top: 0rem;
+  margin-left: 0rem;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
@@ -12427,6 +12428,13 @@ i.icon.step-ok:before {
 }
 
 /* '✔' */
+
+i.icon.block:before {
+  content: '\e807';
+  margin: 0;
+}
+
+/* '' */
 
 i.icon.arrow-input:before {
   content: '\fe3e';

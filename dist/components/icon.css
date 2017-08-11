@@ -3361,6 +3361,12 @@ i.icon.step-ok:before {
   text-align: center;
 }
 /* '✔' */
+i.icon.block:before {
+  content: '\e807';
+  margin: 0;
+}
+
+/* '' */
 i.icon.arrow-input:before {
   content: '\fe3e';
 }

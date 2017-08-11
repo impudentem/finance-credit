@@ -15,15 +15,6 @@ class firstStepController
       @init() if newValue is 1
       return false
 
-    # window["_loccc"] = @$location
-    # $ () =>
-    #   @$iElement = $ @$element
-    #   @init()
-    #   $(@$element).find "select"
-    #     .dropdown()
-    # @init()
-
-
 
   card_hover: ($event, card) ->
     @$scope.cards_first.card_hover = if $event.type is "mouseover" then card else ""
@@ -40,18 +31,6 @@ class firstStepController
           .update?.value @$scope.$storage.strgData.amount if @$scope.$storage.strgData.amount
       @$scope.$apply() if not @$scope.$$phase
     # "f32. 32".replace(/[^0-9]+/g, '');
-
-    # console.log $event
-    # if fromRange
-    #   @$timeout =>
-    #     _el = @$iElement.find("[name='amount']")
-    #     _el = angular.element _el if _el.length
-    #     # console.log "onMove", v, meta
-    #     _el.val? v
-    #     _el.triggerHandler? "change"
-    # else
-    #   @rangeElement.data "module-amountrange"
-    #     .set.value v
 
   nextStep: ->
     form = $(@$element).find ".ui.form"
@@ -76,15 +55,6 @@ class firstStepController
       @$timeout =>
         _dropdown.data "module-dropdown"
           .set.selected @$scope.$storage.strgData.aims
-
-    # param =
-    #   mask: "[1-5\s]{1,2}?999"
-    #   greedy: off
-    #   showMaskOnHover: off
-      # oncomplete: (e) => @$scope.$storage.strgData.amount = e.target.value
-    # $ 'input[name="amount"]'
-    #   .inputmask param
-      # .set.value @$scope.$storage.strgData.aims
 
 
     @changeAmount = (v) =>

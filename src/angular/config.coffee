@@ -29,7 +29,7 @@ angular.module 'financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
   ($rootScope, $http, $location) ->
     $location.path "/s1"
 
-    $http.defaults.useXDomain = true
+    # $http.defaults.useXDomain = true
     $http.defaults.headers.common["Accept"] = "application/json"
     $http.defaults.headers.common["Content-Type"] = "application/json; charset=UTF-8"
     $http.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
@@ -42,6 +42,8 @@ angular.module 'financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
       bubbles: on
       cancelable: on
     $rootScope.settings =
+      apiSubscr:
+        url: "/finance/web/subscribe/"
       api:
         debug : on
         url   : "//credits.finance.ua/api/"
@@ -74,7 +76,7 @@ angular.module 'financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
           .on $rootScope.settings.events.transitionEvent(), (e) ->
             $ e.currentTarget
               .remove()
-
+    return off
   ]
 
-.controller "financeAppController", ['$rootScope', '$scope', '$localStorage', '$location', '$window', '$timeout', '$route', financeAppController]
+.controller "financeAppController", ['$rootScope', '$scope', '$localStorage', '$location', '$window', '$timeout', '$route', '$http', '$sceDelegate', '$sce', financeAppController]

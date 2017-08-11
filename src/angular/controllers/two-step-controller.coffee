@@ -21,8 +21,6 @@ class twoStepController
     maxDate.setFullYear maxDate.getFullYear() - 18
     minDate.setFullYear minDate.getFullYear() - 90
     @initCal = () =>
-      # @calendar = $ ".ui.calendar"
-      # if _cal.length
       @calendar = @$iElement.find ".ui.calendar"
         .calendar
           type: "date"
@@ -48,9 +46,9 @@ class twoStepController
             now: 'Сейчас'
             am: 'AM'
             pm: 'PM'
-          # onChange: (date, text, mode) =>
+          onChange: (date, text, mode) =>
             # console.log date, text, mode
-            # @$scope.$storage.strgData.bday = text
+            @$scope.$storage.strgData.bday = text
             # @$scope.$apply() if not @$scope.$$phase
           formatter:
             date: (date, settings) ->
@@ -83,22 +81,22 @@ class twoStepController
       form.validate.form()
 
   initMask: ->
-    # $ document
-    #   .ready ->
-    #     console.log "READY___"
-    #     return ""
     @$scope.$storage.strgData.aggree = true if @$scope.$storage.strgData.aggree is undefined
-    param =
-      # mask: "+38 \\(0(3\\9)|(50)|(63)|(66)|(67)|(68)|(73)|(\\91)|(\\92)|(\\93)|(\\94)|(\\95)|(\\96)|(\\97)|(\\98)|(\\9\\9)\\) 999-99-99"
-      mask: "+38 (099) 999-99-99"
-      greedy: off
-      showMaskOnHover: off
-      oncomplete: (e) => @$scope.$storage.strgData.phone = e.target.value
+    alternatCodePhone     = [39,50,63,66,67,68,73,91,92,93,94,95,96,97,98,99]
+    alternatCodePhoneMask = ({mask: "+38 (0#{code}) ###-##-##", cc: "UA", cd: "Ukraine"} for code in alternatCodePhone)
     $ 'input[name="phone"]'
-      .inputmask param
+      .inputmask
+        # mask: "+38 (099) 999-99-99"
+        alias: "abstractphone"
+        countrycode: "38"
+        phoneCodes: alternatCodePhoneMask
+        # greedy: off
+        # keepStatic: on
+        showMaskOnHover: off
+        oncomplete: (e) => @$scope.$storage.strgData.phone = e.target.value
 
     param =
-      mask: "(09)|(19)|(29)|(30|1).(09)|(10|1|2).(1\\9)|(20)99"
+      mask: "(09|19|29|30|31).(09|10|11|12).9999"
       greedy: off
       showMaskOnHover: off
       oncomplete: (e) => @$scope.$storage.strgData.bday = e.target.value
@@ -152,16 +150,4 @@ class twoStepController
               type: "checked"
               prompt: "Так мы не сможем обработать Ваш запрос"
             ]
-        # onSuccess: (e, f) =>
-        #   e.preventDefault()
-        #   e.stopPropagation()
-
-        #   console.log "fromTwo", e
-
-        #   @$scope.main.loading = on
-        #   @$location.path "/s3"
-        #   @$scope.$apply() if not @$scope.$$phase
-
-        #   return off
-
 

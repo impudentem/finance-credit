@@ -157,7 +157,7 @@ threeStepController = (function() {
       })(this));
     }
     param = {
-      mask: "([а-яёієыї\\-\\']+\\s[а-яёієыї\\-\\']+)?(\\s[а-яёієыї\\-\\']+)?",
+      mask: "U{1,128}",
       greedy: false,
       showMaskOnHover: false,
       oncomplete: (function(_this) {
@@ -166,13 +166,19 @@ threeStepController = (function() {
         };
       })(this)
     };
-    $('input[name="city"]').inputmask(param);
+    $('input[name="city"], .ui.dropdown input.search').inputmask(param);
     param = {
       mask: "9999999999",
       greedy: false,
       showMaskOnHover: false,
       oncomplete: (function(_this) {
         return function(e) {
+          return _this.$scope.$storage.strgData.inn = e.target.value;
+        };
+      })(this),
+      onKeyDown: (function(_this) {
+        return function(e) {
+          console.log(e);
           return _this.$scope.$storage.strgData.inn = e.target.value;
         };
       })(this)
@@ -208,13 +214,13 @@ threeStepController = (function() {
 
   threeStepController.prototype.chngMsg = function(comm) {
     var _checkbox, _form;
-    _form = $(this.$element).find("form");
+    _form = $(this.$element).find(".ui.form");
     _checkbox = this.$iElement.find(".ui.button.submit");
     if (comm === "add") {
       _form.form("add rule", "inn", {
         rules: [
           {
-            type: "integer[10]",
+            type: "integer[10...10]",
             prompt: "Неправильный ИНН"
           }
         ]

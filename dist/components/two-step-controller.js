@@ -68,6 +68,9 @@ twoStepController = (function() {
             am: 'AM',
             pm: 'PM'
           },
+          onChange: function(date, text, mode) {
+            return _this.$scope.$storage.strgData.bday = text;
+          },
           formatter: {
             date: function(date, settings) {
               var day, month, year;
@@ -114,23 +117,37 @@ twoStepController = (function() {
   };
 
   twoStepController.prototype.initMask = function() {
-    var param;
+    var alternatCodePhone, alternatCodePhoneMask, code, param;
     if (this.$scope.$storage.strgData.aggree === void 0) {
       this.$scope.$storage.strgData.aggree = true;
     }
-    param = {
-      mask: "+38 (099) 999-99-99",
-      greedy: false,
+    alternatCodePhone = [39, 50, 63, 66, 67, 68, 73, 91, 92, 93, 94, 95, 96, 97, 98, 99];
+    alternatCodePhoneMask = (function() {
+      var i, len, results;
+      results = [];
+      for (i = 0, len = alternatCodePhone.length; i < len; i++) {
+        code = alternatCodePhone[i];
+        results.push({
+          mask: "+38 (0" + code + ") ###-##-##",
+          cc: "UA",
+          cd: "Ukraine"
+        });
+      }
+      return results;
+    })();
+    $('input[name="phone"]').inputmask({
+      alias: "abstractphone",
+      countrycode: "38",
+      phoneCodes: alternatCodePhoneMask,
       showMaskOnHover: false,
       oncomplete: (function(_this) {
         return function(e) {
           return _this.$scope.$storage.strgData.phone = e.target.value;
         };
       })(this)
-    };
-    $('input[name="phone"]').inputmask(param);
+    });
     param = {
-      mask: "(09)|(19)|(29)|(30|1).(09)|(10|1|2).(1\\9)|(20)99",
+      mask: "(09|19|29|30|31).(09|10|11|12).9999",
       greedy: false,
       showMaskOnHover: false,
       oncomplete: (function(_this) {

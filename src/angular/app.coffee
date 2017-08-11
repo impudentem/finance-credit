@@ -1,5 +1,5 @@
 class financeAppController
-  constructor: (@$rootScope, @$scope, $localStorage, @$location, @$window, @$timeout, @$route) ->
+  constructor: (@$rootScope, @$scope, $localStorage, @$location, @$window, @$timeout, @$route, @$http, @$sceDelegate, @$sce) ->
     @$scope.$storage = @$storage = $localStorage.$default strgData: amount: 5000
 
     @loading = on
@@ -33,23 +33,58 @@ class financeAppController
       console.log @$location.path(), @currentStep, _currentNameStep
       @$timeout =>
         @init() if @currentStep is 1
-      # return if meetsTheRequirementsToLeave()
-      # newPath = @$location.path()
-      # e.preventDefault()
-      # checkIfUserWantsToLeave().then -> @$location.path newPath
+        $ "html, body"
+            .animate
+              scrollTop: 0
+            , 600 if _currentNameStep is "request"
 
+        if _currentNameStep is "request"
+          $ 'input[name="email"]'
+            .inputmask
+              alias: "email"
+              # greedy: off
+              # keepStatic: on
+              showMaskOnHover: off
+              oncomplete: (e) => @$scope.emailSubscr = e.target.value
+          @$scope.main.loading = off
 
 
     $ =>
       @init()
-      # $ ".button.anchor-link"
-      #   .on "click", (e) ->
-      #     e.preventDefault()
-      #     href = $ e.target.href
-      #     $ "html, body"
-      #       .animate
-      #         scrollTop: href.offset().top
-      #       , 600
+
+  sendSubscr: ($event) ->
+    _inEmail = $ "input[name=email]"
+    _inEmail = _inEmail[0] if _inEmail.length
+    if _inEmail.inputmask?.isValid() and _inEmail.inputmask?.isComplete()
+      @$scope.main.loading = on
+      @$scope.$apply() if not @$scope.$$phase
+      params =
+        email: @$scope.emailSubscr
+      clbck = (responce) =>
+        @$scope.main.loading = off
+        @$scope.main.respMsg = @msgSubscr responce.data
+        $ ".ui.page.dimmer"
+          .dimmer "show"
+        @$scope.emailSubscr = ""
+        @$scope.$apply() if not @$scope.$$phase
+      @$http.get @$rootScope.settings.apiSubscr.url,
+        params: params
+      .then clbck, clbck
+
+  msgSubscr: (msg) ->
+    switch msg
+      when "Some fields are missing."
+        "Заполните поле E-mail."
+      when "Invalid email address."
+        "Недействительный адрес электронной почты."
+      when "Invalid list ID."
+        "Недействительный идентификатор подписки."
+      when "Already subscribed."
+        "Вы уже подписаны."
+      when "You're subscribed!"
+        "Вы подписаны на наши новости!"
+      else
+        "Извините, не удалось подписаться. Пожалуйста, повторите попытку позже!"
 
   init: ->
     $ ".ui.clients .ui.images"

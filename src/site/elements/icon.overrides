@@ -45,6 +45,7 @@ i.icon.step-ok:before {
   padding: 0;
   text-align: center;
 } /* '✔' */
+i.icon.block:before { content: '\e807'; margin: 0; } /* '' */
 i.icon.arrow-input:before { content: '\fe3e'; } /* '︾' */
 i.icon.arrow:before { content: '\fe40'; } /* '﹀' */
 i.icon.like:before { content: '👍'; } /* '\1f44d' */

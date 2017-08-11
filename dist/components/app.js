@@ -2,13 +2,16 @@
 var financeAppController;
 
 financeAppController = (function() {
-  function financeAppController($rootScope, $scope, $localStorage, $location, $window, $timeout, $route) {
+  function financeAppController($rootScope, $scope, $localStorage, $location, $window, $timeout, $route, $http, $sceDelegate, $sce) {
     this.$rootScope = $rootScope;
     this.$scope = $scope;
     this.$location = $location;
     this.$window = $window;
     this.$timeout = $timeout;
     this.$route = $route;
+    this.$http = $http;
+    this.$sceDelegate = $sceDelegate;
+    this.$sce = $sce;
     this.$scope.$storage = this.$storage = $localStorage.$default({
       strgData: {
         amount: 5000
@@ -57,7 +60,22 @@ financeAppController = (function() {
         console.log(_this.$location.path(), _this.currentStep, _currentNameStep);
         return _this.$timeout(function() {
           if (_this.currentStep === 1) {
-            return _this.init();
+            _this.init();
+          }
+          if (_currentNameStep === "request") {
+            $("html, body").animate({
+              scrollTop: 0
+            }, 600);
+          }
+          if (_currentNameStep === "request") {
+            $('input[name="email"]').inputmask({
+              alias: "email",
+              showMaskOnHover: false,
+              oncomplete: function(e) {
+                return _this.$scope.emailSubscr = e.target.value;
+              }
+            });
+            return _this.$scope.main.loading = false;
           }
         });
       };
@@ -68,6 +86,54 @@ financeAppController = (function() {
       };
     })(this));
   }
+
+  financeAppController.prototype.sendSubscr = function($event) {
+    var _inEmail, clbck, params, ref, ref1;
+    _inEmail = $("input[name=email]");
+    if (_inEmail.length) {
+      _inEmail = _inEmail[0];
+    }
+    if (((ref = _inEmail.inputmask) != null ? ref.isValid() : void 0) && ((ref1 = _inEmail.inputmask) != null ? ref1.isComplete() : void 0)) {
+      this.$scope.main.loading = true;
+      if (!this.$scope.$$phase) {
+        this.$scope.$apply();
+      }
+      params = {
+        email: this.$scope.emailSubscr
+      };
+      clbck = (function(_this) {
+        return function(responce) {
+          _this.$scope.main.loading = false;
+          _this.$scope.main.respMsg = _this.msgSubscr(responce.data);
+          $(".ui.page.dimmer").dimmer("show");
+          _this.$scope.emailSubscr = "";
+          if (!_this.$scope.$$phase) {
+            return _this.$scope.$apply();
+          }
+        };
+      })(this);
+      return this.$http.get(this.$rootScope.settings.apiSubscr.url, {
+        params: params
+      }).then(clbck, clbck);
+    }
+  };
+
+  financeAppController.prototype.msgSubscr = function(msg) {
+    switch (msg) {
+      case "Some fields are missing.":
+        return "Заполните поле E-mail.";
+      case "Invalid email address.":
+        return "Недействительный адрес электронной почты.";
+      case "Invalid list ID.":
+        return "Недействительный идентификатор подписки.";
+      case "Already subscribed.":
+        return "Вы уже подписаны.";
+      case "You're subscribed!":
+        return "Вы подписаны на наши новости!";
+      default:
+        return "Извините, не удалось подписаться. Пожалуйста, повторите попытку позже!";
+    }
+  };
 
   financeAppController.prototype.init = function() {
     $(".ui.clients .ui.images").slick({

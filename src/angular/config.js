@@ -28,7 +28,6 @@ angular.module('financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
   "$rootScope", "$http", "$location", function($rootScope, $http, $location) {
     var paramsEvent;
     $location.path("/s1");
-    $http.defaults.useXDomain = true;
     $http.defaults.headers.common["Accept"] = "application/json";
     $http.defaults.headers.common["Content-Type"] = "application/json; charset=UTF-8";
     $http.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
@@ -41,6 +40,9 @@ angular.module('financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
       cancelable: true
     };
     $rootScope.settings = {
+      apiSubscr: {
+        url: "/finance/web/subscribe/"
+      },
       api: {
         debug: true,
         url: "//credits.finance.ua/api/",
@@ -76,10 +78,11 @@ angular.module('financeApp', ['finance-directives', 'ngRoute', 'ngSanitize', 'ng
         }
       }
     };
-    return $(document).ready(function() {
+    $(document).ready(function() {
       return $("#page-preloader").addClass("loaded").on($rootScope.settings.events.transitionEvent(), function(e) {
         return $(e.currentTarget).remove();
       });
     });
+    return false;
   }
-]).controller("financeAppController", ['$rootScope', '$scope', '$localStorage', '$location', '$window', '$timeout', '$route', financeAppController]);
+]).controller("financeAppController", ['$rootScope', '$scope', '$localStorage', '$location', '$window', '$timeout', '$route', '$http', '$sceDelegate', '$sce', financeAppController]);

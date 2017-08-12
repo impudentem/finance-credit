@@ -53,7 +53,7 @@ financeApp.run([
         debug: true,
         url: "//credits.finance.ua/api/",
         command: {
-          get: "list",
+          list: "list",
           put: "submit"
         }
       },
@@ -92,4 +92,4 @@ financeApp.run([
   }
 ]);
 
-financeApp.controller("financeAppController", ['$rootScope', '$scope', '$localStorage', '$location', '$window', '$timeout', '$route', '$http', '$sceDelegate', '$sce', financeAppController]);
+financeApp.controller("financeAppController", ['$rootScope', '$scope', '$localStorage', '$location', '$window', '$timeout', '$route', '$http', '$sceDelegate', '$sce', financeClassAppController]);

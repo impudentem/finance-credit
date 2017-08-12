@@ -8,7 +8,7 @@ class twoStepController
       @$iElement = $ @$element
       newValue = parseInt newValue
       @init() if newValue is 2
-      return false
+      # return false
 
   card_hover: ($event, card) ->
     @$scope.cards_two.card_hover = if $event.type is "mouseover" then card else ""

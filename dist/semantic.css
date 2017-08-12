@@ -20145,6 +20145,16 @@ ol.ui.horizontal.list li:before,
 .ui.form .field > .selection.dropdown > .dropdown.icon {
   color: #535353;
 }
+
+.ui.form .field .ui.input input,
+.ui.form .fields .field .ui.input input {
+  width: 100%;
+}
+
+.ui.form .field .ui.input input#bday,
+.ui.form .fields .field .ui.input input#bday {
+  width: 77.74%;
+}
 /*!
  * # Semantic UI 2.2.11 - Grid
  * http://github.com/semantic-org/semantic-ui/

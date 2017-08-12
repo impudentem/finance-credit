@@ -22,9 +22,8 @@ twoStepController = (function() {
         _this.$iElement = $(_this.$element);
         newValue = parseInt(newValue);
         if (newValue === 2) {
-          _this.init();
+          return _this.init();
         }
-        return false;
       };
     })(this));
   }

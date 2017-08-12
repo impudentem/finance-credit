@@ -8,12 +8,13 @@ class firstStepController
       max: 50000
 
     @$scope.$watch (newValue, oldValue, scope) =>
+      # console.log scope, @$scope
       @$scope.main.currentStep
     , (newValue, oldValue, scope) =>
       @$iElement = $ @$element
       newValue = parseInt newValue
       @init() if newValue is 1
-      return false
+      # return false
 
 
   card_hover: ($event, card) ->
@@ -114,7 +115,7 @@ class firstStepController
     # delete @$http.defaults.headers.common['X-Requested-With']
     params =
       data: "aims"
-    trustedUrl = @$sceDelegate.trustAs @$sce.RESOURCE_URL, "#{@$rootScope.settings.api.url}#{@$rootScope.settings.api.command.get}"
+    trustedUrl = @$sceDelegate.trustAs @$sce.RESOURCE_URL, "#{@$rootScope.settings.api.url}#{@$rootScope.settings.api.command.list}"
     @$http.jsonp trustedUrl,
       params: params
     .then (responce) =>

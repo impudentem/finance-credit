@@ -1,4 +1,4 @@
-class financeAppController
+class financeClassAppController
   constructor: (@$rootScope, @$scope, $localStorage, @$location, @$window, @$timeout, @$route, @$http, @$sceDelegate, @$sce) ->
     @$scope.$storage = @$storage = $localStorage.$default strgData: amount: 5000
 
@@ -10,11 +10,11 @@ class financeAppController
     @maxStep = 3
 
     # console.log @$window
-    @$window.addEventListener "eventWidgetStep1", (e) -> console.log e
-    @$window.addEventListener "eventWidgetStep2", (e) -> console.log e
-    @$window.addEventListener "eventWidgetStep3", (e) -> console.log e
-    @$window.addEventListener "eventWidgetSuccess", (e) -> console.log e
-    @$window.addEventListener "eventWidgetError", (e) -> console.log e
+    # @$window.addEventListener "eventWidgetStep1", (e) -> console.log e
+    # @$window.addEventListener "eventWidgetStep2", (e) -> console.log e
+    # @$window.addEventListener "eventWidgetStep3", (e) -> console.log e
+    # @$window.addEventListener "eventWidgetSuccess", (e) -> console.log e
+    # @$window.addEventListener "eventWidgetError", (e) -> console.log e
 
     @$scope.$on '$locationChangeStart', (e, newUrl, oldUrl, newState, oldState) =>
       regNumStep  = new RegExp /\d$/
@@ -30,7 +30,7 @@ class financeAppController
       if _currentNameStep is "request"
         @sendEvent if @statusReq then "#{_currentNameStep}.success" else "#{_currentNameStep}.error"
       @$scope.$apply() if not @$scope.$$phase
-      console.log @$location.path(), @currentStep, _currentNameStep
+      # console.log @$location.path(), @currentStep, _currentNameStep
       @$timeout =>
         @init() if @currentStep is 1
         $ "html, body"
@@ -153,6 +153,6 @@ class financeAppController
       , 600
 
   sendEvent: (evnt) ->
-    console.log evnt
+    # console.log evnt
     evnt = Object.get @$rootScope.settings.events, evnt
     @$window.dispatchEvent evnt

@@ -15,7 +15,7 @@ class threeStepController
         @init "cities", (responce) ->
           @data.cities = responce.data if responce and responce.result is 'success'
           @init "employments", (responce) -> @data.employments = responce.data if responce and responce.result is 'success'
-      return false
+      # return false
 
     @$scope.$watch (newValue, oldValue, scope) =>
       @data
@@ -86,8 +86,13 @@ class threeStepController
 
     _checkbox_noinn = @$iElement.find ".ui.checkbox.noinn"
       .checkbox().first().checkbox
-        onChecked  : => @chngMsg "remove"
-        onUnchecked: => @chngMsg "add"
+        fireOnInit : on
+        onChecked  : =>
+          @$scope.$storage.strgData.noinn = on
+          @chngMsg "remove"
+        onUnchecked: =>
+          @$scope.$storage.strgData.noinn = off
+          @chngMsg "add"
 
     if @$scope.$storage.strgData.city_val
       @$timeout =>
@@ -113,10 +118,11 @@ class threeStepController
       showMaskOnHover: off
       oncomplete: (e) => @$scope.$storage.strgData.inn = e.target.value
       onKeyDown: (e) =>
-        console.log e
+        # console.log e
         @$scope.$storage.strgData.inn = e.target.value
     $ 'input[name="inn"]'
       .inputmask param
+
 
     $(@$element).find ".ui.form"
       .form
@@ -196,7 +202,7 @@ class threeStepController
     if type
       params =
         data: type
-      trustedUrl = @$sceDelegate.trustAs @$sce.RESOURCE_URL, "#{@$rootScope.settings.api.url}#{@$rootScope.settings.api.command.get}"
+      trustedUrl = @$sceDelegate.trustAs @$sce.RESOURCE_URL, "#{@$rootScope.settings.api.url}#{@$rootScope.settings.api.command.list}"
       clbck = (responce) => @fn? responce.data
       @$http.jsonp trustedUrl,
         params: params

@@ -27,7 +27,7 @@ threeStepController = (function() {
         if (newValue === 3) {
           _this.data.employments = {};
           _this.data.cities = {};
-          _this.init("cities", function(responce) {
+          return _this.init("cities", function(responce) {
             if (responce && responce.result === 'success') {
               this.data.cities = responce.data;
             }
@@ -38,7 +38,6 @@ threeStepController = (function() {
             });
           });
         }
-        return false;
       };
     })(this));
     this.$scope.$watch((function(_this) {
@@ -131,13 +130,16 @@ threeStepController = (function() {
       })(this)
     });
     _checkbox_noinn = this.$iElement.find(".ui.checkbox.noinn").checkbox().first().checkbox({
+      fireOnInit: true,
       onChecked: (function(_this) {
         return function() {
+          _this.$scope.$storage.strgData.noinn = true;
           return _this.chngMsg("remove");
         };
       })(this),
       onUnchecked: (function(_this) {
         return function() {
+          _this.$scope.$storage.strgData.noinn = false;
           return _this.chngMsg("add");
         };
       })(this)
@@ -178,7 +180,6 @@ threeStepController = (function() {
       })(this),
       onKeyDown: (function(_this) {
         return function(e) {
-          console.log(e);
           return _this.$scope.$storage.strgData.inn = e.target.value;
         };
       })(this)
@@ -245,7 +246,7 @@ threeStepController = (function() {
       params = {
         data: type
       };
-      trustedUrl = this.$sceDelegate.trustAs(this.$sce.RESOURCE_URL, "" + this.$rootScope.settings.api.url + this.$rootScope.settings.api.command.get);
+      trustedUrl = this.$sceDelegate.trustAs(this.$sce.RESOURCE_URL, "" + this.$rootScope.settings.api.url + this.$rootScope.settings.api.command.list);
       clbck = (function(_this) {
         return function(responce) {
           return typeof _this.fn === "function" ? _this.fn(responce.data) : void 0;

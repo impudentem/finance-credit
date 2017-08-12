@@ -43,6 +43,7 @@ financeApp.run [
         time: new Date()
       bubbles: on
       cancelable: on
+    # console.log $rootScope
     $rootScope.settings =
       apiSubscr:
         url: "/subscribe/"
@@ -50,7 +51,7 @@ financeApp.run [
         debug : on
         url   : "//credits.finance.ua/api/"
         command:
-          get: "list"
+          list: "list"
           put: "submit"
       events:
         s1: new CustomEvent "eventWidgetStep1", paramsEvent
@@ -81,4 +82,4 @@ financeApp.run [
 ]
 
 
-financeApp.controller "financeAppController", ['$rootScope', '$scope', '$localStorage', '$location', '$window', '$timeout', '$route', '$http', '$sceDelegate', '$sce', financeAppController]
+financeApp.controller "financeAppController", ['$rootScope', '$scope', '$localStorage', '$location', '$window', '$timeout', '$route', '$http', '$sceDelegate', '$sce', financeClassAppController]

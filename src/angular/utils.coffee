@@ -44,3 +44,33 @@ Object.get = (obj, path, curr = obj) ->
   for key in paths
     curr = if curr[key] isnt undefined then curr[key] else undefined
   return curr
+
+
+
+
+try
+  ce = new window.CustomEvent 'test'
+  ce.preventDefault()
+  if ce.defaultPrevented isnt on
+    throw new Error 'Could not prevent default'
+catch e
+  CustomEvent = (event, params) ->
+    params = params or
+      bubbles: off
+      cancelable: off
+      detail: undefined
+
+    evt = document.createEvent "CustomEvent"
+    evt.initCustomEvent event, params.bubbles, params.cancelable, params.detail
+    origPrevent = evt.preventDefault
+    evt.preventDefault = ->
+      origPrevent.call @
+      try
+        Object.defineProperty @, 'defaultPrevented',
+          get: -> on
+      catch e
+        this.defaultPrevented = on
+    return evt
+
+  CustomEvent.prototype = window.Event.prototype
+  window.CustomEvent = CustomEvent

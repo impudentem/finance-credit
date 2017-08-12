@@ -28,9 +28,8 @@ firstStepController = (function() {
         _this.$iElement = $(_this.$element);
         newValue = parseInt(newValue);
         if (newValue === 1) {
-          _this.init();
+          return _this.init();
         }
-        return false;
       };
     })(this));
   }
@@ -160,7 +159,7 @@ firstStepController = (function() {
     params = {
       data: "aims"
     };
-    trustedUrl = this.$sceDelegate.trustAs(this.$sce.RESOURCE_URL, "" + this.$rootScope.settings.api.url + this.$rootScope.settings.api.command.get);
+    trustedUrl = this.$sceDelegate.trustAs(this.$sce.RESOURCE_URL, "" + this.$rootScope.settings.api.url + this.$rootScope.settings.api.command.list);
     return this.$http.jsonp(trustedUrl, {
       params: params
     }).then((function(_this) {

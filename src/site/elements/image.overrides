@@ -1,3 +1,16 @@
 /*******************************
          Site Overrides
 *******************************/
+
+.ui.middle.aligned.image .svg {
+  height : inherit;
+  width  : attr(width);
+  height : attr(height);
+}
+
+.ui.middle.aligned.image .svg, .ui.middle.aligned.image svg, .ui.middle.aligned.image symbol, .ui.middle.aligned.image image, .ui.middle.aligned.image marker, .ui.middle.aligned.image pattern, .ui.middle.aligned.image foreignObject {
+  overflow: hidden;
+}
+.svg:not(:root), svg:not(:root) {
+  overflow: hidden;
+}

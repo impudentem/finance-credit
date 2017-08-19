@@ -1,12 +1,13 @@
 /*******************************
          Site Overrides
 *******************************/
-[class^="icon"]:before, [class*=" icon"]:before , i.icon {
+[class^="fa"]:before, [class*=" fa-"]:before, [class^="icon"]:before, [class*=" icon"]:before, i.icon {
   font-style: normal;
   font-weight: normal;
   speak: none;
   display: inline-block;
   text-decoration: inherit;
+  font-family: 'Icons','Open Sans',Arial,Helvetica,sans-serif;
   width: 1em;
   height: 1em;
   // margin-right: .2em;
@@ -61,8 +62,8 @@ i.icon.time:before { content: '🕓'; } /* '\1f553' */
 i.icon.calendar:before { content: '🗓'; } /* '\1f5d3' */
 i.icon.wrench:before { content: '🛠'; } /* '\1f6e0' */
 i.icon.safe:before { content: '🛡'; } /* '\1f6e1' */
-i.icon.chevron.right:before, .icon.angle.right:before { content: "\f105"; }
-i.icon.chevron.left:before, .icon.angle.left:before { content: "\f104"; }
+i.icon.chevron.right:before, .icon.angle.right:before, i.fa.fa-chevron-right:before { content: "\f105"; }
+i.icon.chevron.left:before, .icon.angle.left:before, i.fa.fa-chevron-left:before { content: "\f104"; }
 i.icon.chevron.up:before, .icon.angle.up:before { content: '\f106'; }
 i.icon.chevron.down:before, .icon.angle.down:before { content: '\f107'; }
 

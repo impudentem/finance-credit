@@ -3319,6 +3319,8 @@ i.icon.times.rectangle.outline:before {
          Site Overrides
 *******************************/
 
+[class^="fa"]:before,
+[class*=" fa-"]:before,
 [class^="icon"]:before,
 [class*=" icon"]:before,
 i.icon {
@@ -3327,6 +3329,7 @@ i.icon {
   speak: none;
   display: inline-block;
   text-decoration: inherit;
+  font-family: 'Icons', 'Open Sans', Arial, Helvetica, sans-serif;
   width: 1em;
   height: 1em;
   text-align: center;
@@ -3443,11 +3446,13 @@ i.icon.safe:before {
 
 /* '\1f6e1' */
 i.icon.chevron.right:before,
-.icon.angle.right:before {
+.icon.angle.right:before,
+i.fa.fa-chevron-right:before {
   content: "\f105";
 }
 i.icon.chevron.left:before,
-.icon.angle.left:before {
+.icon.angle.left:before,
+i.fa.fa-chevron-left:before {
   content: "\f104";
 }
 i.icon.chevron.up:before,

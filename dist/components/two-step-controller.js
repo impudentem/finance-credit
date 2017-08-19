@@ -32,59 +32,74 @@ twoStepController = (function() {
     return this.$scope.cards_two.card_hover = $event.type === "mouseover" ? card : "";
   };
 
+  twoStepController.prototype.formatter = function(date) {
+    var day, month, year;
+    if (!date) {
+      return "";
+    }
+    day = "" + (date.getDate());
+    month = "" + (date.getMonth() + 1);
+    day = day.length < 2 ? "0" + (date.getDate()) : "" + (date.getDate());
+    month = month.length < 2 ? "0" + (date.getMonth() + 1) : "" + (date.getMonth() + 1);
+    year = "" + (date.getFullYear());
+    return day + "." + month + "." + year;
+  };
+
   twoStepController.prototype.init = function() {
-    var maxDate, minDate;
     this.calendar = {};
-    minDate = new Date();
-    maxDate = new Date();
-    maxDate.setFullYear(maxDate.getFullYear() - 18);
-    minDate.setFullYear(minDate.getFullYear() - 90);
+    this.minDate = new Date();
+    this.maxDate = new Date();
+    this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
+    this.minDate.setFullYear(this.minDate.getFullYear() - 90);
     this.initCal = (function(_this) {
       return function() {
-        _this.calendar = _this.$iElement.find(".ui.calendar").calendar({
-          type: "date",
-          firstDayOfWeek: 1,
-          ampm: false,
-          minDate: minDate,
-          maxDate: maxDate,
-          initialDate: minDate,
-          touchReadonly: false,
-          disableMinute: true,
-          popupOptions: {
-            position: 'top right',
-            lastResort: 'top right'
+        _this.calendar = _this.$iElement.find("button.daterange").daterangepicker({
+          singleDatePicker: true,
+          locale: {
+            format: "DD.MM.YYYY",
+            separator: " - ",
+            applyLabel: "Ок",
+            cancelLabel: "Отмена",
+            fromLabel: "С",
+            toLabel: "По",
+            customRangeLabel: "Custom",
+            weekLabel: "W",
+            daysOfWeek: ['В', 'П', 'В', 'С', 'Ч', 'П', 'С'],
+            monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+            firstDay: 1
           },
-          className: {
-            prevIcon: "open icon left",
-            nextIcon: "open icon right"
-          },
-          text: {
-            days: ['В', 'П', 'В', 'С', 'Ч', 'П', 'С'],
-            months: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-            monthsShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
-            today: 'Сегодня',
-            now: 'Сейчас',
-            am: 'AM',
-            pm: 'PM'
-          },
-          onChange: function(date, text, mode) {
-            return _this.$scope.$storage.strgData.bday = text;
-          },
-          formatter: {
-            date: function(date, settings) {
-              var day, month, year;
-              if (!date) {
-                return "";
-              }
-              day = "" + (date.getDate());
-              month = "" + (date.getMonth() + 1);
-              day = day.length < 2 ? "0" + (date.getDate()) : "" + (date.getDate());
-              month = month.length < 2 ? "0" + (date.getMonth() + 1) : "" + (date.getMonth() + 1);
-              year = "" + (date.getFullYear());
-              return day + "." + month + "." + year;
-            }
+          opens: "left",
+          minDate: _this.formatter(_this.minDate),
+          maxDate: _this.formatter(_this.maxDate),
+          startDate: _this.$scope.$storage.strgData.bday ? moment(_this.$scope.$storage.strgData.bday, "DD.MM.YYYY").toDate() : _this.minDate
+        }, function(start, end, label) {
+          var form;
+          form = $(_this.$element).find(".ui.form");
+          form = form.data("module-form");
+          _this.bday = start.format("DD.MM.YYYY");
+          _this.$scope.$storage.strgData.bday = start.format("DD.MM.YYYY");
+          if (!_this.$scope.$$phase) {
+            _this.$scope.$apply();
+          }
+          if (form && form.is.valid() !== true) {
+            return form.validate.form();
           }
         });
+        _this.calendar_input = _this.$iElement.find("input[name='bday']").on("change", function(e) {
+          return _this.calendar.data("daterangepicker").setStartDate(_this.calendar_input.inputmask("isComplete") ? moment(e.target.value, "DD.MM.YYYY").toDate() : _this.minDate);
+        }).inputmask({
+          placeholder: "__.__.____",
+          alias: "dd.mm.yyyy",
+          yearrange: {
+            minyear: _this.minDate.getFullYear(),
+            maxyear: _this.maxDate.getFullYear()
+          },
+          greedy: false,
+          showMaskOnHover: false
+        });
+        if (_this.$scope.$storage.strgData.bday) {
+          _this.calendar_input.val(_this.$scope.$storage.strgData.bday);
+        }
         return _this.initMask();
       };
     })(this);
@@ -135,27 +150,20 @@ twoStepController = (function() {
       return results;
     })();
     $('input[name="phone"]').inputmask({
-      alias: "abstractphone",
-      countrycode: "38",
-      phoneCodes: alternatCodePhoneMask,
+      mask: "+38 \\(099\\) 999-99-99",
+      greedy: false,
       showMaskOnHover: false,
       oncomplete: (function(_this) {
         return function(e) {
           return _this.$scope.$storage.strgData.phone = e.target.value;
         };
-      })(this)
-    });
-    param = {
-      mask: "(09|19|29|30|31).(09|10|11|12).9999",
-      greedy: false,
-      showMaskOnHover: false,
-      oncomplete: (function(_this) {
+      })(this),
+      onKeyDown: (function(_this) {
         return function(e) {
-          return _this.$scope.$storage.strgData.bday = e.target.value;
+          return _this.$scope.$storage.strgData.phone = e.target.value;
         };
       })(this)
-    };
-    $('input[name="bday"]').inputmask(param);
+    });
     param = {
       mask: "U{1,64} (U{1,64})|(U{1,64} U{1,64})",
       greedy: false,
@@ -197,8 +205,11 @@ twoStepController = (function() {
           identifier: "phone",
           rules: [
             {
-              type: "empty",
+              type: "regExp[/^\\+38\\s\\(0\\d{2}\\)\\s\\d{3}\\-\\d{2}\\-\\d{2}$/i]",
               prompt: "Неправильный номер телефона"
+            }, {
+              type: "empty",
+              prompt: "Вы не указали номер телефона"
             }
           ]
         },

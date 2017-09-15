@@ -25,7 +25,7 @@ class financeClassAppController
       @$scope.$apply() if not @$scope.$$phase
 
       @$timeout =>
-        if parseInt(@currentStep) is 1
+        if _currentNameStep is "request"
           @init()
           _inp = $ 'input[name="email"]'
           _im = new Inputmask "email", showMaskOnHover: off, androidHack: on
@@ -44,8 +44,7 @@ class financeClassAppController
           #   showMaskOnHover: off
           #   oncomplete: (e) => @$scope.emailSubscr = e.target.value
           @$scope.main.loading = off
-        else if _currentNameStep is "request"
-          @$scope.main.loading = off
+          
           $ "html, body"
               .animate
                 scrollTop: 0

@@ -44,7 +44,7 @@ financeClassAppController = (function() {
         }
         return _this.$timeout(function() {
           var _im, _inp;
-          if (parseInt(_this.currentStep) === 1) {
+          if (_currentNameStep === "request") {
             _this.init();
             _inp = $('input[name="email"]');
             _im = new Inputmask("email", {
@@ -59,8 +59,6 @@ financeClassAppController = (function() {
                 _im.mask(_inp[0]);
               }
             }
-            return _this.$scope.main.loading = false;
-          } else if (_currentNameStep === "request") {
             _this.$scope.main.loading = false;
             return $("html, body").animate({
               scrollTop: 0

@@ -91,10 +91,10 @@ class threeStepController
         fireOnInit : on
         onChecked  : =>
           @$scope.$storage.strgData.noinn = on
-          @chngMsg "add"
+          @chngMsg "remove"
         onUnchecked: =>
           @$scope.$storage.strgData.noinn = off
-          @chngMsg "remove"
+          @chngMsg "add"
 
     if @$scope.$storage.strgData.city_val
       @$timeout =>
@@ -198,16 +198,16 @@ class threeStepController
           prompt: "Неправильный ИНН"
         ]
       if @$rootScope.isMobile is false
+        _checkbox.popup "destroy"
+    else
+      _form.form "remove fields", ["inn"]
+      _form.form "validate field", "inn"
+      if @$rootScope.isMobile is false
         _checkbox.popup
           transition: "horizontal flip"
           position  : 'right center',
           target    : '#inn',
           content   : 'Без ИНН шансы на получение кредита значительно уменьшаются. Часть банков не будет рассматривать заявку, если отправить её без ИНН.'
-    else
-      _form.form "remove fields", ["inn"]
-      _form.form "validate field", "inn"
-      if @$rootScope.isMobile is false
-        _checkbox.popup "destroy"
 
   # @$window.dispatchEvent @$rootScope.settings.events.eventWidgetStep3
 

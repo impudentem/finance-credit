@@ -5705,13 +5705,13 @@ threeStepController = (function() {
       onChecked: (function(_this) {
         return function() {
           _this.$scope.$storage.strgData.noinn = true;
-          return _this.chngMsg("add");
+          return _this.chngMsg("remove");
         };
       })(this),
       onUnchecked: (function(_this) {
         return function() {
           _this.$scope.$storage.strgData.noinn = false;
-          return _this.chngMsg("remove");
+          return _this.chngMsg("add");
         };
       })(this)
     });
@@ -5790,18 +5790,18 @@ threeStepController = (function() {
         ]
       });
       if (this.$rootScope.isMobile === false) {
+        return _checkbox.popup("destroy");
+      }
+    } else {
+      _form.form("remove fields", ["inn"]);
+      _form.form("validate field", "inn");
+      if (this.$rootScope.isMobile === false) {
         return _checkbox.popup({
           transition: "horizontal flip",
           position: 'right center',
           target: '#inn',
           content: 'Без ИНН шансы на получение кредита значительно уменьшаются. Часть банков не будет рассматривать заявку, если отправить её без ИНН.'
         });
-      }
-    } else {
-      _form.form("remove fields", ["inn"]);
-      _form.form("validate field", "inn");
-      if (this.$rootScope.isMobile === false) {
-        return _checkbox.popup("destroy");
       }
     }
   };
@@ -5965,7 +5965,7 @@ financeClassAppController = (function() {
         }
         return _this.$timeout(function() {
           var _im, _inp;
-          if (parseInt(_this.currentStep) === 1) {
+          if (_currentNameStep === "request") {
             _this.init();
             _inp = $('input[name="email"]');
             _im = new Inputmask("email", {
@@ -5980,8 +5980,6 @@ financeClassAppController = (function() {
                 _im.mask(_inp[0]);
               }
             }
-            return _this.$scope.main.loading = false;
-          } else if (_currentNameStep === "request") {
             _this.$scope.main.loading = false;
             return $("html, body").animate({
               scrollTop: 0

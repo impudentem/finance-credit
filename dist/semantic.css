@@ -568,6 +568,8 @@ body {
   padding: 0px;
   overflow-x: hidden;
   min-width: 320px;
+  max-width: 100%;
+  width: 100vw;
   background: #F6F6F6;
   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
   font-size: 14px;
@@ -1539,12 +1541,11 @@ body {
 
 .ui.grid.request {
   padding: 5.8571rem 0rem 0rem 0rem!important;
-  margin-bottom: 9.1428rem!important;
 }
 
 .ui.grid.mail-subscr {
   background: #FFF;
-  margin-top: 0rem!important;
+  margin-top: 1rem!important;
 }
 
 .ui.grid.mail-subscr .ui.container {
@@ -32279,13 +32280,13 @@ select.ui.dropdown {
 
 @media only screen and (max-width: 767px) {
   .ui.selection.dropdown .menu {
-    max-height: 8.01428571rem;
+    max-height: 16.02857143rem;
   }
 }
 
 @media only screen and (min-width: 768px) {
   .ui.selection.dropdown .menu {
-    max-height: 10.68571429rem;
+    max-height: 16.02857143rem;
   }
 }
 
@@ -32493,13 +32494,13 @@ select.ui.dropdown {
 
 @media only screen and (max-width: 767px) {
   .ui.search.dropdown .menu {
-    max-height: 8.01428571rem;
+    max-height: 16.02857143rem;
   }
 }
 
 @media only screen and (min-width: 768px) {
   .ui.search.dropdown .menu {
-    max-height: 10.68571429rem;
+    max-height: 16.02857143rem;
   }
 }
 

@@ -131,7 +131,7 @@ twoStepController = (function() {
   };
 
   twoStepController.prototype.initMask = function() {
-    var alternatCodePhone, alternatCodePhoneMask, code, param;
+    var _mobMask, _nameMask, _t, alternatCodePhone, alternatCodePhoneMask, code;
     if (this.$scope.$storage.strgData.aggree === void 0) {
       this.$scope.$storage.strgData.aggree = true;
     }
@@ -149,23 +149,14 @@ twoStepController = (function() {
       }
       return results;
     })();
-    $('input[name="phone"]').inputmask({
-      mask: "+38 \\(099\\) 999-99-99",
-      greedy: false,
-      showMaskOnHover: false,
-      oncomplete: (function(_this) {
-        return function(e) {
-          return _this.$scope.$storage.strgData.phone = e.target.value;
-        };
-      })(this),
-      onKeyDown: (function(_this) {
-        return function(e) {
-          return _this.$scope.$storage.strgData.phone = e.target.value;
-        };
-      })(this)
+    _mobMask = $('input[name="phone"]');
+    _t = this;
+    _mobMask.mask("+38 (099) 999-99-99", {
+      completed: function() {
+        return _t.$scope.$storage.strgData.phone = this.val();
+      }
     });
-    param = {
-      mask: "U{1,64} (U{1,64})|(U{1,64} U{1,64})",
+    _nameMask = new Inputmask("U{1,64} (U{1,64})|(U{1,64} U{1,64})", {
       greedy: false,
       showMaskOnHover: false,
       oncomplete: (function(_this) {
@@ -173,8 +164,8 @@ twoStepController = (function() {
           return _this.$scope.$storage.strgData.name = e.target.value;
         };
       })(this)
-    };
-    $('input[name="fullname"]').inputmask(param);
+    });
+    _nameMask.mask($('input[name="fullname"]')[0]);
     this.$scope.main.loading = false;
     return $(this.$element).find(".ui.form").form({
       inline: true,

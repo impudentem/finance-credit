@@ -580,21 +580,30 @@
             }
             function writeBuffer(input, buffer, caretPos, event, triggerInputEvent) {
                 if (event && $.isFunction(opts.onBeforeWrite)) {
-                    var result = opts.onBeforeWrite.call(inputmask, event, buffer, caretPos, opts);
-                    if (result) {
-                        if (result.refreshFromBuffer) {
-                            var refresh = result.refreshFromBuffer;
-                            refreshFromBuffer(!0 === refresh ? refresh : refresh.start, refresh.end, result.buffer || buffer),
-                            buffer = getBuffer(!0);
-                        }
-                        caretPos !== undefined && (caretPos = result.caret !== undefined ? result.caret : caretPos);
+                  var result = opts.onBeforeWrite(event, buffer, caretPos, opts);
+                  if (result) {
+                    if (result.refreshFromBuffer) {
+                      var refresh = result.refreshFromBuffer;
+                      refreshFromBuffer(refresh === true ? refresh : refresh.start, refresh.end, result.buffer || buffer);
+                      buffer = getBuffer(true);
                     }
+                    //only alter when intented !== undefined
+                    if (caretPos !== undefined) caretPos = result.caret !== undefined ? result.caret : caretPos;
+                  }
                 }
-                input !== undefined && (input.inputmask._valueSet(buffer.join("")), caretPos === undefined || event !== undefined && "blur" === event.type ? renderColorMask(input, caretPos, 0 === buffer.length) : android && event && "input" === event.type ? setTimeout(function() {
-                    caret(input, caretPos);
-                }, 0) : caret(input, caretPos), !0 === triggerInputEvent && (skipInputEvent = !0,
-                $(input).trigger("input")));
-            }
+                input.inputmask._valueSet(buffer.join(""));
+                if (caretPos !== undefined && (event === undefined || event.type !== "blur")) {
+                  if (android && event.type === "input") {
+                    setTimeout(function () {
+                      caret(input, caretPos);
+                    }, 0);
+                  } else caret(input, caretPos);
+                } else renderColorMask(input, buffer, caretPos);
+                if (triggerInputEvent === true) {
+                  skipInputEvent = true;
+                  $(input).trigger("input");
+                }
+              }
             function getPlaceholder(pos, test, returnPL) {
                 if (test = test || getTest(pos).match, test.placeholder !== undefined || !0 === returnPL) return $.isFunction(test.placeholder) ? test.placeholder(opts) : test.placeholder;
                 if (null === test.fn) {
@@ -897,31 +906,42 @@
                     }, 0)) : (opts.insertMode = !opts.insertMode, caret(input, opts.insertMode || pos.begin !== getMaskSet().maskLength ? pos.begin : pos.begin - 1));
                     opts.onKeyDown.call(this, e, getBuffer(), caret(input).begin, opts), ignorable = -1 !== $.inArray(k, opts.ignorables);
                 },
-                keypressEvent: function(e, checkval, writeOut, strict, ndx) {
+                keypressEvent: function (e, checkval, writeOut, strict, ndx) {
                     var input = this, $input = $(input), k = e.which || e.charCode || e.keyCode;
-                    if (!(!0 === checkval || e.ctrlKey && e.altKey) && (e.ctrlKey || e.metaKey || ignorable)) return k === Inputmask.keyCode.ENTER && undoValue !== getBuffer().join("") && (undoValue = getBuffer().join(""),
+                    if (!(checkval === !0 || e.ctrlKey && e.altKey) && (e.ctrlKey || e.metaKey || ignorable)) return k === Inputmask.keyCode.ENTER && undoValue !== getBuffer().join("") && (undoValue = getBuffer().join(""),
                     setTimeout(function() {
                         $input.trigger("change");
                     }, 0)), !0;
                     if (k) {
-                        46 === k && !1 === e.shiftKey && "" !== opts.radixPoint && (k = opts.radixPoint.charCodeAt(0));
+                        46 === k && e.shiftKey === !1 && "" !== opts.radixPoint && (k = opts.radixPoint.charCodeAt(0));
                         var forwardPosition, pos = checkval ? {
                             begin: ndx,
                             end: ndx
                         } : caret(input), c = String.fromCharCode(k);
                         getMaskSet().writeOutBuffer = !0;
                         var valResult = isValid(pos, c, strict);
-                        if (!1 !== valResult && (resetMaskSet(!0), forwardPosition = valResult.caret !== undefined ? valResult.caret : checkval ? valResult.pos + 1 : seekNext(valResult.pos),
-                        getMaskSet().p = forwardPosition), !1 !== writeOut && (setTimeout(function() {
-                            opts.onKeyValidation.call(input, k, valResult, opts);
-                        }, 0), getMaskSet().writeOutBuffer && !1 !== valResult)) {
-                            var buffer = getBuffer();
-                            writeBuffer(input, buffer, opts.numericInput && valResult.caret === undefined ? seekPrevious(forwardPosition) : forwardPosition, e, !0 !== checkval),
-                            !0 !== checkval && setTimeout(function() {
-                                !0 === isComplete(buffer) && $input.trigger("complete");
-                            }, 0);
+                        if (valResult !== !1 && (resetMaskSet(!0), forwardPosition = void 0 !== valResult.caret ? valResult.caret : checkval ? valResult.pos + 1 : seekNext(valResult.pos),
+                        getMaskSet().p = forwardPosition), writeOut !== !1) {
+                            var self = this;
+                            if(setTimeout(function() {
+                                opts.onKeyValidation.call(self, k, valResult, opts);
+                            }, 0), getMaskSet().writeOutBuffer && valResult !== !1) {
+                                var buffer = getBuffer();
+                                writeBuffer(input, buffer, opts.numericInput && void 0 === valResult.caret ? seekPrevious(forwardPosition) : forwardPosition, e, checkval !== !0),
+                                checkval !== !0 && setTimeout(function() {
+                                    isComplete(buffer) === !0 && $input.trigger("complete");
+                                }, 0);
+                            }
+                            if (android && $input.is(":focus")) {
+                             var nextCaretPos = seekNext(valResult.pos);
+                             if (nextCaretPos > 0) {
+                              setTimeout(function() {
+                               caret(input, nextCaretPos);
+                              }, 0);
+                             }
+                            }
                         }
-                        if (e.preventDefault(), checkval) return !1 !== valResult && (valResult.forwardPosition = forwardPosition),
+                        if (e.preventDefault(), checkval) return valResult.forwardPosition = forwardPosition,
                         valResult;
                     }
                 },

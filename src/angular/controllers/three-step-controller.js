@@ -104,7 +104,8 @@ threeStepController = (function() {
   };
 
   threeStepController.prototype.update = function() {
-    var _checkbox_noinn, _dropdown_city, _dropdown_employment, param;
+    var _checkbox_noinn, _cityMask, _dropdown_city, _dropdown_employment, _innMask;
+    this.chngMsg("add");
     _dropdown_city = this.$iElement.find(".ui.dropdown.city").dropdown({
       selectOnKeydown: false,
       allowReselection: true,
@@ -134,13 +135,13 @@ threeStepController = (function() {
       onChecked: (function(_this) {
         return function() {
           _this.$scope.$storage.strgData.noinn = true;
-          return _this.chngMsg("remove");
+          return _this.chngMsg("add");
         };
       })(this),
       onUnchecked: (function(_this) {
         return function() {
           _this.$scope.$storage.strgData.noinn = false;
-          return _this.chngMsg("add");
+          return _this.chngMsg("remove");
         };
       })(this)
     });
@@ -158,8 +159,7 @@ threeStepController = (function() {
         };
       })(this));
     }
-    param = {
-      mask: "U{1,128}",
+    _cityMask = new Inputmask("U{1,128}", {
       greedy: false,
       showMaskOnHover: false,
       oncomplete: (function(_this) {
@@ -167,24 +167,18 @@ threeStepController = (function() {
           return _this.$scope.$storage.strgData.city = e.target.value;
         };
       })(this)
-    };
-    $('input[name="city"], .ui.dropdown input.search').inputmask(param);
-    param = {
-      mask: "9999999999",
+    });
+    _cityMask.mask($('input[name="city"], .ui.dropdown input.search')[0]);
+    _innMask = new Inputmask("9999999999", {
       greedy: false,
       showMaskOnHover: false,
       oncomplete: (function(_this) {
         return function(e) {
           return _this.$scope.$storage.strgData.inn = e.target.value;
         };
-      })(this),
-      onKeyDown: (function(_this) {
-        return function(e) {
-          return _this.$scope.$storage.strgData.inn = e.target.value;
-        };
       })(this)
-    };
-    $('input[name="inn"]').inputmask(param);
+    });
+    _innMask.mask($('input[name="inn"]')[0]);
     $(this.$element).find(".ui.form").form({
       inline: true,
       on: "blur",
@@ -209,14 +203,13 @@ threeStepController = (function() {
         }
       }
     });
-    this.chngMsg("add");
     return this.$scope.main.loading = false;
   };
 
   threeStepController.prototype.chngMsg = function(comm) {
     var _checkbox, _form;
     _form = $(this.$element).find(".ui.form");
-    _checkbox = this.$iElement.find(".ui.button.submit");
+    _checkbox = this.$iElement.find(".ui.button.right");
     if (comm === "add") {
       _form.form("add rule", "inn", {
         rules: [
@@ -226,16 +219,20 @@ threeStepController = (function() {
           }
         ]
       });
-      return _checkbox.popup({
-        transition: "horizontal flip",
-        position: 'right center',
-        target: '#inn',
-        content: 'Без ИНН шансы на получение кредита значительно уменьшаются. Часть банков не будет рассматривать заявку, если отправить её без ИНН.'
-      });
+      if (this.$rootScope.isMobile === false) {
+        return _checkbox.popup({
+          transition: "horizontal flip",
+          position: 'right center',
+          target: '#inn',
+          content: 'Без ИНН шансы на получение кредита значительно уменьшаются. Часть банков не будет рассматривать заявку, если отправить её без ИНН.'
+        });
+      }
     } else {
       _form.form("remove fields", ["inn"]);
       _form.form("validate field", "inn");
-      return _checkbox.popup("destroy");
+      if (this.$rootScope.isMobile === false) {
+        return _checkbox.popup("destroy");
+      }
     }
   };
 
@@ -258,13 +255,10 @@ threeStepController = (function() {
     }
   };
 
-  threeStepController.prototype.post = function(type, fn) {
-    var clbck, params, trustedUrl;
+  threeStepController.prototype.post = function(data, fn) {
+    var clbck, trustedUrl;
     this.fn = fn;
-    if (type) {
-      params = {
-        data: type
-      };
+    if (data) {
       trustedUrl = this.$sceDelegate.trustAs(this.$sce.RESOURCE_URL, "" + this.$rootScope.settings.api.url + this.$rootScope.settings.api.command.put);
       clbck = (function(_this) {
         return function(responce) {
@@ -272,7 +266,7 @@ threeStepController = (function() {
         };
       })(this);
       return this.$http.jsonp(trustedUrl, {
-        params: params
+        params: data
       }).then(clbck, clbck);
     }
   };

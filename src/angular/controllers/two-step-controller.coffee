@@ -146,17 +146,26 @@ class twoStepController
     @$scope.$storage.strgData.aggree = true if @$scope.$storage.strgData.aggree is undefined
     alternatCodePhone     = [39,50,63,66,67,68,73,91,92,93,94,95,96,97,98,99]
     alternatCodePhoneMask = ({mask: "+38 (0#{code}) ###-##-##", cc: "UA", cd: "Ukraine"} for code in alternatCodePhone)
-    $ 'input[name="phone"]'
-      .inputmask
-        mask: "+38 \\(099\\) 999-99-99"
-        # alias: "abstractphone"
-        # countrycode: "38"
-        # phoneCodes: alternatCodePhoneMask
-        greedy: off
-        # keepStatic: on
-        showMaskOnHover: off
-        oncomplete: (e) => @$scope.$storage.strgData.phone = e.target.value
-        onKeyDown: (e) => @$scope.$storage.strgData.phone = e.target.value
+    # if @$rootScope.isMobile is false
+    _mobMask = $('input[name="phone"]')
+    # new Inputmask "+38 \\(099\\) 999-99-99",
+      # greedy: off
+      # showMaskOnHover: off
+      # oncomplete: (e) => @$scope.$storage.strgData.phone = e.target.value
+      # onKeyDown: (e) => @$scope.$storage.strgData.phone = e.target.value
+    _t = @
+    _mobMask.mask "+38 (099) 999-99-99", completed: () -> 
+      _t.$scope.$storage.strgData.phone = @val()
+      # .inputmask
+      #   mask: "+38 \\(099\\) 999-99-99"
+      #   # alias: "abstractphone"
+      #   # countrycode: "38"
+      #   # phoneCodes: alternatCodePhoneMask
+      #   greedy: off
+      #   # keepStatic: on
+      #   showMaskOnHover: off
+      #   oncomplete: (e) => @$scope.$storage.strgData.phone = e.target.value
+      #   onKeyDown: (e) => @$scope.$storage.strgData.phone = e.target.value
 
     # param =
     #   mask: "(09|19|29|30|31).(09|10|11|12).9999"
@@ -165,14 +174,18 @@ class twoStepController
     #   oncomplete: (e) => @$scope.$storage.strgData.bday = e.target.value
     # $ 'input[name="bday"]'
     #   .inputmask param
-
-    param =
-      mask: "U{1,64} (U{1,64})|(U{1,64} U{1,64})"
+    _nameMask = new Inputmask "U{1,64} (U{1,64})|(U{1,64} U{1,64})",
       greedy: off
       showMaskOnHover: off
       oncomplete: (e) => @$scope.$storage.strgData.name = e.target.value
-    $ 'input[name="fullname"]'
-      .inputmask param
+    # param =
+    #   mask: "U{1,64} (U{1,64})|(U{1,64} U{1,64})"
+    #   greedy: off
+    #   showMaskOnHover: off
+    #   oncomplete: (e) => @$scope.$storage.strgData.name = e.target.value
+    # if @$rootScope.isMobile is false
+    _nameMask.mask $('input[name="fullname"]')[0]
+    # .inputmask param
 
     @$scope.main.loading = off
 

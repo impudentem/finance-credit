@@ -66,6 +66,8 @@ class threeStepController
       form.validate.form()
 
   update: ->
+    @chngMsg "add"
+
     _dropdown_city = @$iElement.find ".ui.dropdown.city"
       .dropdown
         selectOnKeydown: off
@@ -89,10 +91,10 @@ class threeStepController
         fireOnInit : on
         onChecked  : =>
           @$scope.$storage.strgData.noinn = on
-          @chngMsg "remove"
+          @chngMsg "add"
         onUnchecked: =>
           @$scope.$storage.strgData.noinn = off
-          @chngMsg "add"
+          @chngMsg "remove"
 
     if @$scope.$storage.strgData.city_val
       @$timeout =>
@@ -104,24 +106,33 @@ class threeStepController
         _dropdown_employment.data "module-dropdown"
           .set.selected @$scope.$storage.strgData.employment
 
-    param =
-      mask: "U{1,128}"
+    _cityMask = new Inputmask "U{1,128}",
       greedy: off
       showMaskOnHover: off
       oncomplete: (e) => @$scope.$storage.strgData.city = e.target.value
-    $ 'input[name="city"], .ui.dropdown input.search'
-      .inputmask param
 
-    param =
-      mask: "9999999999"
+    # param =
+    #   mask: "U{1,128}"
+    #   greedy: off
+    #   showMaskOnHover: off
+    #   oncomplete: (e) => @$scope.$storage.strgData.city = e.target.value
+    _cityMask.mask $('input[name="city"], .ui.dropdown input.search')[0]
+    # .inputmask param
+
+    _innMask = new Inputmask "9999999999",
       greedy: off
       showMaskOnHover: off
       oncomplete: (e) => @$scope.$storage.strgData.inn = e.target.value
-      onKeyDown: (e) =>
-        # console.log e
-        @$scope.$storage.strgData.inn = e.target.value
-    $ 'input[name="inn"]'
-      .inputmask param
+    # param =
+    #   mask: "9999999999"
+    #   greedy: off
+    #   showMaskOnHover: off
+    #   oncomplete: (e) => @$scope.$storage.strgData.inn = e.target.value
+    #   onKeyDown: (e) =>
+    #     # console.log e
+    #     @$scope.$storage.strgData.inn = e.target.value
+    _innMask.mask $('input[name="inn"]')[0]
+    # .inputmask param
 
 
     $(@$element).find ".ui.form"
@@ -173,28 +184,30 @@ class threeStepController
 
         #   return off
 
-    @chngMsg "add"
+    
 
     @$scope.main.loading = off
 
   chngMsg: (comm) ->
     _form = $(@$element).find ".ui.form"
-    _checkbox = @$iElement.find ".ui.button.submit"
+    _checkbox = @$iElement.find ".ui.button.right"
     if comm is "add"
       _form.form "add rule", "inn",
         rules: [
           type: "integer[10...10]"
           prompt: "Неправильный ИНН"
         ]
-      _checkbox.popup
-        transition: "horizontal flip"
-        position  : 'right center',
-        target    : '#inn',
-        content   : 'Без ИНН шансы на получение кредита значительно уменьшаются. Часть банков не будет рассматривать заявку, если отправить её без ИНН.'
+      if @$rootScope.isMobile is false
+        _checkbox.popup
+          transition: "horizontal flip"
+          position  : 'right center',
+          target    : '#inn',
+          content   : 'Без ИНН шансы на получение кредита значительно уменьшаются. Часть банков не будет рассматривать заявку, если отправить её без ИНН.'
     else
       _form.form "remove fields", ["inn"]
       _form.form "validate field", "inn"
-      _checkbox.popup "destroy"
+      if @$rootScope.isMobile is false
+        _checkbox.popup "destroy"
 
   # @$window.dispatchEvent @$rootScope.settings.events.eventWidgetStep3
 
@@ -208,14 +221,14 @@ class threeStepController
         params: params
       .then clbck, clbck
 
-  post: (type, @fn) ->
+  post: (data, @fn) ->
     # delete @$http.defaults.headers.common['X-Requested-With']
-    if type
-      params =
-        data: type
+    if data
+      # params =
+      #   data: data
       trustedUrl = @$sceDelegate.trustAs @$sce.RESOURCE_URL, "#{@$rootScope.settings.api.url}#{@$rootScope.settings.api.command.put}"
       clbck = (responce) => @fn? responce.data
       @$http.jsonp trustedUrl,
-        params: params
+        params: data
       .then clbck, clbck
 

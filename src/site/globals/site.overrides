@@ -312,12 +312,12 @@ body {
 }
 .ui.grid.request {
   padding       : 5.8571rem 0rem 0rem 0rem!important;
-  margin-bottom : 9.1428rem!important;
+  // margin-bottom : 9.1428rem!important;
 }
 .ui.grid.mail-subscr {
   background : #FFF;
   // height     : 101px;
-  margin-top : 0rem!important;
+  margin-top : 1rem!important;
 }
 .ui.grid.mail-subscr .ui.container {
   padding : 1.7857rem 0 1.1857rem 0;

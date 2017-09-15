@@ -26,6 +26,8 @@ body {
   padding: 0px;
   overflow-x: hidden;
   min-width: 320px;
+  max-width: 100%;
+  width: 100vw;
   background: #F6F6F6;
   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
   font-size: 14px;
@@ -853,11 +855,10 @@ body {
 }
 .ui.grid.request {
   padding: 5.8571rem 0rem 0rem 0rem!important;
-  margin-bottom: 9.1428rem!important;
 }
 .ui.grid.mail-subscr {
   background: #FFF;
-  margin-top: 0rem!important;
+  margin-top: 1rem!important;
 }
 .ui.grid.mail-subscr .ui.container {
   padding: 1.7857rem 0 1.1857rem 0;

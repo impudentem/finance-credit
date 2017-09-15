@@ -43,23 +43,28 @@ financeClassAppController = (function() {
           _this.$scope.$apply();
         }
         return _this.$timeout(function() {
-          if (_this.currentStep === 1) {
+          var _im, _inp;
+          if (parseInt(_this.currentStep) === 1) {
             _this.init();
-          }
-          if (_currentNameStep === "request") {
-            $("html, body").animate({
+            _inp = $('input[name="email"]');
+            _im = new Inputmask("email", {
+              showMaskOnHover: false,
+              androidHack: true
+            });
+            if (_inp.length) {
+              if (_this.$rootScope.isMobile) {
+                _inp[0].type = "email";
+                _inp[0].required = true;
+              } else {
+                _im.mask(_inp[0]);
+              }
+            }
+            return _this.$scope.main.loading = false;
+          } else if (_currentNameStep === "request") {
+            _this.$scope.main.loading = false;
+            return $("html, body").animate({
               scrollTop: 0
             }, 600);
-          }
-          if (_currentNameStep === "request") {
-            $('input[name="email"]').inputmask({
-              alias: "email",
-              showMaskOnHover: false,
-              oncomplete: function(e) {
-                return _this.$scope.emailSubscr = e.target.value;
-              }
-            });
-            return _this.$scope.main.loading = false;
           }
         });
       };
@@ -77,7 +82,7 @@ financeClassAppController = (function() {
     if (_inEmail.length) {
       _inEmail = _inEmail[0];
     }
-    if (((ref = _inEmail.inputmask) != null ? ref.isValid() : void 0) && ((ref1 = _inEmail.inputmask) != null ? ref1.isComplete() : void 0)) {
+    if (((ref = _inEmail.inputmask) != null ? ref.isValid() : void 0) && ((ref1 = _inEmail.inputmask) != null ? ref1.isComplete() : void 0) || ((typeof _inEmail.checkValidity === "function" ? _inEmail.checkValidity() : void 0) && _inEmail.type === "email")) {
       this.$scope.main.loading = true;
       if (!this.$scope.$$phase) {
         this.$scope.$apply();
@@ -99,6 +104,8 @@ financeClassAppController = (function() {
       return this.$http.get(this.$rootScope.settings.apiSubscr.url, {
         params: params
       }).then(clbck, clbck);
+    } else if ((typeof _inEmail.checkValidity === "function" ? _inEmail.checkValidity() : void 0) === false) {
+      return typeof _inEmail.reportValidity === "function" ? _inEmail.reportValidity() : void 0;
     }
   };
 

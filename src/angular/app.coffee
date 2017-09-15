@@ -4,17 +4,10 @@ class financeClassAppController
 
     @loading = on
     @statusReq = off
-    # console.log @$scope.$storage.strgData
 
     @currentStep = 1
     @maxStep = 3
 
-    # console.log @$window
-    # @$window.addEventListener "eventWidgetStep1", (e) -> console.log e
-    # @$window.addEventListener "eventWidgetStep2", (e) -> console.log e
-    # @$window.addEventListener "eventWidgetStep3", (e) -> console.log e
-    # @$window.addEventListener "eventWidgetSuccess", (e) -> console.log e
-    # @$window.addEventListener "eventWidgetError", (e) -> console.log e
 
     @$scope.$on '$locationChangeStart', (e, newUrl, oldUrl, newState, oldState) =>
       regNumStep  = new RegExp /\d$/
@@ -30,23 +23,33 @@ class financeClassAppController
       if _currentNameStep is "request"
         @sendEvent if @statusReq then "#{_currentNameStep}.success" else "#{_currentNameStep}.error"
       @$scope.$apply() if not @$scope.$$phase
-      # console.log @$location.path(), @currentStep, _currentNameStep
-      @$timeout =>
-        @init() if @currentStep is 1
-        $ "html, body"
-            .animate
-              scrollTop: 0
-            , 600 if _currentNameStep is "request"
 
-        if _currentNameStep is "request"
-          $ 'input[name="email"]'
-            .inputmask
-              alias: "email"
-              # greedy: off
-              # keepStatic: on
-              showMaskOnHover: off
-              oncomplete: (e) => @$scope.emailSubscr = e.target.value
+      @$timeout =>
+        if parseInt(@currentStep) is 1
+          @init()
+          _inp = $ 'input[name="email"]'
+          _im = new Inputmask "email", showMaskOnHover: off, androidHack: on
+          if _inp.length
+            if @$rootScope.isMobile
+              _inp[0].type="email"
+              _inp[0].required = on
+            else
+              _im.mask _inp[0]
+          # console.log _im, _inp[0]
+          # _im.mask _inp[0] if _inp.length
+          # .inputmask
+          #   alias: "email"
+          #   #greedy: off
+          #   #keepStatic: on
+          #   showMaskOnHover: off
+          #   oncomplete: (e) => @$scope.emailSubscr = e.target.value
           @$scope.main.loading = off
+        else if _currentNameStep is "request"
+          @$scope.main.loading = off
+          $ "html, body"
+              .animate
+                scrollTop: 0
+              , 600
 
 
     $ =>
@@ -55,7 +58,7 @@ class financeClassAppController
   sendSubscr: ($event) ->
     _inEmail = $ "input[name=email]"
     _inEmail = _inEmail[0] if _inEmail.length
-    if _inEmail.inputmask?.isValid() and _inEmail.inputmask?.isComplete()
+    if _inEmail.inputmask?.isValid() and _inEmail.inputmask?.isComplete() or (_inEmail.checkValidity?() and _inEmail.type is "email")
       @$scope.main.loading = on
       @$scope.$apply() if not @$scope.$$phase
       params =
@@ -70,6 +73,8 @@ class financeClassAppController
       @$http.get @$rootScope.settings.apiSubscr.url,
         params: params
       .then clbck, clbck
+    else if _inEmail.checkValidity?() is false
+      _inEmail.reportValidity?()
 
   msgSubscr: (msg) ->
     switch msg
@@ -128,7 +133,6 @@ class financeClassAppController
       .sidebar "setting", "dimPage", on
       .sidebar "setting", "transition", "push"
       .sidebar "setting", "useLegacy", on
-
 
 
     $ ".ui.accordion"

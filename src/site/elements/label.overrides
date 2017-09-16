@@ -71,3 +71,12 @@
   font-weight: normal;
   color: #484848;
 }
+
+.ui.form .field .ui.input .mobtriggerbday {
+  display: block;
+  width: 77.74%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}

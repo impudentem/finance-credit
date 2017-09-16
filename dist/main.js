@@ -5364,10 +5364,14 @@ twoStepController = (function() {
     this.maxDate = new Date();
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
     this.minDate.setFullYear(this.minDate.getFullYear() - 90);
+    this.minDateMob = moment(this.minDate).format("YYYY-MM-DD");
+    this.maxDateMob = moment(this.maxDate).format("YYYY-MM-DD");
     this.initCal = (function(_this) {
       return function() {
+        var _slfDate, _val;
         _this.calendar = _this.$iElement.find("button.daterange").daterangepicker({
           singleDatePicker: true,
+          showDropdowns: true,
           locale: {
             format: "DD.MM.YYYY",
             separator: " - ",
@@ -5384,13 +5388,14 @@ twoStepController = (function() {
           opens: "left",
           minDate: _this.formatter(_this.minDate),
           maxDate: _this.formatter(_this.maxDate),
-          startDate: _this.$scope.$storage.strgData.bday ? moment(_this.$scope.$storage.strgData.bday, "DD.MM.YYYY").toDate() : _this.minDate
+          startDate: _this.$scope.$storage.strgData.bday ? moment(_this.$scope.$storage.strgData.bday, "DD.MM.YYYY").toDate() : _this.maxDate
         }, function(start, end, label) {
-          var form;
+          var _bday, form;
           form = $(_this.$element).find(".ui.form");
           form = form.data("module-form");
-          _this.bday = start.format("DD.MM.YYYY");
-          _this.$scope.$storage.strgData.bday = start.format("DD.MM.YYYY");
+          _bday = start.format("DD.MM.YYYY");
+          _this.$scope.$storage.strgData.bday = _bday;
+          _this.mob_trigger_calendar_input.val(moment(_bday, "DD.MM.YYYY").format("YYYY-MM-DD"));
           if (!_this.$scope.$$phase) {
             _this.$scope.$apply();
           }
@@ -5398,8 +5403,26 @@ twoStepController = (function() {
             return form.validate.form();
           }
         });
-        _this.calendar_input = _this.$iElement.find("input[name='bday']").on("change", function(e) {
-          return _this.calendar.data("daterangepicker").setStartDate(_this.calendar_input.inputmask("isComplete") ? moment(e.target.value, "DD.MM.YYYY").toDate() : _this.minDate);
+        _this.calendar_input = _this.$iElement.find("input[name='bday']");
+        _this.mob_trigger_calendar_input = _this.$iElement.find("input[name='mobtriggerbday']");
+        if (_this.$rootScope.isMobile) {
+          _this.mob_trigger_calendar_input.on("change", function(e) {
+            var _lfDate, base, base1;
+            _lfDate = _this.isValidRange(e.target.value, "YYYY-MM-DD") ? moment(e.target.value, "YYYY-MM-DD").format("DD.MM.YYYY") : moment(_this.maxDate).format("DD.MM.YYYY");
+            _this.$scope.$storage.strgData.bday = _lfDate;
+            _this.calendar.data("daterangepicker").setStartDate(typeof (base = moment(_lfDate, "DD.MM.YYYY")).toDate === "function" ? base.toDate() : void 0);
+            _this.calendar.data("daterangepicker").setEndDate(typeof (base1 = moment(_lfDate, "DD.MM.YYYY")).toDate === "function" ? base1.toDate() : void 0);
+            if (!_this.$scope.$$phase) {
+              return _this.$scope.$apply();
+            }
+          });
+        }
+        _this.calendar_input.on("change", function(e) {
+          var _efDate;
+          _this.calendar.data("daterangepicker").setStartDate(_this.calendar_input.inputmask("isComplete") ? moment(e.target.value, "DD.MM.YYYY").toDate() : _this.maxDate);
+          _this.calendar.data("daterangepicker").setEndDate(_this.calendar_input.inputmask("isComplete") ? moment(e.target.value, "DD.MM.YYYY").toDate() : _this.maxDate);
+          _efDate = moment(e.target.value, "DD.MM.YYYY").format("YYYY-MM-DD");
+          return _this.mob_trigger_calendar_input.val(_efDate);
         }).inputmask({
           placeholder: "__.__.____",
           alias: "dd.mm.yyyy",
@@ -5411,7 +5434,12 @@ twoStepController = (function() {
           showMaskOnHover: false
         });
         if (_this.$scope.$storage.strgData.bday) {
-          _this.calendar_input.val(_this.$scope.$storage.strgData.bday);
+          _val = _this.isValidRange(_this.$scope.$storage.strgData.bday, "DD.MM.YYYY") ? _this.$scope.$storage.strgData.bday : moment(_this.maxDate).format("DD.MM.YYYY");
+          _this.calendar_input.val(_val);
+          if (_this.$rootScope.isMobile) {
+            _slfDate = moment(_val, "DD.MM.YYYY").format("YYYY-MM-DD");
+            _this.mob_trigger_calendar_input.val(_slfDate);
+          }
         }
         return _this.initMask();
       };
@@ -5421,6 +5449,10 @@ twoStepController = (function() {
         return _this.initCal();
       };
     })(this));
+  };
+
+  twoStepController.prototype.isValidRange = function(date, format) {
+    return (moment(date, format).unix() <= moment(this.maxDate).unix()) && (moment(date, format).unix() >= moment(this.minDate).unix());
   };
 
   twoStepController.prototype.prevStep = function() {
@@ -5480,6 +5512,21 @@ twoStepController = (function() {
     });
     _nameMask.mask($('input[name="fullname"]')[0]);
     this.$scope.main.loading = false;
+    $.fn.form.settings.rules.dateRange = function(value, dateRange) {
+      var _calendar, _calendar_input, _calendar_max_unix, base, ref, status;
+      _calendar_input = $("input[name='bday']");
+      _calendar = $("button.daterange").data("daterangepicker");
+      _calendar_max_unix = _calendar != null ? _calendar.maxDate.unix() : void 0;
+      status = this[0];
+      status = status.validity ? (ref = status.validity) != null ? ref.valid : void 0 : typeof status.checkValidity === "function" ? status.checkValidity() : void 0;
+      if (status) {
+        status = _calendar_input.inputmask("isComplete");
+      }
+      if (status) {
+        status = (typeof (base = moment(_calendar_input.val(), "DD.MM.YYYY")).unix === "function" ? base.unix() : void 0) <= _calendar_max_unix;
+      }
+      return status;
+    };
     return $(this.$element).find(".ui.form").form({
       inline: true,
       on: "blur",
@@ -5502,6 +5549,9 @@ twoStepController = (function() {
             {
               type: "regExp[/^\\d{2}[\\.]\\d{2}[\\.]\\d{4}$/i]",
               prompt: "Неправильная дата рождения"
+            }, {
+              type: "dateRange",
+              prompt: "Кредит могут получить лица возрастом от 18 до 90 лет"
             }
           ]
         },

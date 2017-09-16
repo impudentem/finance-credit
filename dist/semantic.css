@@ -13948,6 +13948,15 @@ svg:not(:root) {
   -webkit-box-shadow: 0 1px 10px 0 rgba(255, 156, 15, 0.4), inset 1px 1px 3px 0 rgba(0, 0, 0, 0.17);
   box-shadow: 0 1px 10px 0 rgba(255, 156, 15, 0.4), inset 1px 1px 3px 0 rgba(0, 0, 0, 0.17);
 }
+
+.ui.form .field .ui.input #mobtriggerbday {
+  width: 77.74%;
+  position: absolute;
+  visibility: visible;
+  color: transparent;
+  height: 100%;
+  z-index: -1;
+}
 /*!
  * # Semantic UI 2.2.11 - Label
  * http://github.com/semantic-org/semantic-ui/
@@ -15452,6 +15461,15 @@ a.ui.basic.label:hover {
   font-size: 1.1428em;
   font-weight: normal;
   color: #484848;
+}
+
+.ui.form .field .ui.input .mobtriggerbday {
+  display: block;
+  width: 77.74%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 /*!
  * # Semantic UI 2.2.11 - List

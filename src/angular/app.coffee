@@ -7,7 +7,7 @@ class financeClassAppController
 
     @currentStep = 1
     @maxStep = 3
-
+ 
 
     @$scope.$on '$locationChangeStart', (e, newUrl, oldUrl, newState, oldState) =>
       regNumStep  = new RegExp /\d$/
@@ -44,7 +44,7 @@ class financeClassAppController
           #   showMaskOnHover: off
           #   oncomplete: (e) => @$scope.emailSubscr = e.target.value
           @$scope.main.loading = off
-          
+
           $ "html, body"
               .animate
                 scrollTop: 0

@@ -535,3 +535,11 @@
   -webkit-box-shadow: 0 1px 10px 0 rgba(255, 156, 15, 0.4), inset 1px 1px 3px 0 rgba(0, 0, 0, 0.17);
           box-shadow: 0 1px 10px 0 rgba(255, 156, 15, 0.4), inset 1px 1px 3px 0 rgba(0, 0, 0, 0.17);
 }
+.ui.form .field .ui.input #mobtriggerbday {
+  width: 77.74%;
+  position: absolute;
+  visibility: visible;
+  color: transparent;
+  height: 100%;
+  z-index: -1;
+}
